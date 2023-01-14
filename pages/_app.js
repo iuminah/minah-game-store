@@ -1,5 +1,16 @@
-import '@/styles/globals.css'
+import "@/styles/globals.css";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import {ThemeProvider} from "@material-tailwind/react";
+import Head from "next/head";
+
+export default function MyApp({Component, pageProps}) {
+  return (
+    <ThemeProvider>
+      <Head>
+        <title>Minah Game Store</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }
