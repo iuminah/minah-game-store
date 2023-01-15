@@ -4,15 +4,15 @@ import {Typography} from "@material-tailwind/react";
 import Image from "next/image";
 
 export default function Home({productList}) {
-  console.log("productList :", productList.attributes.FeatureCover);
   const list = productList?.attributes?.FeatureCover || null;
+
   return (
     <div>
       <Menu />
       <div className="containerd">
         <div>
           {list ? (
-            list.map((item, key) => (
+            list?.map((item, key) => (
               <div
                 key={key}
                 className="flex flex-col justify-center items-center"
@@ -42,5 +42,6 @@ export const getStaticProps = async () => {
     props: {
       productList,
     },
+    revalidate: 10,
   };
 };

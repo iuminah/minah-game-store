@@ -65,6 +65,5 @@ export const getProduct = async () => {
     `,
     {},
   );
-  console.log("data laf :", data);
   return data?.featureCover?.data;
 };
