@@ -1,3 +1,4 @@
+import FeatureSlide from "@/components/feature-slide/FeatureSlide";
 import Menu from "@/components/navbar/Menu";
 import {getProduct} from "@/libs/api";
 import {Typography} from "@material-tailwind/react";
@@ -9,28 +10,7 @@ export default function Home({productList}) {
   return (
     <div>
       <Menu />
-      <div className="containerd">
-        <div>
-          {list ? (
-            list?.map((item, key) => (
-              <div
-                key={key}
-                className="flex flex-col justify-center items-center"
-              >
-                <Typography>{item.name}</Typography>
-                <Image
-                  src={`https://minah-game-cms-uppyx.appengine.bfcplatform.vn${item.image.data.attributes.url}`}
-                  width="300"
-                  height="500"
-                  alt={item.name}
-                />
-              </div>
-            ))
-          ) : (
-            <></>
-          )}
-        </div>
-      </div>
+      <FeatureSlide list={list} />
     </div>
   );
 }
@@ -42,6 +22,6 @@ export const getStaticProps = async () => {
     props: {
       productList,
     },
-    revalidate: 10,
+    revalidate: true,
   };
 };

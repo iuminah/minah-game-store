@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["minah-game-cms-uppyx.appengine.bfcplatform.vn"],
+    domains: ["minah-game-cms-uppyx.appengine.bfcplatform.vn", "localhost"],
   },
 };
 
