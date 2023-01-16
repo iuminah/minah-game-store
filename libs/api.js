@@ -54,7 +54,7 @@ export const getFeatureSlide = async () => {
           attributes {
             FeatureCover {
               name
-              link
+              slug
               image {
                 data {
                   attributes {
