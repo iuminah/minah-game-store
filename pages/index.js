@@ -1,22 +1,20 @@
 import FeatureSlide from "@/components/feature-slide/FeatureSlide";
 import Menu from "@/components/navbar/Menu";
-import {getProduct} from "@/libs/api";
-import {Typography} from "@material-tailwind/react";
-import Image from "next/image";
+import {getFeatureSlide} from "@/libs/api";
 
 export default function Home({productList}) {
-  const list = productList?.attributes?.FeatureCover || null;
+  const listFeature = productList?.attributes?.FeatureCover;
 
   return (
-    <div>
+    <>
       <Menu />
-      <FeatureSlide list={list} />
-    </div>
+      <FeatureSlide listFeature={listFeature} />
+    </>
   );
 }
 
 export const getStaticProps = async () => {
-  const productList = (await getProduct()) || {};
+  const productList = (await getFeatureSlide()) || {};
 
   return {
     props: {
