@@ -7,7 +7,7 @@ import FormData from "form-data";
 
 // PRODUCT_TOKEN
 const token =
-  "20d1b7e62f73a483d53866e7833ffa62ebb87abd2f9c4ab73456185dc87c68e43be56cf099b4cf12be7d49f5b3f677a5b20de74901f0d3791a3813373a73ebb1943a289e866a34537ea210e21ed6f4acc5572cbb258759b71f18ed93fc66a4313413504d476a423b85192ceea33ff126e36b9de75fd166839c5cb01dfcf9fa94";
+  "2d976260e67219668d8bfd5d84d488ffad02c7e24bed5fa6ec958c485837acc4d66f8208d1097b412f4903fa8c1dea10340806c3fda15923721648b1e6d331f0ede6d95cfb789234ca7b3cf837ce80e6beca2a67f574ebc349b1649696afc486a532a828338d532dbbfd7305b37f8e56ce8fe7aebf797a3040d86f5c08757a03";
 
 // export const DOMAIN = "http://localhost:1337";
 export const DOMAIN = "https://minah-game-cms-uppyx.appengine.bfcplatform.vn";
