@@ -1,24 +1,24 @@
 import FeatureSlide from "@/components/feature-slide/FeatureSlide";
 import Menu from "@/components/navbar/Menu";
-import {getFeatureSlide} from "@/libs/api";
+import {getFeatureSlides} from "@/libs/api";
 
-export default function Home({productList}) {
-  const listFeature = productList?.attributes?.FeatureCover;
+export default function Home({featureSlides}) {
+  const slide = featureSlides;
 
   return (
     <>
       <Menu />
-      <FeatureSlide listFeature={listFeature} />
+      <FeatureSlide slide={slide} />
     </>
   );
 }
 
 export const getStaticProps = async () => {
-  const productList = (await getFeatureSlide()) || {};
+  const featureSlides = (await getFeatureSlides()) || {};
 
   return {
     props: {
-      productList,
+      featureSlides,
     },
     revalidate: true,
   };
