@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* background-color: #121212;
+  color: #FFF */
+}
+
+.feature-slide {
+  .swiper {
+    @apply relative;
+    .swiper-button-prev {
+      @apply hidden lg:block;
+      @apply absolute top-10 right-14 left-auto #{!important};
+    }
+    .swiper-button-next {
+      @apply hidden lg:block absolute top-10 right-4;
+    }
+  }
+}

@@ -9,6 +9,7 @@ export default function Home({featureSlides}) {
     <>
       <Menu />
       <FeatureSlide slide={slide} />
+      <div>PRODUCT</div>
     </>
   );
 }

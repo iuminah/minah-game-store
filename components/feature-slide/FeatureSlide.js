@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 import {Pagination, Navigation} from "swiper";
 import {Button, Chip, Typography} from "@material-tailwind/react";
 import {DOMAIN} from "@/libs/api";
+import Image from "next/image";
 
 function FeatureSlide(props) {
   const {slide} = props;
-  console.log("slide :", slide);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center h-[55vh] mt-2 feature-slide">
       <div className="container">
         <Swiper
           slidesPerView={1}
@@ -20,25 +20,27 @@ function FeatureSlide(props) {
           pagination={{
             clickable: true,
           }}
-          // navigation={true}
+          navigation={true}
           modules={[Pagination, Navigation]}
-          className="h-[600px] bg-gray-600 text-white "
+          className="h-full text-white"
         >
           {slide?.map((item, key) => (
-            <SwiperSlide
-              key={key}
-              className="flex flex-col justify-center items-center"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-8 h-full">
-                <picture className="col-span-1 lg:col-span-6">
-                  <img
+            <SwiperSlide key={key} className="py-4 -my-4 ">
+              <div className="h-full grid grid-cols-1 lg:grid-cols-8">
+                <div className="relative lg:col-span-6 py-20 lg:py-0">
+                  <Image
                     src={`${DOMAIN}${item.attributes.cover.data.attributes.url}`}
-                    className="object-fill h-full"
+                    alt={item.attributes.name}
+                    fill
+                    className="object-cover"
+                    draggable="false"
                   />
-                </picture>
-                <div className="col-span-1 lg:col-span-2 flex flex-col px-6 justify-center space-y-4">
-                  <h1 className="lg:text-3xl">{item.attributes.name}</h1>
-                  <Typography className="text-justify">
+                </div>
+                <div className="lg:col-span-2 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray-500">
+                  <h1 className="text-xl lg:text-3xl">
+                    {item.attributes.name}
+                  </h1>
+                  <Typography className="text-justifyd line-clamp-3 lg:line-clamp-5">
                     {item.attributes.brief}
                   </Typography>
                   <div className="flex items-center justify-between space-x-4">
