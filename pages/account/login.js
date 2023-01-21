@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {logIn} from "@/libs/api";
 import {useRouter} from "next/router";
 
-function login() {
+function LogIn() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const {
@@ -57,4 +57,4 @@ function login() {
 
 // login.propTypes = {};
 
-export default login;
+export default LogIn;
