@@ -34,6 +34,7 @@ function FeatureSlide(props) {
                     fill
                     className="object-cover"
                     draggable="false"
+                    priority
                   />
                 </div>
                 <div className="lg:col-span-2 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray-500">

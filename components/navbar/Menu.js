@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import {
   Navbar,
   MobileNav,
@@ -6,15 +6,24 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import Link from "next/link";
 
 export default function Menu() {
   const [openNav, setOpenNav] = useState(false);
+  const [userLogged, setUserLogged] = useState(null);
+  console.log("userLogged :", userLogged);
 
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
+    setUserLogged(localStorage.getItem("username"));
+  }, []);
+
+  const logout = useCallback(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
   }, []);
 
   const navList = (
@@ -74,9 +83,22 @@ export default function Menu() {
           <span>Minah Game Store</span>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-          <span>Buy Now</span>
-        </Button>
+        {userLogged ? (
+          <p className="hidden lg:block cursor-pointer" onClick={logout}>
+            Hello <span className="text-amber-500">{userLogged}</span> !
+          </p>
+        ) : (
+          <Link href="/account/login">
+            <Button
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
+            >
+              Login
+            </Button>
+          </Link>
+        )}
+
         <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -117,9 +139,17 @@ export default function Menu() {
       </div>
       <MobileNav open={openNav}>
         {navList}
-        <Button variant="gradient" size="sm" fullWidth className="mb-2">
-          <span>Buy Now</span>
-        </Button>
+        {userLogged ? (
+          <p className="block lg:hidden text-black px-1" onClick={logout}>
+            Hello <span className="text-amber-500">{userLogged}</span> !
+          </p>
+        ) : (
+          <Link href="/account/login">
+            <Button variant="gradient" size="sm" fullWidth className="mb-2">
+              <span>Login</span>
+            </Button>
+          </Link>
+        )}
       </MobileNav>
     </Navbar>
   );
