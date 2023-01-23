@@ -5,10 +5,13 @@ import {
   Typography,
   Button,
   IconButton,
+  Menu,
+  MenuHandler,
+  MenuList,
 } from "@material-tailwind/react";
 import Link from "next/link";
 
-export default function Menu() {
+export default function MenuBar() {
   const [openNav, setOpenNav] = useState(false);
   const [userLogged, setUserLogged] = useState(null);
   console.log("userLogged :", userLogged);
@@ -19,11 +22,12 @@ export default function Menu() {
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
     setUserLogged(localStorage.getItem("username"));
-  }, []);
+  }, [userLogged]);
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    setUserLogged(null);
   }, []);
 
   const navList = (
@@ -84,9 +88,18 @@ export default function Menu() {
         </Typography>
         <div className="hidden lg:block">{navList}</div>
         {userLogged ? (
-          <p className="hidden lg:block cursor-pointer" onClick={logout}>
-            Hello <span className="text-amber-500">{userLogged}</span> !
-          </p>
+          <Menu placement="bottom-end">
+            <MenuHandler>
+              <p className="hidden lg:block cursor-pointer" onClick={logout}>
+                Hello <span className="text-amber-500">{userLogged}</span> !
+              </p>
+            </MenuHandler>
+            <MenuList>
+              <Typography onClick={logout} className="cursor-pointer">
+                Logout
+              </Typography>
+            </MenuList>
+          </Menu>
         ) : (
           <Link href="/account/login">
             <Button
@@ -94,7 +107,7 @@ export default function Menu() {
               size="sm"
               className="hidden lg:inline-block"
             >
-              Login
+              Sign in
             </Button>
           </Link>
         )}

@@ -11,7 +11,7 @@ function FeatureSlide(props) {
   const {slide} = props;
 
   return (
-    <div className="flex justify-center h-[55vh] mt-2 feature-slide">
+    <div className="feature-slide">
       <div className="container">
         <Swiper
           slidesPerView={1}
@@ -25,7 +25,7 @@ function FeatureSlide(props) {
           className="h-full text-white"
         >
           {slide?.map((item, key) => (
-            <SwiperSlide key={key} className="py-4 -my-4 ">
+            <SwiperSlide key={key} className="py-3.5 -my-3.5">
               <div className="h-full grid grid-cols-1 lg:grid-cols-8">
                 <div className="relative lg:col-span-6 py-20 lg:py-0">
                   <Image

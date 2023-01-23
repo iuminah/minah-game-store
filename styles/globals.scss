@@ -11,6 +11,8 @@
 }
 
 .feature-slide {
+  @apply h-[500px];
+  @apply flex justify-center;
   .swiper {
     @apply relative;
     .swiper-button-prev {
@@ -19,6 +21,9 @@
     }
     .swiper-button-next {
       @apply hidden lg:block absolute top-10 right-4;
+    }
+    .swiper-pagination {
+      @apply -mb-2;
     }
   }
 }
