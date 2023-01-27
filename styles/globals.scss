@@ -27,3 +27,11 @@
     }
   }
 }
+
+.form-error {
+  @apply text-red-500 py-1;
+}
+
+.h-5 {
+  @apply h-auto #{!important};
+}

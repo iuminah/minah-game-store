@@ -6,15 +6,25 @@ import "swiper/css/navigation";
 
 import {ThemeProvider} from "@material-tailwind/react";
 import Head from "next/head";
+import {persistor, store} from "../redux/store";
+import {Provider} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
 
 export default function MyApp({Component, pageProps}) {
   return (
-    <ThemeProvider>
-      <Head>
-        <title>Minah Game Store</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+          <Head>
+            <title>Minah Game Store</title>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+          </Head>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 }

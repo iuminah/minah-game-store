@@ -11,6 +11,7 @@
   "dependencies": {
     "@material-tailwind/react": "^1.2.5",
     "@next/font": "13.1.2",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.2",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.2",
@@ -19,10 +20,13 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.1",
+    "react-redux": "^8.0.5",
+    "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
     "swiper": "^8.4.5"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
     "@tailwindcss/jit": "^0.1.18",
     "@tailwindcss/line-clamp": "^0.4.2",
     "autoprefixer": "^10.4.13",

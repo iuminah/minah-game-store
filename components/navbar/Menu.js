@@ -14,7 +14,6 @@ import Link from "next/link";
 export default function MenuBar() {
   const [openNav, setOpenNav] = useState(false);
   const [userLogged, setUserLogged] = useState(null);
-  console.log("userLogged :", userLogged);
 
   useEffect(() => {
     window.addEventListener(
@@ -39,7 +38,7 @@ export default function MenuBar() {
         className="p-1 font-normal"
       >
         <a href="#" className="flex items-center">
-          Pages
+          Store
         </a>
       </Typography>
       <Typography
@@ -49,7 +48,7 @@ export default function MenuBar() {
         className="p-1 font-normal"
       >
         <a href="#" className="flex items-center">
-          Account
+          Browse
         </a>
       </Typography>
       <Typography
@@ -59,17 +58,7 @@ export default function MenuBar() {
         className="p-1 font-normal"
       >
         <a href="#" className="flex items-center">
-          Blocks
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Docs
+          News
         </a>
       </Typography>
     </ul>
