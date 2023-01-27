@@ -23,6 +23,7 @@
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
+    "sharp": "^0.31.3",
     "swiper": "^8.4.5"
   },
   "devDependencies": {
