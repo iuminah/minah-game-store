@@ -29,8 +29,8 @@ export default function MenuBar() {
   const userLogged = useSelector(selectUserID);
   const userInfo = useSelector(selectUserData);
   const userAvatar =
-    DOMAIN + userInfo[0]?.attributes.avatar.data.attributes.url || null;
-  const userName = userInfo[0]?.attributes.username || null;
+    DOMAIN + userInfo?.[0]?.attributes.avatar.data.attributes.url || null;
+  const userName = userInfo?.[0]?.attributes.username || null;
 
   useEffect(() => {
     window.addEventListener(
