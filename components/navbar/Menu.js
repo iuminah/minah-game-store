@@ -42,12 +42,12 @@ export default function MenuBar() {
       dispatch(setUserData(userData));
     };
     userData();
-  }, [userLogged]);
+  }, [userLogged, dispatch]);
 
-  const logout = useCallback(() => {
+  const logout = () => {
     dispatch(setUserID(null));
     dispatch(setToken(null));
-  }, []);
+  };
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
