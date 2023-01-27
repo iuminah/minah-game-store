@@ -3,33 +3,27 @@ import {createSlice} from "@reduxjs/toolkit";
 export const accountSlice = createSlice({
   name: "account",
   initialState: {
-    username: "username",
+    userID: null,
+    userData: null,
+    token: null,
   },
   reducers: {
-    setUserName: (state, action) => {
-      state.username = action.payload;
+    setToken: (state, action) => {
+      state.token = action.payload;
     },
-    increment: (state) => {
-      state.value += 1;
+    setUserID: (state, action) => {
+      state.userID = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setUserData: (state, action) => {
+      state.userData = action.payload;
     },
   },
 });
 
-export const {setUserName, increment, decrement, incrementByAmount} =
-  accountSlice.actions;
+export const {setUserID, setToken, setUserData} = accountSlice.actions;
 
-export const incrementAsync = (amount) => (dispatch) => {
-  setTimeout(() => {
-    dispatch(incrementByAmount(amount));
-  }, 1000);
-};
-
-export const selectAccount = (state) => state.account.username;
+export const selectUserID = (state) => state.account.userID;
+export const selectToken = (state) => state.account.token;
+export const selectUserData = (state) => state.account.userData;
 
 export default accountSlice.reducer;

@@ -8,7 +8,7 @@ import Link from "next/link";
 import Visibility from "../../assets/icons/visibility_black_24dp.svg";
 import VisibilityOff from "../../assets/icons/visibility_off_black_24dp.svg";
 import {useDispatch} from "react-redux";
-import {setUserName} from "@/redux/accountSlice";
+import {setToken, setUserID} from "@/redux/accountSlice";
 
 function LogIn() {
   const router = useRouter();
@@ -28,9 +28,8 @@ function LogIn() {
     const {email, password} = data;
     const res = await logIn(email, password);
     if (res.status === 200) {
-      localStorage.setItem("token", res.data.jwt);
-      localStorage.setItem("username", res.data.user.username);
-      dispatch(setUserName(res.data.user.username));
+      dispatch(setUserID(res.data.user.id));
+      dispatch(setToken(res.data.jwt));
       router.push("/");
     } else {
       setErrorMessage(res.response.data.error.message);

@@ -8,25 +8,45 @@ import {
   Menu,
   MenuHandler,
   MenuList,
+  Avatar,
+  MenuItem,
 } from "@material-tailwind/react";
 import Link from "next/link";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  setToken,
+  selectUserID,
+  setUserID,
+  setUserData,
+  selectUserData,
+} from "@/redux/accountSlice";
+import {DOMAIN, getUserData} from "@/libs/api";
 
 export default function MenuBar() {
+  const dispatch = useDispatch();
   const [openNav, setOpenNav] = useState(false);
-  const [userLogged, setUserLogged] = useState(null);
+
+  const userLogged = useSelector(selectUserID);
+  const userInfo = useSelector(selectUserData);
+  const userAvatar =
+    DOMAIN + userInfo[0]?.attributes.avatar.data.attributes.url || null;
+  const userName = userInfo[0]?.attributes.username || null;
 
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
-    setUserLogged(localStorage.getItem("username"));
+    const userData = async () => {
+      const userData = await getUserData(userLogged);
+      dispatch(setUserData(userData));
+    };
+    userData();
   }, [userLogged]);
 
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    setUserLogged(null);
+    dispatch(setUserID(null));
+    dispatch(setToken(null));
   }, []);
 
   const navList = (
@@ -76,83 +96,72 @@ export default function MenuBar() {
           <span>Minah Game Store</span>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        {userLogged ? (
-          <Menu placement="bottom-end">
-            <MenuHandler>
-              <p className="hidden lg:block cursor-pointer" onClick={logout}>
-                Hello <span className="text-amber-500">{userLogged}</span> !
-              </p>
-            </MenuHandler>
-            <MenuList>
-              <Typography onClick={logout} className="cursor-pointer">
-                Logout
-              </Typography>
-            </MenuList>
-          </Menu>
-        ) : (
-          <Link href="/account/login">
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              Sign in
-            </Button>
-          </Link>
-        )}
-
-        <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
-        >
-          {openNav ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+        <div className="space-x-4 flex items-center">
+          <IconButton
+            variant="text"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+            ripple={false}
+            onClick={() => setOpenNav(!openNav)}
+          >
+            {openNav ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </IconButton>
+          {userLogged ? (
+            <span className="">
+              <Menu placement="bottom-end">
+                <MenuHandler className="cursor-pointer">
+                  <Avatar src={userAvatar} alt="avatar" />
+                </MenuHandler>
+                <MenuList>
+                  {userName && <MenuItem>{userName}</MenuItem>}
+                  <MenuItem onClick={logout} className="cursor-pointer">
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </span>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+            <Link href="/account/login">
+              <Button
+                variant="gradient"
+                size="sm"
+                className="hidden lg:inline-block"
+              >
+                Sign in
+              </Button>
+            </Link>
           )}
-        </IconButton>
+        </div>
       </div>
-      <MobileNav open={openNav}>
-        {navList}
-        {userLogged ? (
-          <p className="block lg:hidden text-black px-1" onClick={logout}>
-            Hello <span className="text-amber-500">{userLogged}</span> !
-          </p>
-        ) : (
-          <Link href="/account/login">
-            <Button variant="gradient" size="sm" fullWidth className="mb-2">
-              <span>Login</span>
-            </Button>
-          </Link>
-        )}
-      </MobileNav>
+      <MobileNav open={openNav}>{navList}</MobileNav>
     </Navbar>
   );
 }
