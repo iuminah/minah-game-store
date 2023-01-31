@@ -1,18 +1,15 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {Button, IconButton, Input, Typography} from "@material-tailwind/react";
-import {useForm} from "react-hook-form";
-import {logIn} from "@/libs/api";
+import {Button, Input, Typography} from "@material-tailwind/react";
 import {useRouter} from "next/router";
-import Link from "next/link";
+import {useForm} from "react-hook-form";
 import Visibility from "../../assets/icons/visibility_black_18dp.svg";
 import VisibilityOff from "../../assets/icons/visibility_off_black_18dp.svg";
-import {useDispatch} from "react-redux";
-import {setToken, setUserID} from "@/redux/accountSlice";
+import Link from "next/link";
+import {registerAccount} from "@/libs/api";
 
-function LogIn() {
+function Register() {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -24,14 +21,13 @@ function LogIn() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const {username, email, password} = data;
     setDisableBtn(true);
-    const {email, password} = data;
-    const res = await logIn(email, password);
+    const res = await registerAccount(username, email, password);
     if (res.status === 200) {
-      dispatch(setUserID(res.data.user.id));
-      dispatch(setToken(res.data.jwt));
-      router.back();
+      console.log(res);
     } else {
+      console.log(res);
       setErrorMessage(res.response.data.error.message);
       setDisableBtn(false);
     }
@@ -44,10 +40,20 @@ function LogIn() {
   return (
     <div className="flex flex-col justify-center items-center py-4">
       <Typography className="text-center text-xl lg:text-2xl font-bold pb-8">
-        Đăng nhập
+        Tạo tài khoản
       </Typography>
 
       <form className="w-3/4 lg:w-1/5" onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          variant="outlined"
+          label="Username"
+          {...register("username", {required: true})}
+        />
+        {errors.username ? (
+          <Typography className="form-error">Chưa nhập Username</Typography>
+        ) : (
+          <Typography className="form-error">&nbsp;</Typography>
+        )}
         <Input
           variant="outlined"
           label="Email"
@@ -73,7 +79,7 @@ function LogIn() {
           <Typography className="form-error">Chưa nhập password</Typography>
         ) : errorMessage ? (
           <Typography className="form-error">
-            Email hoặc Password chưa đúng
+            Email hoặc Username đã tồn tại
           </Typography>
         ) : (
           <Typography className="form-error">&nbsp;</Typography>
@@ -81,14 +87,14 @@ function LogIn() {
         <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
           <input
             type="submit"
-            value="Đăng nhập"
+            value="Đăng ký"
             className="text-sm w-full h-full p-2"
           />
         </Button>
 
-        <Link href="/account/register">
+        <Link href="/account/login">
           <Typography className="text-left p-2 text-blue-500">
-            Tạo tài khoản
+            Đăng nhập
           </Typography>
         </Link>
       </form>
@@ -96,6 +102,6 @@ function LogIn() {
   );
 }
 
-LogIn.propTypes = {};
+Register.propTypes = {};
 
-export default LogIn;
+export default Register;

@@ -113,7 +113,7 @@ export default function MenuBar() {
   );
 
   return (
-    <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none text-blue-gray-900">
+    <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none text-blue-gray-900 fixed z-50">
       <div className="container mx-auto flex items-center justify-between ">
         <Typography
           as="a"

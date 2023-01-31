@@ -8,7 +8,9 @@ export default function Home({featureSlides}) {
   return (
     <>
       <Menu />
-      <FeatureSlide slide={slide} />
+      <div className="pt-[74px]">
+        <FeatureSlide slide={slide} />
+      </div>
     </>
   );
 }

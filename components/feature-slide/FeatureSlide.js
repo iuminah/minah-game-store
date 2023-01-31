@@ -1,11 +1,10 @@
 import React from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
-import PropTypes from "prop-types";
 
 import {Pagination, Navigation} from "swiper";
 import {Button, Chip, Typography} from "@material-tailwind/react";
-import {DOMAIN} from "@/libs/api";
 import Image from "next/image";
+import {getImageUrl, shimmerBlur} from "@/libs/ultis";
 
 function FeatureSlide(props) {
   const {slide} = props;
@@ -26,18 +25,20 @@ function FeatureSlide(props) {
         >
           {slide?.map((item, key) => (
             <SwiperSlide key={key} className="py-3.5 -my-3.5">
-              <div className="h-full grid grid-cols-1 lg:grid-cols-8">
-                <div className="relative lg:col-span-6 py-20 lg:py-0">
+              <div className="h-full grid grid-cols-1 lg:grid-cols-11">
+                <div className="relative lg:col-span-8 py-20 lg:py-0">
                   <Image
-                    src={`${DOMAIN}${item.attributes.cover.data.attributes.url}`}
+                    src={getImageUrl(item)}
                     alt={item.attributes.name}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                     draggable="false"
-                    priority
+                    placeholder="blur"
+                    blurDataURL={shimmerBlur()}
                   />
                 </div>
-                <div className="lg:col-span-2 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray-500">
+                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray-500">
                   <h1 className="text-xl lg:text-3xl">
                     {item.attributes.name}
                   </h1>
@@ -74,7 +75,5 @@ function FeatureSlide(props) {
     </div>
   );
 }
-
-FeatureSlide.propTypes = {};
 
 export default FeatureSlide;

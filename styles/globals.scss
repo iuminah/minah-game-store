@@ -6,22 +6,37 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* background-color: #121212;
-  color: #FFF */
+  // background-color: #121212;
+  // color: #fff;
 }
 
 .feature-slide {
-  @apply h-[500px];
+  @apply h-[550px];
   @apply flex justify-center;
+
   .swiper {
     @apply relative;
-    .swiper-button-prev {
-      @apply hidden lg:block;
-      @apply absolute top-10 right-14 left-auto #{!important};
-    }
+
+    .swiper-button-prev,
     .swiper-button-next {
-      @apply hidden lg:block absolute top-10 right-4;
+      @apply hidden lg:block w-10 h-10 border;
+      @apply bg-center bg-no-repeat;
+
+      &::after {
+        content: unset;
+      }
     }
+
+    .swiper-button-prev {
+      @apply absolute top-10 right-16 left-auto #{!important};
+      background-image: url("../assets/icons/chevron_left_black_24dp.svg");
+    }
+
+    .swiper-button-next {
+      @apply absolute top-10 right-4;
+      background-image: url("../assets/icons/chevron_right_black_24dp.svg");
+    }
+
     .swiper-pagination {
       @apply -mb-2;
     }
