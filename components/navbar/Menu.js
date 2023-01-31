@@ -22,11 +22,18 @@ import {
 } from "@/redux/accountSlice";
 import {DOMAIN, getUserData} from "@/libs/api";
 import userIcon from "../../public/favicon/userIcon.png";
+import {useRouter} from "next/router";
 
 export default function MenuBar() {
   const dispatch = useDispatch();
   const [openNav, setOpenNav] = useState(false);
   const [avatar, setAvatar] = useState("");
+  const [buttonLogin, setButtonLogin] = useState();
+  console.log("buttonLogin :", buttonLogin);
+
+  const router = useRouter();
+  const pathname = router.pathname;
+  console.log("pathname :", pathname);
 
   const userLogged = useSelector(selectUserID);
   const userInfo = useSelector(selectUserData);
@@ -34,10 +41,14 @@ export default function MenuBar() {
   const userName = userInfo?.[0]?.attributes?.username;
 
   useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
-    );
+    if (pathname === "/account/login") {
+      setButtonLogin(false);
+    } else {
+      setButtonLogin(true);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const userData = async () => {
       const userData = await getUserData(userLogged);
       dispatch(setUserData(userData));
@@ -49,6 +60,13 @@ export default function MenuBar() {
     }
   }, [userLogged, dispatch, userAvatar]);
 
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false),
+    );
+  }, []);
+
   const logout = useCallback(() => {
     dispatch(setUserID(null));
     dispatch(setToken(null));
@@ -56,32 +74,17 @@ export default function MenuBar() {
 
   const navList = (
     <ul className="mb-2 mt-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
+      <Typography as="li" variant="small" className="p-1 font-normal">
         <a href="#" className="flex items-center">
           Store
         </a>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
+      <Typography as="li" variant="small" className="p-1 font-normal">
         <a href="#" className="flex items-center">
           Browse
         </a>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
+      <Typography as="li" variant="small" className="p-1 font-normal">
         <a href="#" className="flex items-center">
           News
         </a>
@@ -101,34 +104,28 @@ export default function MenuBar() {
               </MenuList>
             </Menu>
           </span>
-        ) : (
+        ) : buttonLogin ? (
           <Link href="/account/login">
             <Button variant="gradient" size="sm" className="">
               Sign in
             </Button>
           </Link>
-        )}
+        ) : null}
       </span>
     </ul>
   );
 
   return (
-    <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none text-blue-gray-900 fixed z-50">
+    <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none bg-gray border-none fixed z-50">
       <div className="container mx-auto flex items-center justify-between ">
-        <Typography
-          as="a"
-          href="#"
-          variant="small"
-          className="mr-4 cursor-pointer py-1.5 font-normal text-lg"
-        >
-          <span>Minah Game Store</span>
+        <Typography className="cursor-pointer py-1.5 font-normal text-lg ">
+          <Link href="/">Minah Game Store</Link>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        <div className="lg:space-x-4 flex items-center">
+        <div className="flex items-center">
           <IconButton
             variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
+            className="ml-auto h-6 w-6 lg:hidden"
             onClick={() => setOpenNav(!openNav)}
           >
             {openNav ? (
@@ -176,7 +173,7 @@ export default function MenuBar() {
                 </MenuList>
               </Menu>
             </span>
-          ) : (
+          ) : buttonLogin ? (
             <Link href="/account/login">
               <Button
                 variant="gradient"
@@ -186,7 +183,7 @@ export default function MenuBar() {
                 Sign in
               </Button>
             </Link>
-          )}
+          ) : null}
         </div>
       </div>
       <MobileNav open={openNav}>{navList}</MobileNav>

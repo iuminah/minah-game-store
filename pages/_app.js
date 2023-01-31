@@ -9,6 +9,7 @@ import Head from "next/head";
 import {persistor, store} from "../redux/store";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
+import Layout from "@/components/layout";
 
 export default function MyApp({Component, pageProps}) {
   return (
@@ -19,10 +20,12 @@ export default function MyApp({Component, pageProps}) {
             <title>Minah Game Store</title>
             <meta
               name="viewport"
-              content="width=device-width, initial-scale=1"
+              content="width=device-width, initial-scale=1.0"
             />
           </Head>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </ThemeProvider>
       </PersistGate>
     </Provider>

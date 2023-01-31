@@ -30,7 +30,7 @@ function LogIn() {
     if (res.status === 200) {
       dispatch(setUserID(res.data.user.id));
       dispatch(setToken(res.data.jwt));
-      router.back();
+      router.push();
     } else {
       setErrorMessage(res.response.data.error.message);
       setDisableBtn(false);
@@ -47,37 +47,57 @@ function LogIn() {
         Đăng nhập
       </Typography>
 
-      <form className="w-3/4 lg:w-1/5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-3/4 lg:w-1/5 form" onSubmit={handleSubmit(onSubmit)}>
         <Input
+          className="input-text"
           variant="outlined"
           label="Email"
           {...register("email", {required: true})}
         />
-        {errors.email ? (
-          <Typography className="form-error">Chưa nhập Email</Typography>
-        ) : (
-          <Typography className="form-error">&nbsp;</Typography>
-        )}
+        <div className="pl-3">
+          {errors.email ? (
+            <Typography className="form-error">Chưa nhập Email</Typography>
+          ) : (
+            <Typography className="form-error">&nbsp;</Typography>
+          )}
+        </div>
         <Input
+          className="input-text"
           variant="outlined"
           label="Password"
           type={showPassword ? "text" : "password"}
           {...register("password", {required: true})}
           icon={
             <div className="cursor-pointer" onClick={handleShowPassword}>
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+              {showPassword ? (
+                <VisibilityOff
+                  className="fill-white"
+                  oncopy="return false"
+                  onpaste="return false"
+                  oncut="return false"
+                />
+              ) : (
+                <Visibility
+                  className="fill-white"
+                  oncopy="return false"
+                  onpaste="return false"
+                  oncut="return false"
+                />
+              )}
             </div>
           }
         />
-        {errors.password ? (
-          <Typography className="form-error">Chưa nhập password</Typography>
-        ) : errorMessage ? (
-          <Typography className="form-error">
-            Email hoặc Password chưa đúng
-          </Typography>
-        ) : (
-          <Typography className="form-error">&nbsp;</Typography>
-        )}
+        <div className="pl-3">
+          {errors.password ? (
+            <Typography className="form-error">Chưa nhập password</Typography>
+          ) : errorMessage ? (
+            <Typography className="form-error">
+              Email hoặc Password chưa đúng
+            </Typography>
+          ) : (
+            <Typography className="form-error">&nbsp;</Typography>
+          )}
+        </div>
         <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
           <input
             type="submit"
@@ -87,7 +107,7 @@ function LogIn() {
         </Button>
 
         <Link href="/account/register">
-          <Typography className="text-left p-2 text-blue-500">
+          <Typography className="text-left p-2 mt-1 text-blue-500">
             Tạo tài khoản
           </Typography>
         </Link>

@@ -6,7 +6,12 @@ module.exports = withMT({
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "#121212",
+        gray: "#555555",
+      },
+    },
   },
   plugins: [require("@tailwindcss/line-clamp")],
 });

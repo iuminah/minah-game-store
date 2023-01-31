@@ -38,7 +38,7 @@ function FeatureSlide(props) {
                     blurDataURL={shimmerBlur()}
                   />
                 </div>
-                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray-500">
+                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray">
                   <h1 className="text-xl lg:text-3xl">
                     {item.attributes.name}
                   </h1>

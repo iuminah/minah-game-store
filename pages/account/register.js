@@ -93,7 +93,7 @@ function Register() {
         </Button>
 
         <Link href="/account/login">
-          <Typography className="text-left p-2 text-blue-500">
+          <Typography className="text-left p-2 mt-1 text-blue-500">
             Đăng nhập
           </Typography>
         </Link>

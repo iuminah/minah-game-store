@@ -7,8 +7,7 @@ export default function Home({featureSlides}) {
 
   return (
     <>
-      <Menu />
-      <div className="pt-[74px]">
+      <div>
         <FeatureSlide slide={slide} />
       </div>
     </>
