@@ -30,7 +30,7 @@ function LogIn() {
     if (res.status === 200) {
       dispatch(setUserID(res.data.user.id));
       dispatch(setToken(res.data.jwt));
-      router.push();
+      router.push("/");
     } else {
       setErrorMessage(res.response.data.error.message);
       setDisableBtn(false);
@@ -70,19 +70,9 @@ function LogIn() {
           icon={
             <div className="cursor-pointer" onClick={handleShowPassword}>
               {showPassword ? (
-                <VisibilityOff
-                  className="fill-white"
-                  oncopy="return false"
-                  onpaste="return false"
-                  oncut="return false"
-                />
+                <VisibilityOff className="fill-white" />
               ) : (
-                <Visibility
-                  className="fill-white"
-                  oncopy="return false"
-                  onpaste="return false"
-                  oncut="return false"
-                />
+                <Visibility className="fill-white" />
               )}
             </div>
           }

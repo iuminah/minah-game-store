@@ -22,18 +22,19 @@ import {
 } from "@/redux/accountSlice";
 import {DOMAIN, getUserData} from "@/libs/api";
 import userIcon from "../../public/favicon/userIcon.png";
+import MinahLogo from "../../assets/icons/MinahLogo.svg";
+import MinahLogoPNG from "../../assets/icons/MinahLogo.png";
 import {useRouter} from "next/router";
+import Image from "next/image";
 
 export default function MenuBar() {
   const dispatch = useDispatch();
   const [openNav, setOpenNav] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [buttonLogin, setButtonLogin] = useState();
-  console.log("buttonLogin :", buttonLogin);
 
   const router = useRouter();
   const pathname = router.pathname;
-  console.log("pathname :", pathname);
 
   const userLogged = useSelector(selectUserID);
   const userInfo = useSelector(selectUserData);
@@ -117,10 +118,22 @@ export default function MenuBar() {
 
   return (
     <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none bg-gray border-none fixed z-50">
-      <div className="container mx-auto flex items-center justify-between ">
-        <Typography className="cursor-pointer py-1.5 font-normal text-lg ">
-          <Link href="/">Minah Game Store</Link>
-        </Typography>
+      <div className="container mx-auto flex items-center justify-between relative">
+        {/* <div className="relative w-[32px] h-[32px]"> */}
+        <div>
+          <div className="absolute -top-1.5 lg:-top-1.5 w-[35px] h-[35px] lg:w-[45px] lg:h-[45px]">
+            <Link href="/">
+              <Image
+                alt="logo"
+                src={MinahLogoPNG}
+                fill
+                className="object-cover"
+                draggable="false"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              />
+            </Link>
+          </div>
+        </div>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center">
           <IconButton

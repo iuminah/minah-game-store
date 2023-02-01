@@ -25,6 +25,10 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #fff !important;
 }
 
+li {
+  color: #121212;
+}
+
 .feature-slide {
   @apply h-[550px];
   @apply flex justify-center;

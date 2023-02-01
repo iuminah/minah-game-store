@@ -32,4 +32,4 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 export const shimmerBlur = () =>
-  `data:image/svg+xml;base64,${toBase64(shimmer(100, 80))}`;
+  `data:image/svg+xml;base64,${toBase64(shimmer(1200, 1200))}`;
