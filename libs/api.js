@@ -71,6 +71,40 @@ export const logIn = async (email, password) => {
   return data;
 };
 
+export const forgotPassword = async (email) => {
+  const data = axios
+    .post(`${DOMAIN}/api/auth/forgot-password`, {
+      email: email, // user's email
+    })
+    .then((res) => {
+      console.log("Your user received an email");
+      return res;
+    })
+    .catch((err) => {
+      console.log("An error occurred:", err.response);
+      return err;
+    });
+  return data;
+};
+
+export const resetPassword = async (privateCode, password) => {
+  const data = axios
+    .post(`${DOMAIN}/api/auth/reset-password`, {
+      code: privateCode, // code contained in the reset link of step 3.
+      password: password,
+      passwordConfirmation: password,
+    })
+    .then((res) => {
+      console.log("Your user's password has been reset.");
+      return res;
+    })
+    .catch((err) => {
+      console.log("An error occurred:", err.response);
+      return err;
+    });
+  return data;
+};
+
 export const getUserData = async (userID) => {
   const data = await fetchAPI(
     `

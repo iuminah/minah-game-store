@@ -10,7 +10,7 @@ import VisibilityOff from "../../assets/icons/visibility_off_black_18dp.svg";
 import {useDispatch} from "react-redux";
 import {setToken, setUserID} from "@/redux/accountSlice";
 
-function LogIn() {
+function LogInPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,20 +47,18 @@ function LogIn() {
         Đăng nhập
       </Typography>
 
-      <form className="w-3/4 lg:w-1/5 form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-3/4 lg:w-1/4 form" onSubmit={handleSubmit(onSubmit)}>
         <Input
           className="input-text"
           variant="outlined"
           label="Email"
           {...register("email", {required: true})}
         />
-        <div className="pl-3">
-          {errors.email ? (
-            <Typography className="form-error">Chưa nhập Email</Typography>
-          ) : (
-            <Typography className="form-error">&nbsp;</Typography>
-          )}
-        </div>
+        {errors.email ? (
+          <Typography className="form-error">Chưa nhập Email</Typography>
+        ) : (
+          <Typography className="form-error">&nbsp;</Typography>
+        )}
         <Input
           className="input-text"
           variant="outlined"
@@ -77,17 +75,15 @@ function LogIn() {
             </div>
           }
         />
-        <div className="pl-3">
-          {errors.password ? (
-            <Typography className="form-error">Chưa nhập password</Typography>
-          ) : errorMessage ? (
-            <Typography className="form-error">
-              Email hoặc Password chưa đúng
-            </Typography>
-          ) : (
-            <Typography className="form-error">&nbsp;</Typography>
-          )}
-        </div>
+        {errors.password ? (
+          <Typography className="form-error">Chưa nhập password</Typography>
+        ) : errorMessage ? (
+          <Typography className="form-error">
+            Email hoặc Password chưa đúng
+          </Typography>
+        ) : (
+          <Typography className="form-error">&nbsp;</Typography>
+        )}
         <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
           <input
             type="submit"
@@ -96,16 +92,19 @@ function LogIn() {
           />
         </Button>
 
-        <Link href="/account/register">
-          <Typography className="text-left p-2 mt-1 text-blue-500">
-            Tạo tài khoản
-          </Typography>
-        </Link>
+        <div className="flex items-center justify-between p-2 mt-1">
+          <Link href="/account/register">
+            <Typography className=" text-blue-500">Tạo tài khoản</Typography>
+          </Link>
+          <Link href="/account/forgot-password">
+            <Typography className="text-blue-500">Quên mật khẩu</Typography>
+          </Link>
+        </div>
       </form>
     </div>
   );
 }
 
-LogIn.propTypes = {};
+LogInPage.propTypes = {};
 
-export default LogIn;
+export default LogInPage;

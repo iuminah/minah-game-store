@@ -8,7 +8,7 @@ import VisibilityOff from "../../assets/icons/visibility_off_black_18dp.svg";
 import Link from "next/link";
 import {registerAccount} from "@/libs/api";
 
-function Register() {
+function RegisterPage() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
@@ -43,8 +43,9 @@ function Register() {
         Tạo tài khoản
       </Typography>
 
-      <form className="w-3/4 lg:w-1/5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-3/4 lg:w-1/4 form" onSubmit={handleSubmit(onSubmit)}>
         <Input
+          className="input-text"
           variant="outlined"
           label="Username"
           {...register("username", {required: true})}
@@ -55,6 +56,7 @@ function Register() {
           <Typography className="form-error">&nbsp;</Typography>
         )}
         <Input
+          className="input-text"
           variant="outlined"
           label="Email"
           {...register("email", {required: true})}
@@ -65,13 +67,18 @@ function Register() {
           <Typography className="form-error">&nbsp;</Typography>
         )}
         <Input
+          className="input-text"
           variant="outlined"
           label="Password"
           type={showPassword ? "text" : "password"}
           {...register("password", {required: true})}
           icon={
             <div className="cursor-pointer" onClick={handleShowPassword}>
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+              {showPassword ? (
+                <VisibilityOff className="fill-white" />
+              ) : (
+                <Visibility className="fill-white" />
+              )}
             </div>
           }
         />
@@ -102,6 +109,6 @@ function Register() {
   );
 }
 
-Register.propTypes = {};
+RegisterPage.propTypes = {};
 
-export default Register;
+export default RegisterPage;

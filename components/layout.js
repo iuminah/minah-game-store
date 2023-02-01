@@ -4,7 +4,7 @@ export default function Layout({children}) {
   return (
     <>
       <MenuBar />
-      <main className="pt-[100px]">{children}</main>
+      <main className="pt-[100px] container mx-auto">{children}</main>
     </>
   );
 }
