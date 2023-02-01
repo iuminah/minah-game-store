@@ -118,11 +118,10 @@ export default function MenuBar() {
 
   return (
     <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none bg-gray border-none fixed z-50">
-      <div className="container mx-auto flex items-center justify-between relative">
-        {/* <div className="relative w-[32px] h-[32px]"> */}
-        <div>
-          <div className="absolute -top-1.5 lg:-top-1.5 w-[35px] h-[35px] lg:w-[45px] lg:h-[45px]">
-            <Link href="/">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="relative">
+          <Link href="/">
+            <div className="absolute -top-[18px] lg:-top-[22px] w-[35px] h-[35px] lg:w-[45px] lg:h-[45px]">
               <Image
                 alt="logo"
                 src={MinahLogoPNG}
@@ -131,8 +130,8 @@ export default function MenuBar() {
                 draggable="false"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
               />
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center">
