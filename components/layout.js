@@ -1,3 +1,4 @@
+import Footer from "./footer/footer";
 import MenuBar from "./navbar/Menu";
 
 export default function Layout({children}) {
@@ -5,6 +6,7 @@ export default function Layout({children}) {
     <>
       <MenuBar />
       <main className="pt-[100px] container mx-auto">{children}</main>
+      <Footer />
     </>
   );
 }

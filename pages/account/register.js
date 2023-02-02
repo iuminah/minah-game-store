@@ -75,9 +75,9 @@ function RegisterPage() {
           icon={
             <div className="cursor-pointer" onClick={handleShowPassword}>
               {showPassword ? (
-                <VisibilityOff className="fill-white" />
+                <VisibilityOff className="fill-text-primary" />
               ) : (
-                <Visibility className="fill-white" />
+                <Visibility className="fill-text-primary" />
               )}
             </div>
           }

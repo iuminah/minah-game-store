@@ -22,7 +22,6 @@ import {
 } from "@/redux/accountSlice";
 import {DOMAIN, getUserData} from "@/libs/api";
 import userIcon from "../../public/favicon/userIcon.png";
-import MinahLogo from "../../assets/icons/MinahLogo.svg";
 import MinahLogoPNG from "../../assets/icons/MinahLogo.png";
 import {useRouter} from "next/router";
 import Image from "next/image";
@@ -40,6 +39,10 @@ export default function MenuBar() {
   const userInfo = useSelector(selectUserData);
   const userAvatar = userInfo?.[0]?.attributes?.avatar?.data?.attributes?.url;
   const userName = userInfo?.[0]?.attributes?.username;
+
+  const handleCloseMenu = useCallback(() => {
+    setOpenNav(false);
+  }, [setOpenNav]);
 
   useEffect(() => {
     if (pathname === "/account/login") {
@@ -75,21 +78,18 @@ export default function MenuBar() {
 
   const navList = (
     <ul className="mb-2 mt-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
+      <div className="lg:flex my-4 lg:my-0 space-y-4 lg:space-y-0 lg:space-x-6">
+        <Link href="#" className="flex items-center hover-effect">
           Store
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
+        </Link>
+        <Link href="#" className="flex items-center hover-effect">
           Browse
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
+        </Link>
+        <Link href="#" className="flex items-center hover-effect">
           News
-        </a>
-      </Typography>
+        </Link>
+      </div>
+
       <span className="lg:hidden">
         {userLogged ? (
           <span className="">
@@ -107,7 +107,12 @@ export default function MenuBar() {
           </span>
         ) : buttonLogin ? (
           <Link href="/account/login">
-            <Button variant="gradient" size="sm" className="">
+            <Button
+              variant="gradient"
+              size="sm"
+              className="w-full lg:w-auto"
+              onClick={handleCloseMenu}
+            >
               Sign in
             </Button>
           </Link>

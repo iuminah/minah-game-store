@@ -43,11 +43,7 @@ function FeatureSlide(props) {
                   {item.attributes.brief}
                 </Typography>
                 <div className="flex items-center justify-between space-x-4">
-                  <Chip
-                    color="green"
-                    value={`- ${item.attributes.productPrice.discount}%`}
-                    className="px-2 text-sx "
-                  />
+                  <div className="text-white px-2 py-1.5 text-sm bg-green-500 rounded-md">{`- ${item.attributes.productPrice.discount}%`}</div>
                   <div className="text-right">
                     <Typography className="text-md line-through text-gray-300">
                       {item.attributes.productPrice.price.toLocaleString()}₫
