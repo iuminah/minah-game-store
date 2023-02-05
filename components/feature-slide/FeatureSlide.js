@@ -7,6 +7,7 @@ import Image from "next/image";
 import {getImageUrl, shimmerBlur} from "@/libs/ultis";
 import ChevronRight from "../../assets/icons/chevron_right_black.svg";
 import ChevronLeft from "../../assets/icons/chevron_left_black.svg";
+import Link from "next/link";
 
 function FeatureSlide(props) {
   const {slide} = props;
@@ -74,7 +75,9 @@ function FeatureSlide(props) {
                     <p className="italic">Free to play</p>
                   )}
                 </div>
-                <Button>{item.attributes.button}</Button>
+                <Link href={item.attributes.slug}>
+                  <Button className="w-full">{item.attributes.button}</Button>
+                </Link>
               </div>
             </div>
           </SwiperSlide>
