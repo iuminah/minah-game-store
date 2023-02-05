@@ -33,7 +33,7 @@ function FeatureSlide(props) {
         {slide?.map((item, key) => (
           <SwiperSlide key={key} className="py-3.5 -my-3.5">
             <div className="h-full grid grid-cols-1 lg:grid-cols-11">
-              <div className="relative lg:col-span-8 py-20 lg:py-0">
+              <div className="relative lg:col-span-8 py-20 lg:py-0 rounded-t-xl lg:rounded-none overflow-hidden">
                 <Image
                   src={getImageUrl(item)}
                   alt={item.attributes.name}

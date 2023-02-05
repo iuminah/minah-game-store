@@ -17,11 +17,11 @@ export default function MyApp({Component, pageProps}) {
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
           <Head>
-            <title>Minah Game Store</title>
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1.0"
             />
+            <title>Minah Game Store</title>
           </Head>
           <Layout>
             <Component {...pageProps} />

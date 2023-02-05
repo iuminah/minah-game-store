@@ -126,7 +126,7 @@ export default function MenuBar() {
       <div className="container mx-auto flex items-center justify-between">
         <div className="relative">
           <Link href="/">
-            <div className="absolute -top-[18px] lg:-top-[22px] w-[35px] h-[35px] lg:w-[45px] lg:h-[45px]">
+            <div className="absolute -top-[18px] lg:-top-[18px] w-[35px] h-[35px] ">
               <Image
                 alt="logo"
                 src={MinahLogoPNG}
