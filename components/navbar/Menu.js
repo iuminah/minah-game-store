@@ -80,13 +80,13 @@ export default function MenuBar() {
     <ul className="mb-2 mt-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <div className="lg:flex my-4 lg:my-0 space-y-4 lg:space-y-0 lg:space-x-6">
         <Link href="#" className="flex items-center hover-effect">
-          Store
+          Cửa hàng
         </Link>
         <Link href="#" className="flex items-center hover-effect">
-          Browse
+          Khám phá
         </Link>
         <Link href="#" className="flex items-center hover-effect">
-          News
+          Tin tức
         </Link>
       </div>
 

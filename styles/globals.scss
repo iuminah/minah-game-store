@@ -30,31 +30,12 @@ li {
 }
 
 .feature-slide {
-  @apply h-[550px];
+  @apply h-[550px] w-[90vw] lg:w-auto mx-auto;
   @apply flex justify-center;
+  @apply rounded-xl lg:rounded-none overflow-hidden;
 
   .swiper {
     @apply relative;
-
-    .swiper-button-prev,
-    .swiper-button-next {
-      @apply hidden lg:block w-10 h-10 border border-text-primary;
-      @apply bg-center bg-no-repeat;
-
-      &::after {
-        content: unset;
-      }
-    }
-
-    .swiper-button-prev {
-      @apply absolute top-10 right-16 left-auto #{!important};
-      background-image: url("../assets/icons/chevron_left_black_24dp.svg");
-    }
-
-    .swiper-button-next {
-      @apply absolute top-10 right-4;
-      background-image: url("../assets/icons/chevron_right_black_24dp.svg");
-    }
 
     .swiper-pagination {
       @apply -mb-2;

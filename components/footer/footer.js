@@ -13,30 +13,35 @@ function Footer(props) {
   return (
     <div className="bg-gray">
       <div className=" py-10">
-        <div className="container mx-auto space-y-6 lg:space-y-0 flex flex-col justify-center items-center lg:flex-row lg:justify-between">
-          <div className="flex flex-col items-center lg:items-start space-y-6 lg:space-y-0">
+        {/* <div className="container mx-auto space-y-6 lg:space-y-0 flex flex-col justify-center items-center lg:flex-row lg:justify-between"> */}
+        <div className="container mx-auto grid grid-col-1 lg:grid-cols-3 space-y-10 lg:space-y-0">
+          <div className="flex flex-col col-span-1 items-center lg:items-start space-y-6 lg:space-y-0">
             <Link href="" className="hover-effect">
-              Về chúng tôi
+              Điều khoản và dịch vụ
             </Link>
             <Link href="" className="hover-effect">
-              Điều khoản
+              Chính sách bảo mật
             </Link>
             <Link href="" className="hover-effect">
-              Liên hệ
-            </Link>
-          </div>
-          <div className="space-x-10">
-            <Link href="" className="hover-effect">
-              Store
+              Vấn đề thường gặp
             </Link>
             <Link href="" className="hover-effect">
-              Browse
-            </Link>
-            <Link href="" className="hover-effect">
-              News
+              Liên hệ chăm sóc khách hàng
             </Link>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-10 col-span-1 justify-center items-center ">
+            <Link href="" className="hover-effect">
+              Cửa hàng
+            </Link>
+            <Link href="" className="hover-effect">
+              Khám phá
+            </Link>
+            <Link href="" className="hover-effect">
+              Tin tức
+            </Link>
+          </div>
+
+          <div className="flex space-x-2 col-span-1 justify-center lg:justify-end items-center ">
             <div className="social-icon">
               <FaceBookIcon className="fill-text-primary w-2.5" />
             </div>
@@ -52,12 +57,9 @@ function Footer(props) {
           </div>
         </div>
       </div>
-      <div
-        className="container mx-auto flex flex-col
-       justify-between items-center py-5 space-y-5"
-      >
-        <div className="relative w-[45px] h-[45px]">
-          <Link href="/">
+      <div className="container mx-auto flex flex-col justify-between items-center pb-5 space-y-5">
+        <Link href="/">
+          <div className="relative w-[45px] h-[45px]">
             <Image
               src={MinahLogo}
               alt="MinahLogo"
@@ -66,8 +68,8 @@ function Footer(props) {
               draggable="false"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             />
-          </Link>
-        </div>
+          </div>
+        </Link>
         <div className="flex items-center italic text-sm">
           Made with
           <Heart className="fill-[#FF597B] ml-1" />
