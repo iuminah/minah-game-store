@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   color: #b9b9b9;
+  font-family: "Nunito", sans-serif !important;
 }
 
 body {
@@ -27,6 +28,53 @@ input:-webkit-autofill {
 
 li {
   color: #121212;
+}
+
+.post-content {
+  @apply text-lg leading-relaxed;
+
+  p,
+  span {
+    @apply text-text-primary #{!important};
+  }
+
+  & > * {
+    @apply mb-4;
+  }
+
+  img {
+    @apply w-full mx-auto;
+  }
+
+  blockquote {
+    @apply border-l-2 px-4 italic;
+  }
+
+  pre {
+    @apply p-4 text-sm;
+  }
+
+  ul {
+    @apply list-disc ml-8 space-y-2;
+  }
+
+  .table {
+    @apply w-full #{!important};
+  }
+  table {
+    @apply w-full;
+  }
+
+  table,
+  th,
+  td {
+    @apply border border-collapse;
+  }
+
+  th,
+  td {
+    @apply px-2;
+  }
 }
 
 .feature-slide {

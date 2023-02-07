@@ -173,39 +173,6 @@ export const getNewGameSlide = async () => {
   return data?.newGame?.data?.attributes.products?.data;
 };
 
-export const getFeatureSlides = async () => {
-  const data = await fetchAPI(
-    `
-    query {
-      featureSlides {
-        data {
-          attributes {
-            name
-            brief
-            slug
-            cover {
-              data {
-                attributes {
-                  url
-                  formats
-                }
-              }
-            }
-            button
-            productPrice {
-              price 
-              discount
-            }
-          }
-        }
-      }
-    }
-    `,
-    {},
-  );
-  return data?.featureSlides?.data;
-};
-
 export const getProducts = async () => {
   const data = await fetchAPI(
     `

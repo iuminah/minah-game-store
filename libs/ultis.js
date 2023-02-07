@@ -12,9 +12,9 @@ const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <linearGradient id="g">
-      <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="70%" />
+      <stop stop-color="#dfdfdf" offset="20%" />
+      <stop stop-color="#c5c5c5" offset="50%" />
+      <stop stop-color="#dfdfdf" offset="70%" />
     </linearGradient>
   </defs>
   <rect width="${w}" height="${h}" fill="none" />
@@ -28,7 +28,7 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 export const shimmerBlur = () =>
-  `data:image/svg+xml;base64,${toBase64(shimmer(1200, 1200))}`;
+  `data:image/svg+xml;base64,${toBase64(shimmer(80, 80))}`;
 
 export const fixContent = (content) => {
   return content.replaceAll("/uploads/", `${DOMAIN}/uploads/`);

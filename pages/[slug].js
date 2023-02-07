@@ -8,8 +8,13 @@ function Page({product}) {
 
   const fixedContent = fixContent(description);
   return (
-    <div className="container mx-auto px-8">
-      <div dangerouslySetInnerHTML={{__html: fixedContent}} />
+    <div className="">
+      <div className="grid grid-cols-1 lg:grid-cols-5">
+        <div
+          className="col-span-1 lg:col-span-3 post-content"
+          dangerouslySetInnerHTML={{__html: fixedContent}}
+        />
+      </div>
     </div>
   );
 }
