@@ -9,9 +9,11 @@ import ChevronRight from "../../assets/icons/chevron_right_black.svg";
 import ChevronLeft from "../../assets/icons/chevron_left_black.svg";
 import Link from "next/link";
 
-function FeatureSlide(props) {
-  const {slide} = props;
-
+function NewGameSlide({newGameSlides}) {
+  const lastPrice = (price, discount) => {
+    const result = price - price * (discount / 100);
+    return `${result.toLocaleString()}₫`;
+  };
   return (
     <div className="feature-slide">
       <Swiper
@@ -31,12 +33,12 @@ function FeatureSlide(props) {
         }}
         modules={[Autoplay, Pagination, Navigation]}
       >
-        {slide?.map((item, key) => (
+        {newGameSlides?.map((item, key) => (
           <SwiperSlide key={key} className="py-3.5 -my-3.5">
-            <div className="h-full grid grid-cols-1 lg:grid-cols-11">
-              <div className="relative lg:col-span-8 py-20 lg:py-0 rounded-t-xl lg:rounded-none overflow-hidden">
+            <div className="h-full grid grid-cols-1 lg:grid-cols-11 rounded-xl lg:rounded-none overflow-hidden">
+              <div className="relative lg:col-span-8 py-20 lg:py-0">
                 <Image
-                  src={getImageUrl(item)}
+                  src={getImageUrl(item.attributes.cover)}
                   alt={item.attributes.name}
                   fill
                   className="object-cover"
@@ -46,29 +48,29 @@ function FeatureSlide(props) {
                   blurDataURL={shimmerBlur()}
                 />
               </div>
-              <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray rounded-b-xl lg:rounded-b-none ">
+              <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray">
                 <h1 className="text-xl lg:text-3xl">{item.attributes.name}</h1>
                 <p className="line-clamp-3 lg:line-clamp-5">
                   {item.attributes.brief}
                 </p>
                 <div className="flex items-center justify-between space-x-4">
-                  {item.attributes.productPrice.discount ? (
-                    <div className="text-white px-2 py-1.5 text-sm bg-green-500 rounded-md">{`- ${item.attributes.productPrice.discount}%`}</div>
+                  {item.attributes.discount ? (
+                    <div className="text-white px-2 py-1.5 text-sm bg-green-500 rounded-md">{`- ${item.attributes.discount}%`}</div>
                   ) : (
                     <p></p>
                   )}
-                  {item.attributes.productPrice.price ? (
+                  {item.attributes.prices ? (
                     <div className="text-right">
-                      <Typography className="text-md line-through text-gray-300 italic font-thin">
-                        {item.attributes.productPrice.price.toLocaleString()}₫
-                      </Typography>
+                      {item.attributes.discount ? (
+                        <Typography className="text-md line-through text-gray-300 italic font-thin">
+                          {item.attributes.prices.toLocaleString()}₫
+                        </Typography>
+                      ) : null}
                       <p className="text-lg">
-                        {(
-                          item.attributes.productPrice.price -
-                          item.attributes.productPrice.price *
-                            (item.attributes.productPrice.discount / 100)
-                        ).toLocaleString()}
-                        ₫
+                        {lastPrice(
+                          item.attributes.prices,
+                          item.attributes.discount,
+                        )}
                       </p>
                     </div>
                   ) : (
@@ -95,4 +97,4 @@ function FeatureSlide(props) {
   );
 }
 
-export default FeatureSlide;
+export default NewGameSlide;

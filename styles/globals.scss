@@ -32,7 +32,7 @@ li {
 .feature-slide {
   @apply h-[550px] w-[90vw] lg:w-auto mx-auto;
   @apply flex justify-center;
-  @apply rounded-xl lg:rounded-none overflow-hidden;
+  // @apply rounded-xl lg:rounded-none overflow-hidden;
 
   .swiper {
     @apply relative;

@@ -79,14 +79,14 @@ export default function MenuBar() {
   const navList = (
     <ul className="mb-2 mt-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <div className="lg:flex my-4 lg:my-0 space-y-4 lg:space-y-0 lg:space-x-6">
-        <Link href="#" className="flex items-center hover-effect">
-          Cửa hàng
+        <Link href="/" className="flex items-center hover-effect">
+          Store
         </Link>
-        <Link href="#" className="flex items-center hover-effect">
-          Khám phá
+        <Link href="/discover" className="flex items-center hover-effect">
+          Discover
         </Link>
-        <Link href="#" className="flex items-center hover-effect">
-          Tin tức
+        <Link href="/news" className="flex items-center hover-effect">
+          News
         </Link>
       </div>
 

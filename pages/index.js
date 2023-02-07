@@ -1,25 +1,22 @@
-import FeatureSlide from "@/components/feature-slide/FeatureSlide";
-import Menu from "@/components/navbar/Menu";
-import {getFeatureSlides} from "@/libs/api";
+import NewGameSlide from "@/components/feature-slide/NewGameSlide";
+import {getNewGameSlide} from "@/libs/api";
 
-export default function Home({featureSlides}) {
-  const slide = featureSlides;
-
+export default function Home({newGameSlides}) {
   return (
     <>
       <div>
-        <FeatureSlide slide={slide} />
+        <NewGameSlide newGameSlides={newGameSlides} />
       </div>
     </>
   );
 }
 
 export const getStaticProps = async () => {
-  const featureSlides = (await getFeatureSlides()) || {};
+  const newGameSlides = (await getNewGameSlide()) || {};
 
   return {
     props: {
-      featureSlides,
+      newGameSlides,
     },
     revalidate: true,
   };

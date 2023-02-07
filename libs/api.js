@@ -136,6 +136,43 @@ export const getUserData = async (userID) => {
   return data?.usersPermissionsUsers?.data;
 };
 
+export const getNewGameSlide = async () => {
+  const data = await fetchAPI(
+    `
+    query {
+      newGame {
+        data {
+          attributes {
+            products {
+              data {
+                attributes {
+                  name
+                  slug
+                  brief
+                  button
+                  prices
+                  discount
+                  cover {
+                    data {
+                      attributes {
+                        url
+                        formats
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+    {},
+  );
+  return data?.newGame?.data?.attributes.products?.data;
+};
+
 export const getFeatureSlides = async () => {
   const data = await fetchAPI(
     `
@@ -169,15 +206,34 @@ export const getFeatureSlides = async () => {
   return data?.featureSlides?.data;
 };
 
-export const getproductBySlug = async (slug) => {
+export const getProducts = async () => {
   const data = await fetchAPI(
     `
-    query getProductBySlug ($slug: String) {
-      featureSlides(filters: {slug: { eq: $slug}}) {
+    query {
+      products {
         data {
           attributes {
             name
-            brief
+            slug
+          }
+        }
+      }
+    }
+    `,
+    {},
+  );
+  return data?.products?.data;
+};
+
+export const getProductBySlug = async (slug) => {
+  const data = await fetchAPI(
+    `
+    query getGameBySlug($slug: String) {
+      products(filters: {slug: {eq: $slug}}) {
+        data {
+          attributes {
+            name
+            description
           }
         }
       }
@@ -189,5 +245,5 @@ export const getproductBySlug = async (slug) => {
       },
     },
   );
-  return data?.featureSlides?.data?.[0];
+  return data?.products?.data?.[0].attributes;
 };

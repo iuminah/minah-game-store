@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getFeatureSlides, getproductBySlug} from "@/libs/api";
+import {getProductBySlug, getProducts} from "@/libs/api";
+import {fixContent} from "@/libs/ultis";
 
 function Page({product}) {
-  const {brief, name} = product.attributes;
+  const {name, description} = product;
+
+  const fixedContent = fixContent(description);
   return (
-    <div>
-      <h1>{name}</h1>
-      <p>{brief}</p>
+    <div className="container mx-auto px-8">
+      <div dangerouslySetInnerHTML={{__html: fixedContent}} />
     </div>
   );
 }
@@ -15,9 +17,7 @@ function Page({product}) {
 Page.propTypes = {};
 
 export async function getStaticProps({params}) {
-  console.log("params :", params);
-  const product = await getproductBySlug(params.slug);
-  console.log("product :", product);
+  const product = await getProductBySlug(params.slug);
   return {
     props: {
       product,
@@ -26,7 +26,7 @@ export async function getStaticProps({params}) {
 }
 
 export async function getStaticPaths() {
-  const productSlug = await getFeatureSlides();
+  const productSlug = await getProducts();
 
   return {
     paths: productSlug.map((product) => `/${product.attributes.slug}`),

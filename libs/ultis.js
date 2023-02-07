@@ -1,10 +1,6 @@
 import {DOMAIN} from "./api";
 
-export const getImageUrl = (item) => {
-  const image = DOMAIN + item.attributes.cover.data.attributes.url;
-
-  return image;
-};
+export const getImageUrl = (obj) => DOMAIN + obj.data.attributes.url;
 
 export const getImageThumbnail = (item) => {
   const thumbnail =
@@ -33,3 +29,7 @@ const toBase64 = (str) =>
 
 export const shimmerBlur = () =>
   `data:image/svg+xml;base64,${toBase64(shimmer(1200, 1200))}`;
+
+export const fixContent = (content) => {
+  return content.replaceAll("/uploads/", `${DOMAIN}/uploads/`);
+};
