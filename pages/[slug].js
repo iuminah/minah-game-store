@@ -9,6 +9,7 @@ function Page({product}) {
   const fixedContent = fixContent(description);
   return (
     <div className="">
+      <h1 className="text-2xl pb-4">{name}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-5">
         <div
           className="col-span-1 lg:col-span-3 post-content"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 import {Pagination, Navigation, Autoplay, EffectCards} from "swiper";
@@ -14,6 +14,8 @@ function NewGameSlide({newGameSlides}) {
     const result = price - price * (discount / 100);
     return `${result.toLocaleString()}₫`;
   };
+
+  const handleShowDetailProduct = useCallback(() => {}, []);
   return (
     <div className="feature-slide">
       <Swiper
