@@ -33,3 +33,8 @@ export const shimmerBlur = () =>
 export const fixContent = (content) => {
   return content.replaceAll("/uploads/", `${DOMAIN}/uploads/`);
 };
+
+export const lastPrice = (price, discount) => {
+  const result = price - price * (discount / 100);
+  return `${result.toLocaleString()}₫`;
+};

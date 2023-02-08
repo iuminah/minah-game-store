@@ -30,20 +30,20 @@ li {
   color: #121212;
 }
 
+h1 {
+  @apply text-2xl #{!important};
+}
+
+h2 {
+  @apply text-xl #{!important};
+}
+
+h3 {
+  @apply text-lg #{!important};
+}
+
 .post-content {
   @apply text-base leading-relaxed;
-
-  h1 {
-    @apply text-2xl #{!important};
-  }
-
-  h2 {
-    @apply text-xl #{!important};
-  }
-
-  h3 {
-    @apply text-lg #{!important};
-  }
 
   p,
   span {
@@ -90,7 +90,7 @@ li {
 }
 
 .feature-slide {
-  @apply h-[550px] w-[90vw] lg:w-auto mx-auto;
+  @apply h-[550px]  lg:w-auto mx-auto;
   @apply flex justify-center;
   // @apply rounded-xl lg:rounded-none overflow-hidden;
 

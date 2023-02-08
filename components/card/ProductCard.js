@@ -1,41 +1,50 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  p,
-} from "@material-tailwind/react";
+import Image from "next/image";
+import {getImageUrl, lastPrice, shimmerBlur} from "@/libs/ultis";
+import Link from "next/link";
 
-function ProductCard(props) {
+function ProductCard({cover, name, prices, discount, slug}) {
   return (
-    <Card className="w-80">
-      <CardHeader color="blue" className="relative h-36">
-        <img
-          src="/img/blog.jpg"
-          alt="img-blur-shadow"
-          className="h-full w-full"
-        />
-      </CardHeader>
-      <CardBody className="text-center">
-        <p variant="h5" className="mb-2">
-          Cozy 5 Stars Apartment
-        </p>
-        <p>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to "Naviglio" where you can enjoy the main night life in
-          Barcelona.
-        </p>
-      </CardBody>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <p variant="small">$899/night</p>
-        <p variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Barcelona, Spain
-        </p>
-      </CardFooter>
-    </Card>
+    <div className="bg-gray rounded-xl overflow-hidden cursor-pointer">
+      <Link href={slug}>
+        <div className="relative w-full h-[160px]">
+          <Image
+            src={getImageUrl(cover)}
+            alt={name}
+            fill
+            className="object-cover hover:opacity-70"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+            draggable="false"
+            placeholder="blur"
+            blurDataURL={shimmerBlur()}
+          />
+        </div>
+        <div className="px-3.5 py-2 space-y-2">
+          <p>{name}</p>
+          <div className="flex items-center justify-between space-x-4">
+            {discount ? (
+              <div className="text-white px-1.5 py-0.5 text-sm bg-green-500 rounded-md">{`- ${discount}%`}</div>
+            ) : (
+              <p></p>
+            )}
+
+            {prices ? (
+              <div className="text-right flex items-center space-x-2">
+                {discount ? (
+                  <p className="text-md line-through text-gray-300 italic font-thin">
+                    {prices.toLocaleString()}₫
+                  </p>
+                ) : null}
+                <p className="text-lg">{lastPrice(prices, discount)}</p>
+              </div>
+            ) : (
+              <p className="italic">Free to play</p>
+            )}
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
 
