@@ -62,7 +62,7 @@ function NewReleases({NewReleases}) {
           {NewReleases?.map((item) => {
             const {cover, name, prices, discount, slug} = item.attributes;
             return (
-              <SwiperSlide>
+              <SwiperSlide key={item.key}>
                 <ProductCard
                   cover={cover}
                   name={name}
