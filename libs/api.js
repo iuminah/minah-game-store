@@ -105,6 +105,21 @@ export const resetPassword = async (privateCode, password) => {
   return data;
 };
 
+export const resendEmail = async (email) => {
+  const data = axios
+    .post(`${DOMAIN}/api/auth/send-email-confirmation`, {
+      email: email, // user's email
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      // console.error("An error occurred:", error.response);
+      return err;
+    });
+
+  return data;
+};
 export const getUserData = async (userID) => {
   const data = await fetchAPI(
     `

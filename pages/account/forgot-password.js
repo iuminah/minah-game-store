@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {useForm} from "react-hook-form";
-import {Button, Input, Typography} from "@material-tailwind/react";
+import {Button, Input, p} from "@material-tailwind/react";
 import {forgotPassword} from "@/libs/api";
 
 function ForgotPasswordPage() {
@@ -26,32 +26,31 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <div className="py-4">
-      <Typography className="text-center text-xl lg:text-2xl font-bold pb-8">
-        Quên Mật Khẩu
-      </Typography>
-      <form
-        className="w-3/4 lg:w-1/4 mx-auto form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Input
-          className="input-text"
-          label="Email"
-          {...register("email", {required: true})}
-        />
-        {errors.email ? (
-          <Typography className="form-error">Chưa nhập Email</Typography>
-        ) : (
-          <Typography className="form-error">&nbsp;</Typography>
-        )}
-        <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
-          <input
-            type="submit"
-            value="Gửi"
-            className="text-sm w-full h-full p-2"
+    <div className="flex flex-col justify-center items-center py-4 md:px-0">
+      <div className="form-layout">
+        <p className="text-center text-xl lg:text-2xl font-bold pb-8">
+          Quên Mật Khẩu
+        </p>
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            className="input-text"
+            label="Email"
+            {...register("email", {required: true})}
           />
-        </Button>
-      </form>
+          {errors.email ? (
+            <p className="form-error">Chưa nhập Email</p>
+          ) : (
+            <p className="form-error">&nbsp;</p>
+          )}
+          <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
+            <input
+              type="submit"
+              value="Gửi"
+              className="text-sm w-full h-full p-2"
+            />
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

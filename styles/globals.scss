@@ -122,6 +122,10 @@ h3 {
   }
 }
 
+.form-layout {
+  @apply w-full lg:w-2/5 px-8 lg:px-14 py-8 bg-gray;
+}
+
 .form {
   .input-text {
     @apply text-text-primary;
@@ -138,6 +142,12 @@ h3 {
 
 .h-5 {
   @apply h-auto #{!important};
+}
+
+.dialog {
+  @apply bg-gray text-text-primary;
+  @apply divide-y;
+  @apply min-w-[85%] md:min-w-[50%] lg:min-w-[20%] #{!important};
 }
 
 .hover-effect {

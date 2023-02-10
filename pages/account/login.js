@@ -43,10 +43,8 @@ function LogInPage() {
 
   return (
     <div className="flex flex-col justify-center items-center py-4 md:px-0">
-      <div className="w-full lg:w-2/5 px-8 lg:px-14 py-8 bg-gray">
-        <p className="text-center text-xl lg:text-2xl font-bold pb-8">
-          Đăng Nhập
-        </p>
+      <div className="form-layout">
+        <p className="text-center text-xl lg:text-2xl font-bold pb-8">Login</p>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -56,7 +54,7 @@ function LogInPage() {
             {...register("email", {required: true})}
           />
           {errors.email ? (
-            <p className="form-error">Chưa nhập Email</p>
+            <p className="form-error">Email is required</p>
           ) : (
             <p className="form-error">&nbsp;</p>
           )}
@@ -77,28 +75,28 @@ function LogInPage() {
             }
           />
           {errors.password ? (
-            <p className="form-error">Chưa nhập password</p>
+            <p className="form-error">Password is required</p>
           ) : errorMessage ? (
-            <p className="form-error">Email hoặc Password chưa đúng</p>
+            <p className="form-error">{errorMessage}</p>
           ) : (
             <p className="form-error">&nbsp;</p>
           )}
           <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
             <input
               type="submit"
-              value="Đăng nhập"
+              value="Login"
               className="text-sm w-full h-full p-2"
             />
           </Button>
           <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
             <Link href="/account/register">
-              <p className=" text-blue-500">Tạo tài khoản</p>
+              <p className=" text-blue-500">Create account</p>
             </Link>
             <Link href="/account/forgot-password">
-              <p className="text-blue-500">Quên mật khẩu</p>
+              <p className="text-blue-500">Forgot password</p>
             </Link>
-            <Link href="/account/forgot-password">
-              <p className="text-blue-500">Gửi lại email xác nhận</p>
+            <Link href="/account/resend-email">
+              <p className="text-blue-500">Resend the confirm email</p>
             </Link>
           </div>
         </form>
