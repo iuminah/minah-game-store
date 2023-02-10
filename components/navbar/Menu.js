@@ -77,7 +77,7 @@ export default function MenuBar() {
   }, [dispatch]);
 
   const navList = (
-    <ul className="mb-2 mt-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="navlist">
       <div className="lg:flex my-4 lg:my-0 space-y-4 lg:space-y-0 lg:space-x-6">
         <Link href="/" className="flex items-center hover-effect">
           Store
@@ -122,88 +122,94 @@ export default function MenuBar() {
   );
 
   return (
-    <Navbar className="max-w-[100%] lg:px-8 lg:py-4 rounded-none bg-gray border-none fixed z-50">
-      <div className="container mx-auto flex items-center justify-between">
-        <div className="relative">
-          <Link href="/">
-            <div className="absolute -top-[18px] lg:-top-[18px] w-[35px] h-[35px] ">
-              <Image
-                alt="logo"
-                src={MinahLogoPNG}
-                fill
-                className="object-cover"
-                draggable="false"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-              />
-            </div>
-          </Link>
-        </div>
-        <div className="hidden lg:block">{navList}</div>
-        <div className="flex items-center">
-          <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 lg:hidden"
-            onClick={() => setOpenNav(!openNav)}
-          >
-            {openNav ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                className="h-6 w-6"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
+    <div className="bg-gray w-full flex items-center justify-center fixed z-50">
+      <Navbar className="rounded-none bg-gray border-none navbar">
+        <div className="container mx-auto px-4 md:px-6 lg:px-0 flex items-center justify-between">
+          <div className="relative">
+            <Link href="/">
+              <div className="absolute -top-[18px] lg:-top-[18px] w-[35px] h-[35px] ">
+                <Image
+                  alt="logo"
+                  src={MinahLogoPNG}
+                  fill
+                  className="object-cover"
+                  draggable="false"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                 />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </IconButton>
-          {userLogged ? (
-            <span className="hidden lg:block">
-              <Menu placement="bottom-end">
-                <MenuHandler className="cursor-pointer">
-                  <Avatar src={avatar || userIcon.src} alt="avatar" size="sm" />
-                </MenuHandler>
-                <MenuList>
-                  {userName && <MenuItem>{userName}</MenuItem>}
-                  <MenuItem onClick={logout} className="cursor-pointer">
-                    Logout
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </span>
-          ) : buttonLogin ? (
-            <Link href="/account/login">
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-              >
-                Sign in
-              </Button>
+              </div>
             </Link>
-          ) : null}
+          </div>
+          <div className="hidden lg:block">{navList}</div>
+          <div className="flex items-center">
+            <IconButton
+              variant="text"
+              className="ml-auto h-6 w-6 lg:hidden"
+              onClick={() => setOpenNav(!openNav)}
+            >
+              {openNav ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  className="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
+            </IconButton>
+            {userLogged ? (
+              <span className="hidden lg:block">
+                <Menu placement="bottom-end">
+                  <MenuHandler className="cursor-pointer">
+                    <Avatar
+                      src={avatar || userIcon.src}
+                      alt="avatar"
+                      size="sm"
+                    />
+                  </MenuHandler>
+                  <MenuList>
+                    {userName && <MenuItem>{userName}</MenuItem>}
+                    <MenuItem onClick={logout} className="cursor-pointer">
+                      Logout
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </span>
+            ) : buttonLogin ? (
+              <Link href="/account/login">
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  Sign in
+                </Button>
+              </Link>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <MobileNav open={openNav}>{navList}</MobileNav>
-    </Navbar>
+        <MobileNav open={openNav}>{navList}</MobileNav>
+      </Navbar>
+    </div>
   );
 }

@@ -10,9 +10,6 @@ export default function Home({newGameSlides}) {
         <NewGameSlide newGameSlides={newGameSlides} />
         <div className="space-y-6">
           <NewReleases NewReleases={newGameSlides} />
-          <NewReleases NewReleases={newGameSlides} />
-          <NewReleases NewReleases={newGameSlides} />
-          <NewReleases NewReleases={newGameSlides} />
           <h2>Other Content</h2>
         </div>
       </div>

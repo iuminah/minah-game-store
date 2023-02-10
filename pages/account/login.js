@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {Button, IconButton, Input, Typography} from "@material-tailwind/react";
+import {Button, Input} from "@material-tailwind/react";
 import {useForm} from "react-hook-form";
 import {logIn} from "@/libs/api";
 import {useRouter} from "next/router";
@@ -42,65 +42,67 @@ function LogInPage() {
   }, [showPassword]);
 
   return (
-    <div className="flex flex-col justify-center items-center py-4">
-      <Typography className="text-center text-xl lg:text-2xl font-bold pb-8">
-        Đăng nhập
-      </Typography>
+    <div className="flex flex-col justify-center items-center py-4 md:px-0">
+      <div className="w-full lg:w-2/5 px-8 lg:px-14 py-8 bg-gray">
+        <p className="text-center text-xl lg:text-2xl font-bold pb-8">
+          Đăng Nhập
+        </p>
 
-      <form className="w-3/4 lg:w-1/4 form" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          className="input-text"
-          variant="outlined"
-          label="Email"
-          {...register("email", {required: true})}
-        />
-        {errors.email ? (
-          <Typography className="form-error">Chưa nhập Email</Typography>
-        ) : (
-          <Typography className="form-error">&nbsp;</Typography>
-        )}
-        <Input
-          className="input-text"
-          variant="outlined"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          {...register("password", {required: true})}
-          icon={
-            <div className="cursor-pointer" onClick={handleShowPassword}>
-              {showPassword ? (
-                <VisibilityOff className="fill-text-primary" />
-              ) : (
-                <Visibility className="fill-text-primary" />
-              )}
-            </div>
-          }
-        />
-        {errors.password ? (
-          <Typography className="form-error">Chưa nhập password</Typography>
-        ) : errorMessage ? (
-          <Typography className="form-error">
-            Email hoặc Password chưa đúng
-          </Typography>
-        ) : (
-          <Typography className="form-error">&nbsp;</Typography>
-        )}
-        <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
-          <input
-            type="submit"
-            value="Đăng nhập"
-            className="text-sm w-full h-full p-2"
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            className="input-text"
+            variant="outlined"
+            label="Email"
+            {...register("email", {required: true})}
           />
-        </Button>
-
-        <div className="flex items-center justify-between p-2 mt-1">
-          <Link href="/account/register">
-            <Typography className=" text-blue-500">Tạo tài khoản</Typography>
-          </Link>
-          <Link href="/account/forgot-password">
-            <Typography className="text-blue-500">Quên mật khẩu</Typography>
-          </Link>
-        </div>
-      </form>
+          {errors.email ? (
+            <p className="form-error">Chưa nhập Email</p>
+          ) : (
+            <p className="form-error">&nbsp;</p>
+          )}
+          <Input
+            className="input-text"
+            variant="outlined"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            {...register("password", {required: true})}
+            icon={
+              <div className="cursor-pointer" onClick={handleShowPassword}>
+                {showPassword ? (
+                  <VisibilityOff className="fill-text-primary" />
+                ) : (
+                  <Visibility className="fill-text-primary" />
+                )}
+              </div>
+            }
+          />
+          {errors.password ? (
+            <p className="form-error">Chưa nhập password</p>
+          ) : errorMessage ? (
+            <p className="form-error">Email hoặc Password chưa đúng</p>
+          ) : (
+            <p className="form-error">&nbsp;</p>
+          )}
+          <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
+            <input
+              type="submit"
+              value="Đăng nhập"
+              className="text-sm w-full h-full p-2"
+            />
+          </Button>
+          <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
+            <Link href="/account/register">
+              <p className=" text-blue-500">Tạo tài khoản</p>
+            </Link>
+            <Link href="/account/forgot-password">
+              <p className="text-blue-500">Quên mật khẩu</p>
+            </Link>
+            <Link href="/account/forgot-password">
+              <p className="text-blue-500">Gửi lại email xác nhận</p>
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

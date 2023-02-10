@@ -9,7 +9,6 @@ import ChevronRight from "../../assets/icons/chevron_right_black.svg";
 import ChevronLeft from "../../assets/icons/chevron_left_black.svg";
 
 function NewReleases({NewReleases}) {
-  console.log("NewReleases :", NewReleases);
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
@@ -59,10 +58,10 @@ function NewReleases({NewReleases}) {
             },
           }}
         >
-          {NewReleases?.map((item) => {
+          {NewReleases?.map((item, key) => {
             const {cover, name, prices, discount, slug} = item.attributes;
             return (
-              <SwiperSlide key={item.key}>
+              <SwiperSlide key={key}>
                 <ProductCard
                   cover={cover}
                   name={name}

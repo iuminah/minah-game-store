@@ -42,6 +42,17 @@ h3 {
   @apply text-lg #{!important};
 }
 
+.navbar {
+  @apply px-0 #{!important};
+}
+
+.navlist {
+  @apply container mx-auto;
+  @apply mb-2 mt-4 lg:mb-0 lg:mt-0;
+  @apply px-4 md:px-6 lg:px-0;
+  @apply flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6;
+}
+
 .post-content {
   @apply text-base leading-relaxed;
 
@@ -90,7 +101,7 @@ h3 {
 }
 
 .feature-slide {
-  @apply h-[550px]  lg:w-auto mx-auto;
+  @apply h-[550px] lg:w-auto mx-auto;
   @apply flex justify-center;
   // @apply rounded-xl lg:rounded-none overflow-hidden;
 
