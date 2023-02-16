@@ -26,7 +26,6 @@ function ResetPasswordPage(props) {
   const onSubmit = async (data) => {
     const res = await resetPassword(privateCode, data.password);
     if (res.status === 200) {
-      console.log(res);
       router.push("/account/login");
     } else {
       console.log(res);

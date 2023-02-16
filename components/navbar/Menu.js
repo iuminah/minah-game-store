@@ -2,7 +2,6 @@ import {useState, useEffect, useCallback} from "react";
 import {
   Navbar,
   MobileNav,
-  Typography,
   Button,
   IconButton,
   Menu,
@@ -37,8 +36,8 @@ export default function MenuBar() {
 
   const userLogged = useSelector(selectUserID);
   const userInfo = useSelector(selectUserData);
-  const userAvatar = userInfo?.[0]?.attributes?.avatar?.data?.attributes?.url;
-  const userName = userInfo?.[0]?.attributes?.username;
+  const userAvatar = userInfo?.attributes?.avatar?.data?.attributes?.url;
+  const userName = userInfo?.attributes?.username;
 
   const handleCloseMenu = useCallback(() => {
     setOpenNav(false);
@@ -98,7 +97,11 @@ export default function MenuBar() {
                 <Avatar src={avatar || userIcon.src} alt="avatar" size="sm" />
               </MenuHandler>
               <MenuList>
-                {userName && <MenuItem>{userName}</MenuItem>}
+                {userName && (
+                  <Link href="/account/profile" className="outline-none">
+                    <MenuItem>{userName}</MenuItem>
+                  </Link>
+                )}
                 <MenuItem onClick={logout} className="cursor-pointer">
                   Logout
                 </MenuItem>
@@ -124,7 +127,7 @@ export default function MenuBar() {
   return (
     <div className="bg-gray w-full flex items-center justify-center fixed z-50">
       <Navbar className="rounded-none bg-gray border-none navbar">
-        <div className="container mx-auto px-4 md:px-6 lg:px-0 flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-6 lg:px-4 flex items-center justify-between">
           <div className="relative">
             <Link href="/">
               <div className="absolute -top-[18px] lg:-top-[18px] w-[35px] h-[35px] ">
@@ -188,7 +191,11 @@ export default function MenuBar() {
                     />
                   </MenuHandler>
                   <MenuList>
-                    {userName && <MenuItem>{userName}</MenuItem>}
+                    {userName && (
+                      <Link href="/account/profile" className="outline-none">
+                        <MenuItem>{userName} a</MenuItem>
+                      </Link>
+                    )}
                     <MenuItem onClick={logout} className="cursor-pointer">
                       Logout
                     </MenuItem>

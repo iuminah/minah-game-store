@@ -28,6 +28,9 @@ input:-webkit-autofill {
 
 li {
   color: #121212;
+  &:hover {
+    @apply border-none #{!important};
+  }
 }
 
 h1 {
@@ -101,7 +104,7 @@ h3 {
 }
 
 .feature-slide {
-  @apply h-[550px] lg:w-auto mx-auto;
+  @apply h-[550px] xl:h-[670px] md:w-auto mx-auto;
   @apply flex justify-center;
   // @apply rounded-xl lg:rounded-none overflow-hidden;
 
