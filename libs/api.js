@@ -152,7 +152,7 @@ export const uploadAvatar = async (data) => {
     redirect: "follow",
   };
 
-  fetch("http://localhost:1337/api/upload", requestOptions)
+  fetch(`${DOMAIN}/api/upload`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
