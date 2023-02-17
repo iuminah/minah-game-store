@@ -10,10 +10,9 @@ import defaultAvatar from "../../assets/icons/userIcon.png";
 // import ImgCrop from "antd-img-crop";
 
 function ProfilePage() {
+  const {register, handleSubmit} = useForm();
   const userData = useSelector(selectUserData);
   if (!userData) return null;
-
-  const {register, handleSubmit} = useForm();
 
   const {username, email, avatar} = userData?.attributes;
 

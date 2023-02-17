@@ -34,7 +34,7 @@ function UserProfile() {
     router.push("/");
     dispatch(setUserID(null));
     dispatch(setToken(null));
-  }, []);
+  }, [dispatch, router]);
 
   const items = [
     {

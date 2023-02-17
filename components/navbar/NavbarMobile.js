@@ -35,7 +35,7 @@ function NavbarMobile({openSlideMenu, handleCloseMenu}) {
     router.push("/");
     dispatch(setUserID(null));
     dispatch(setToken(null));
-  }, []);
+  }, [dispatch, router]);
 
   return (
     <div className={`container h-full ${openSlideMenu ? "block" : "hidden"}`}>
