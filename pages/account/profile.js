@@ -6,14 +6,16 @@ import Image from "next/image";
 import {getBase64, getImageUrl} from "@/libs/ultis";
 import {useForm} from "react-hook-form";
 import {uploadAvatar} from "@/libs/api";
+import defaultAvatar from "../../assets/icons/userIcon.png";
 // import ImgCrop from "antd-img-crop";
 
 function ProfilePage() {
+  const userData = useSelector(selectUserData);
+  if (!userData) return null;
+
   const {register, handleSubmit} = useForm();
 
-  const userData = useSelector(selectUserData);
-
-  const {username, email, avatar} = userData.attributes;
+  const {username, email, avatar} = userData?.attributes;
 
   const onSubmit = async (data) => {
     const {avatar} = data;
@@ -22,26 +24,28 @@ function ProfilePage() {
     console.log("res :", res);
   };
 
-  return (
-    <div>
-      <div className="relative w-[100px] h-[100px]">
-        <Image
-          alt="avatar"
-          src={getImageUrl(avatar)}
-          fill
-          className="object-cover"
-          draggable="false"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-        />
+  if (userData) {
+    return (
+      <div>
+        <div className="relative w-[100px] h-[100px]">
+          <Image
+            alt="avatar"
+            src={getImageUrl(avatar) || defaultAvatar.src}
+            fill
+            className="object-cover"
+            draggable="false"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+          />
+        </div>
+        <div>User Name : {username}</div>
+        <div>Email : {email}</div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input type="file" {...register("avatar")} />
+          <input type="submit" />
+        </form>
       </div>
-      <div>User Name : {username}</div>
-      <div>Email : {email}</div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="file" {...register("avatar")} />
-        <input type="submit" />
-      </form>
-    </div>
-  );
+    );
+  } else return null;
 }
 
 ProfilePage.propTypes = {};

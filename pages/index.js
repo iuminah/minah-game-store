@@ -2,16 +2,16 @@ import ProductCard from "@/components/card/ProductCard";
 import NewGameSlide from "@/components/feature-slide/NewGameSlide";
 import NewReleases from "@/components/sections/NewReleases";
 import {getNewGameSlide} from "@/libs/api";
+import {Button} from "antd";
 
 export default function Home({newGameSlides}) {
   return (
     <>
-      <div className="space-y-4">
+      <div>
         <NewGameSlide newGameSlides={newGameSlides} />
-        <div className="space-y-6">
+        {/* <div className="space-y-6">
           <NewReleases NewReleases={newGameSlides} />
-          <h2>Other Content</h2>
-        </div>
+        </div> */}
       </div>
     </>
   );

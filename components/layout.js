@@ -1,13 +1,11 @@
 import Footer from "./footer/footer";
-import MenuBar from "./navbar/Menu";
+import Navbar from "./navbar/Navbar";
 
 export default function Layout({children}) {
   return (
     <>
-      <MenuBar />
-      <main className="pt-[80px] lg:pt-[90px] lg:pb-[40px] container mx-auto px-4 md:px-6 lg:px-4">
-        {children}
-      </main>
+      <Navbar />
+      <main className="container pt-20">{children}</main>
       <Footer />
     </>
   );

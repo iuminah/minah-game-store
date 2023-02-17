@@ -1,6 +1,14 @@
 import {DOMAIN} from "./api";
 
-export const getImageUrl = (obj) => DOMAIN + obj.data.attributes.url;
+export const getImageUrl = (obj, withDomain = true) => {
+  const url = (obj?.data || obj)?.attributes?.url;
+
+  if (!url) return null;
+
+  if (url.match(/^http(s)*:\/\//)) return url;
+
+  return withDomain ? `${DOMAIN}${url}` : url;
+};
 
 export const getImageThumbnail = (item) => {
   const thumbnail =

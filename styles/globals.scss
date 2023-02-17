@@ -6,12 +6,41 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #b9b9b9;
-  font-family: "Nunito", sans-serif !important;
+  // overflow: hidden;
 }
 
 body {
   @apply bg-background;
+  @apply text-text-primary;
+}
+
+.navbar {
+  @apply h-16 w-full fixed z-50;
+  @apply flex items-center;
+  @apply bg-gray;
+  @apply text-text-primary text-center;
+
+  .navbar-content {
+    @apply container h-full;
+    @apply flex items-center justify-between;
+  }
+}
+
+.navbar-mobile {
+  @apply fixed top-[62px] right-0 overflow-hidden z-50;
+  @apply bg-gray h-[calc(100dvh-64px)];
+  @apply duration-300 transition-all ease-in-out;
+
+  .navbar-mobile-content {
+    @apply h-full;
+    @apply flex flex-col justify-between;
+    .navlink-mobile {
+      @apply flex flex-col items-center space-y-4 pt-10;
+    }
+    .avatar-mobile {
+      @apply mb-6;
+    }
+  }
 }
 
 input:-webkit-autofill,
@@ -26,85 +55,85 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #fff !important;
 }
 
-li {
-  color: #121212;
-  &:hover {
-    @apply border-none #{!important};
-  }
-}
+// li {
+//   color: #121212;
+//   &:hover {
+//     @apply border-none #{!important};
+//   }
+// }
 
-h1 {
-  @apply text-2xl #{!important};
-}
+// // h1 {
+// //   @apply text-2xl #{!important};
+// // }
 
-h2 {
-  @apply text-xl #{!important};
-}
+// // h2 {
+// //   @apply text-xl #{!important};
+// // }
 
-h3 {
-  @apply text-lg #{!important};
-}
+// // h3 {
+// //   @apply text-lg #{!important};
+// // }
 
-.navbar {
-  @apply px-0 #{!important};
-}
+// .navbar {
+//   @apply px-0 #{!important};
+// }
 
-.navlist {
-  @apply container mx-auto;
-  @apply mb-2 mt-4 lg:mb-0 lg:mt-0;
-  @apply px-4 md:px-6 lg:px-0;
-  @apply flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6;
-}
+// .navlist {
+//   @apply container mx-auto;
+//   @apply mb-2 mt-4 lg:mb-0 lg:mt-0;
+//   @apply px-4 md:px-6 lg:px-0;
+//   @apply flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6;
+// }
 
-.post-content {
-  @apply text-base leading-relaxed;
+// .post-content {
+//   // @apply text-base leading-relaxed;
 
-  p,
-  span {
-    @apply text-text-primary #{!important};
-  }
+//   p,
+//   span {
+//     @apply text-text-primary #{!important};
+//   }
 
-  & > * {
-    @apply mb-4;
-  }
+//   & > * {
+//     @apply mb-4;
+//   }
 
-  img {
-    @apply w-full mx-auto;
-  }
+//   img {
+//     @apply w-full mx-auto;
+//   }
 
-  blockquote {
-    @apply border-l-2 px-4 italic;
-  }
+//   blockquote {
+//     @apply border-l-2 px-4 italic;
+//   }
 
-  pre {
-    @apply p-4 text-sm;
-  }
+//   pre {
+//     // @apply p-4 text-sm;
+//   }
 
-  ul {
-    @apply list-disc ml-8 space-y-2;
-  }
+//   ul {
+//     @apply list-disc ml-8 space-y-2;
+//   }
 
-  .table {
-    @apply w-full #{!important};
-  }
-  table {
-    @apply w-full;
-  }
+//   .table {
+//     @apply w-full #{!important};
+//   }
+//   table {
+//     @apply w-full;
+//   }
 
-  table,
-  th,
-  td {
-    @apply border border-collapse;
-  }
+//   table,
+//   th,
+//   td {
+//     @apply border border-collapse;
+//   }
 
-  th,
-  td {
-    @apply px-2;
-  }
-}
+//   th,
+//   td {
+//     @apply px-2;
+//   }
+// }
 
 .feature-slide {
-  @apply h-[550px] xl:h-[670px] md:w-auto mx-auto;
+  @apply h-[550px] md:h-[420px] xl:h-[640px] md:w-auto mx-auto;
   @apply flex justify-center;
   // @apply rounded-xl lg:rounded-none overflow-hidden;
 
@@ -125,33 +154,33 @@ h3 {
   }
 }
 
-.form-layout {
-  @apply w-full lg:w-2/5 px-8 lg:px-14 py-8 bg-gray;
-}
+// .form-layout {
+//   @apply w-full lg:w-2/5 px-8 lg:px-14 py-8 bg-gray;
+// }
 
-.form {
-  .input-text {
-    @apply text-text-primary;
-  }
+// .form {
+//   .input-text {
+//     @apply text-text-primary;
+//   }
 
-  label {
-    @apply text-text-primary #{!important};
-  }
-}
+//   label {
+//     @apply text-text-primary #{!important};
+//   }
+// }
 
-.form-error {
-  @apply text-red-500 py-1 pl-3 text-[14px];
-}
+// .form-error {
+//   @apply text-red-500 py-1 pl-3 text-[14px];
+// }
 
-.h-5 {
-  @apply h-auto #{!important};
-}
+// .h-5 {
+//   @apply h-auto #{!important};
+// }
 
-.dialog {
-  @apply bg-gray text-text-primary;
-  @apply divide-y;
-  @apply min-w-[85%] md:min-w-[50%] lg:min-w-[20%] #{!important};
-}
+// .dialog {
+//   @apply bg-gray text-text-primary;
+//   @apply divide-y;
+//   @apply min-w-[85%] md:min-w-[50%] lg:min-w-[20%] #{!important};
+// }
 
 .hover-effect {
   @apply hover:text-primary duration-300 ease-in-out;

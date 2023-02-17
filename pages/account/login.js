@@ -1,14 +1,13 @@
 import React, {useCallback, useState} from "react";
-import PropTypes from "prop-types";
-import {Button, Input} from "@material-tailwind/react";
 import {useForm} from "react-hook-form";
 import {logIn} from "@/libs/api";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Visibility from "../../assets/icons/visibility_black_18dp.svg";
 import VisibilityOff from "../../assets/icons/visibility_off_black_18dp.svg";
-import {useDispatch} from "react-redux";
-import {setToken, setUserID} from "@/redux/accountSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectToken, setToken, setUserID} from "@/redux/accountSlice";
+import {Button, Input} from "antd";
 
 function LogInPage() {
   const router = useRouter();
@@ -16,6 +15,9 @@ function LogInPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  // const token = useSelector(selectToken);
+  // if (token) return <p className="text-center">You are logged in</p>;
 
   const {
     register,
@@ -47,7 +49,7 @@ function LogInPage() {
         <p className="text-center text-xl lg:text-2xl font-bold pb-8">Login</p>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <Input
+          <input
             className="input-text"
             variant="outlined"
             label="Email"
@@ -58,7 +60,7 @@ function LogInPage() {
           ) : (
             <p className="form-error">&nbsp;</p>
           )}
-          <Input
+          <input
             className="input-text"
             variant="outlined"
             label="Password"
@@ -81,13 +83,13 @@ function LogInPage() {
           ) : (
             <p className="form-error">&nbsp;</p>
           )}
-          <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
-            <input
-              type="submit"
-              value="Login"
-              className="text-sm w-full h-full p-2"
-            />
-          </Button>
+          {/* <Button className="p-0 w-full" disabled={disableBtn}> */}
+          <input
+            type="submit"
+            value="Login"
+            className="text-sm w-full h-full p-2"
+          />
+          {/* </Button> */}
           <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
             <Link href="/account/register">
               <p className=" text-blue-500">Create account</p>
