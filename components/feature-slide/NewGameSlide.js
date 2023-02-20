@@ -3,18 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Pagination, Navigation, Autoplay} from "swiper";
-import {getImageUrl, lastPrice} from "@/libs/ultis";
+import {getImageUrl, lastPrice, shimmerBlur} from "@/libs/ultis";
 import {Button, IconButton, Skeleton} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 function NewGameSlide({newGameSlides}) {
-  const [loadingImage, setLoadingImage] = useState(false);
-
-  const onLoad = useCallback(() => {
-    setLoadingImage(true);
-  }, []);
-
   return (
     <div className="feature-slide">
       <Swiper
@@ -45,23 +39,15 @@ function NewGameSlide({newGameSlides}) {
               <div className="h-full grid grid-row-4 md:grid-rows-none md:grid-cols-6 lg:grid-cols-12 ">
                 <div className="relative row-span-3 md:row-auto md:col-span-4 lg:col-span-9 lg:py-0 active:opacity-80">
                   <Link href={slug}>
-                    {loadingImage && (
-                      <Skeleton
-                        sx={{bgcolor: "grey.900"}}
-                        variant="rectangular"
-                        width={"100%"}
-                        height={"100%"}
-                        animation="wave"
-                      />
-                    )}
                     <Image
                       src={getImageUrl(cover)}
                       alt={name}
                       fill
-                      className="object-cover rounded-t-xl md:rounded-t-none overflow-hidden"
+                      className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                       draggable="false"
-                      onLoad={onLoad}
+                      placeholder="blur"
+                      blurDataURL={shimmerBlur(80, 80)}
                     />
                   </Link>
                 </div>
