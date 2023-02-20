@@ -12,9 +12,10 @@ import defaultAvatar from "../../assets/icons/userIcon.png";
 function ProfilePage() {
   const {register, handleSubmit} = useForm();
   const userData = useSelector(selectUserData);
-  if (!userData) return null;
+  console.log("userData :", userData);
+  // if (!userData) return null;
 
-  const {username, email, avatar} = userData?.attributes;
+  const {username, email, avatar} = userData?.attributes ?? {};
 
   const onSubmit = async (data) => {
     const {avatar} = data;

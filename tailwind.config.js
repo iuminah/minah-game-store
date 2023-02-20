@@ -4,22 +4,6 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      "2xl": "1536px",
-    },
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: "1rem",
-        sm: "1rem",
-        lg: "2rem",
-        // xl: "5.157rem",
-      },
-    },
     fontFamily: {RobotoCondensed: ["Roboto Condensed", "sans-serif"]},
     fontSize: {
       headline1: [
@@ -138,13 +122,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        background: "#121212",
-        gray: "#2a2a2a",
-        primary: "#2a92eb",
+        primary: "#42A5F5",
         secondary: "#d9a300",
-        text: {
-          primary: "#b9b9b9",
-        },
+        error: "#F44336",
+        black: "#121212",
       },
     },
   },

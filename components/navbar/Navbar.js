@@ -1,339 +1,202 @@
-// import {useState, useEffect, useCallback} from "react";
-// import {
-//   Navbar,
-//   MobileNav,
-//   Button,
-//   IconButton,
-//   Menu,
-//   MenuHandler,
-//   MenuList,
-//   Avatar,
-//   MenuItem,
-// } from "@material-tailwind/react";
-// import Link from "next/link";
-// import {useDispatch, useSelector} from "react-redux";
-// import {
-//   setToken,
-//   selectUserID,
-//   setUserID,
-//   setUserData,
-//   selectUserData,
-// } from "@/redux/accountSlice";
-// import {DOMAIN, getUserData} from "@/libs/api";
-// import userIcon from "../../public/favicon/userIcon.png";
-// import {useRouter} from "next/router";
-// import Image from "next/image";
-
-// export default function MenuBar() {
-//   const dispatch = useDispatch();
-//   const [openNav, setOpenNav] = useState(false);
-//   const [avatar, setAvatar] = useState("");
-//   const [buttonLogin, setButtonLogin] = useState();
-
-//   const router = useRouter();
-//   const pathname = router.pathname;
-
-//   const userLogged = useSelector(selectUserID);
-//   const userInfo = useSelector(selectUserData);
-//   const userAvatar = userInfo?.attributes?.avatar?.data?.attributes?.url;
-//   const userName = userInfo?.attributes?.username;
-
-//   const handleCloseMenu = useCallback(() => {
-//     setOpenNav(false);
-//   }, [setOpenNav]);
-
-//   useEffect(() => {
-//     if (pathname === "/account/login") {
-//       setButtonLogin(false);
-//     } else {
-//       setButtonLogin(true);
-//     }
-//   }, [pathname]);
-
-//   useEffect(() => {
-//     const userData = async () => {
-//       const userData = await getUserData(userLogged);
-//       dispatch(setUserData(userData));
-//     };
-//     userData();
-
-//     if (userAvatar) {
-//       setAvatar(DOMAIN + userAvatar);
-//     }
-//   }, [userLogged, dispatch, userAvatar]);
-
-//   useEffect(() => {
-//     window.addEventListener(
-//       "resize",
-//       () => window.innerWidth >= 960 && setOpenNav(false),
-//     );
-//   }, []);
-
-//   const logout = useCallback(() => {
-//     dispatch(setUserID(null));
-//     dispatch(setToken(null));
-//   }, [dispatch]);
-
-//   const navList = (
-//     <ul className="navlist">
-//       <div className="lg:flex my-4 lg:my-0 space-y-4 lg:space-y-0 lg:space-x-6">
-//         <Link href="/" className="flex items-center hover-effect">
-//           Store
-//         </Link>
-//         <Link href="/discover" className="flex items-center hover-effect">
-//           Discover
-//         </Link>
-//         <Link href="/news" className="flex items-center hover-effect">
-//           News
-//         </Link>
-//       </div>
-
-//       <span className="lg:hidden">
-//         {userLogged ? (
-//           <span className="">
-//             <Menu placement="bottom-end">
-//               <MenuHandler className="cursor-pointer">
-//                 <Avatar src={avatar || userIcon.src} alt="avatar" size="sm" />
-//               </MenuHandler>
-//               <MenuList>
-//                 {userName && (
-//                   <Link href="/account/profile" className="outline-none">
-//                     <MenuItem>{userName}</MenuItem>
-//                   </Link>
-//                 )}
-//                 <MenuItem onClick={logout} className="cursor-pointer">
-//                   Logout
-//                 </MenuItem>
-//               </MenuList>
-//             </Menu>
-//           </span>
-//         ) : buttonLogin ? (
-//           <Link href="/account/login">
-//             <Button
-//               variant="gradient"
-//               size="sm"
-//               className="w-full lg:w-auto"
-//               onClick={handleCloseMenu}
-//             >
-//               Sign in
-//             </Button>
-//           </Link>
-//         ) : null}
-//       </span>
-//     </ul>
-//   );
-
-//   return (
-//     <div className="bg-gray w-full flex items-center justify-center fixed z-50">
-//       <Navbar className="rounded-none bg-gray border-none navbar">
-//         <div className="container mx-auto px-4 md:px-6 lg:px-4 flex items-center justify-between">
-//           <div className="relative">
-//             <Link href="/">
-//               <div className="absolute -top-[18px] lg:-top-[18px] w-[35px] h-[35px] ">
-//                 <Image
-//                   alt="logo"
-//                   src={MinahLogoPNG}
-//                   fill
-//                   className="object-cover"
-//                   draggable="false"
-//                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-//                 />
-//               </div>
-//             </Link>
-//           </div>
-//           <div className="hidden lg:block">{navList}</div>
-//           <div className="flex items-center">
-//             <IconButton
-//               variant="text"
-//               className="ml-auto h-6 w-6 lg:hidden"
-//               onClick={() => setOpenNav(!openNav)}
-//             >
-//               {openNav ? (
-//                 <svg
-//                   xmlns="http://www.w3.org/2000/svg"
-//                   fill="none"
-//                   className="h-6 w-6"
-//                   viewBox="0 0 24 24"
-//                   stroke="currentColor"
-//                   strokeWidth={2}
-//                 >
-//                   <path
-//                     strokeLinecap="round"
-//                     strokeLinejoin="round"
-//                     d="M6 18L18 6M6 6l12 12"
-//                   />
-//                 </svg>
-//               ) : (
-//                 <svg
-//                   xmlns="http://www.w3.org/2000/svg"
-//                   className="h-6 w-6"
-//                   fill="none"
-//                   stroke="currentColor"
-//                   strokeWidth={2}
-//                 >
-//                   <path
-//                     strokeLinecap="round"
-//                     strokeLinejoin="round"
-//                     d="M4 6h16M4 12h16M4 18h16"
-//                   />
-//                 </svg>
-//               )}
-//             </IconButton>
-//             {userLogged ? (
-//               <span className="hidden lg:block">
-//                 <Menu placement="bottom-end">
-//                   <MenuHandler className="cursor-pointer">
-//                     <Avatar
-//                       src={avatar || userIcon.src}
-//                       alt="avatar"
-//                       size="sm"
-//                     />
-//                   </MenuHandler>
-//                   <MenuList>
-//                     {userName && (
-//                       <Link href="/account/profile" className="outline-none">
-//                         <MenuItem>{userName} a</MenuItem>
-//                       </Link>
-//                     )}
-//                     <MenuItem onClick={logout} className="cursor-pointer">
-//                       Logout
-//                     </MenuItem>
-//                   </MenuList>
-//                 </Menu>
-//               </span>
-//             ) : buttonLogin ? (
-//               <Link href="/account/login">
-//                 <Button
-//                   variant="gradient"
-//                   size="sm"
-//                   className="hidden lg:inline-block"
-//                 >
-//                   Sign in
-//                 </Button>
-//               </Link>
-//             ) : null}
-//           </div>
-//         </div>
-//         <MobileNav open={openNav}>{navList}</MobileNav>
-//       </Navbar>
-//     </div>
-//   );
-// }
-import React, {useCallback} from "react";
-import Image from "next/image";
-import MinahLogoPNG from "../../assets/icons/MinahLogo.png";
+import {useState, useCallback, useEffect} from "react";
 import Link from "next/link";
-import UserProfile from "./UserProfile";
-import MenuButton from "../../assets/icons/menu-button.svg";
-import CloseIcon from "../../assets/icons/close-icon.svg";
-import {Button} from "antd";
-import {useState} from "react";
-import {useEffect} from "react";
-import NavbarMobile from "./NavbarMobile";
-import {useRouter} from "next/router";
+import Image from "next/image";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import MenuIcon from "@mui/icons-material/Menu";
+import ClearIcon from "@mui/icons-material/Clear";
+import {Box, Divider, Drawer, IconButton} from "@mui/material";
+import MinahLogoPNG from "../../assets/icons/MinahLogo.png";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  selectUserData,
+  setToken,
+  setUserData,
+  setUserID,
+} from "@/redux/accountSlice";
+import {getImageUrl} from "@/libs/ultis";
 
-export const MenuItem = ({handleCloseMenu}) => {
+const ItemMenu = () => {
   return (
     <>
-      <Link href="/" onClick={handleCloseMenu} className="hover-effect">
-        <button>STORE</button>
+      <Link href="/" className="hover-effect">
+        STORE
       </Link>
-      <Link href="/discover" onClick={handleCloseMenu} className="hover-effect">
+      <Link href="/" className="hover-effect">
         DISCOVER
       </Link>
-      <Link href="/news" onClick={handleCloseMenu} className="hover-effect">
+      <Link href="/" className="hover-effect">
         NEWS
       </Link>
     </>
   );
 };
 
-const Navbar = () => {
-  const router = useRouter();
-  const pathname = router.pathname;
-  const [buttonLogin, setButtonLogin] = useState();
-  const [openSlideMenu, setOpenSlideMenu] = useState(false);
+function Navbar() {
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
+  const {username, avatar} = userData?.attributes ?? {};
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openAnchor = Boolean(anchorEl);
+
+  const openUserMenu = useCallback((event) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+  const CloseUserMenu = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
+
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = useCallback(() => {
+    setDrawer((pre) => !pre);
+  }, []);
 
   useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 1024 && setOpenSlideMenu(false),
+      () => window.innerWidth >= 1024 && setDrawer(false),
     );
   }, []);
 
-  useEffect(() => {
-    if (pathname === "/account/login") {
-      setButtonLogin(false);
-    } else {
-      setButtonLogin(true);
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    if (openSlideMenu) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [openSlideMenu]);
-
-  const handleToggleSlideMenu = useCallback(() => {
-    setOpenSlideMenu((pre) => !pre);
-  }, []);
-
-  const handleCloseMenu = useCallback(() => {
-    setOpenSlideMenu(false);
-  }, []);
+  const handleLogOut = useCallback(() => {
+    CloseUserMenu();
+    dispatch(setToken(null));
+    dispatch(setUserID(null));
+    dispatch(setUserData(null));
+  }, [dispatch, CloseUserMenu]);
 
   return (
-    <div className={`${openSlideMenu ? "overflow-hidden" : "overflow-auto"}`}>
-      <div className="navbar">
-        <div className="navbar-content">
-          <div className="logo">
-            <Link href="/" onClick={handleCloseMenu}>
-              <div className="relative w-[40px] h-[40px]">
-                <Image
-                  alt="logo"
-                  src={MinahLogoPNG}
-                  fill
-                  className="object-cover"
-                  draggable="false"
-                  priority="false"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-                />
-              </div>
-            </Link>
+    <AppBar position="fixed">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters className="navbar">
+          <Link href="/">
+            <div className="relative w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]">
+              <Image
+                alt="logo"
+                src={MinahLogoPNG}
+                fill
+                className="object-cover"
+                draggable="false"
+                priority="false"
+                sizes="100vw"
+              />
+            </div>
+          </Link>
+          <div className="menu">
+            <ItemMenu />
           </div>
-          <div className="navlink hidden lg:block space-x-6 ">
-            <MenuItem />
-          </div>
-          {buttonLogin ? (
-            <div className="avatar hidden lg:block">
-              <UserProfile />
+          {userData ? (
+            <div className="hidden lg:block">
+              <Avatar
+                variant="rounded"
+                alt="Avatar"
+                onClick={openUserMenu}
+                src={getImageUrl(avatar)}
+              />
+              <Menu
+                anchorEl={anchorEl}
+                open={openAnchor}
+                onClose={CloseUserMenu}
+                className="mt-1"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                PaperProps={{sx: {width: "120px"}}}
+              >
+                <Typography
+                  onClick={CloseUserMenu}
+                  className="text-center pb-1.5"
+                >
+                  {username}
+                </Typography>
+                <Divider />
+                <div className="mt-1.5">
+                  <Link href="/account/profile">
+                    <MenuItem onClick={CloseUserMenu}>Profile</MenuItem>
+                  </Link>
+                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                </div>
+              </Menu>
             </div>
           ) : (
-            <div></div>
+            <Link href="/account/login" className="hidden lg:block">
+              <Button variant="contained">LOGIN</Button>
+            </Link>
           )}
 
-          {/* Menu Mobile Button */}
           <div className="block lg:hidden">
-            <Button type="text" onClick={handleToggleSlideMenu}>
-              {openSlideMenu ? (
-                <CloseIcon className="fill-text-primary w-4" />
-              ) : (
-                <MenuButton className="fill-text-primary w-4" />
-              )}
-            </Button>
+            <IconButton aria-label="Menu" onClick={toggleDrawer}>
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor={"right"}
+              open={drawer}
+              PaperProps={{sx: {width: "70%"}}}
+              onClose={toggleDrawer}
+            >
+              <div className="h-16 flex justify-end items-center px-1">
+                <IconButton onClick={toggleDrawer}>
+                  <ClearIcon />
+                </IconButton>
+              </div>
+              <Box
+                role="presentation"
+                onClick={toggleDrawer}
+                className="menu-mobile"
+              >
+                <div className="flex flex-col items-center space-y-6">
+                  <ItemMenu />
+                </div>
+                <div className="w-full">
+                  {userData ? (
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center space-x-3">
+                        <Link href="/account/profile">
+                          <Avatar
+                            variant="rounded"
+                            alt="Avatar"
+                            src={getImageUrl(avatar)}
+                          />
+                        </Link>
+                        <Link href="/account/profile">
+                          <Typography>{username}</Typography>
+                        </Link>
+                      </div>
+                      <Button
+                        variant="text"
+                        sx={{px: 0}}
+                        onClick={handleLogOut}
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  ) : (
+                    <Link href="/account/login">
+                      <Button variant="contained" sx={{width: "100%"}}>
+                        LOGIN
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </Box>
+            </Drawer>
           </div>
-        </div>
-      </div>
-      <div className={`navbar-mobile ${openSlideMenu ? "w-full" : "w-0"}`}>
-        <NavbarMobile
-          openSlideMenu={openSlideMenu}
-          handleCloseMenu={handleCloseMenu}
-        />
-      </div>
-    </div>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
+}
 export default Navbar;

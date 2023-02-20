@@ -7,7 +7,6 @@ import {getImageUrl, lastPrice, shimmerBlur} from "@/libs/ultis";
 import ChevronRight from "../../assets/icons/chevron_right_black.svg";
 import ChevronLeft from "../../assets/icons/chevron_left_black.svg";
 import Link from "next/link";
-import {Button, Tag} from "antd";
 
 function NewGameSlide({newGameSlides}) {
   return (
@@ -52,7 +51,7 @@ function NewGameSlide({newGameSlides}) {
                     />
                   </Link>
                 </div>
-                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-gray">
+                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-[#F5F5F5]">
                   <Link href={slug}>
                     <h1 className="text-headline5 lg:text-headline4 font-bold">
                       {name}
@@ -61,7 +60,7 @@ function NewGameSlide({newGameSlides}) {
                   <p className="line-clamp-3 lg:line-clamp-5">{brief}</p>
                   <div className="flex items-center justify-between space-x-4">
                     {discount ? (
-                      <Tag className="bg-green-600 p-1 px-2.5 text-button2 font-bold border-none text-white">{`- ${discount}%`}</Tag>
+                      <div className="bg-green-600 p-1 px-2.5 text-button2 font-bold border-none text-white">{`- ${discount}%`}</div>
                     ) : (
                       <p></p>
                     )}
@@ -78,23 +77,28 @@ function NewGameSlide({newGameSlides}) {
                       <p className="italic">Free to play</p>
                     )}
                   </div>
-                  <Link href={slug}>
-                    <Button size="large" block className="text-text-primary">
-                      {button}
-                    </Button>
-                  </Link>
+                  {/* <Link href={slug}> */}
+                  <button
+                    type="primary"
+                    size="large"
+                    block
+                    // className="font-medium"
+                  >
+                    {button}
+                  </button>
+                  {/* </Link> */}
                 </div>
               </div>
             </SwiperSlide>
           );
         })}
         <div className="hidden lg:block absolute top-4 right-6 space-x-2 z-10">
-          <Button className="prev p-1">
+          <button className="prev p-1">
             <ChevronLeft className="fill-text-primary" />
-          </Button>
-          <Button className="next p-1">
+          </button>
+          <button className="next p-1">
             <ChevronRight className="fill-text-primary" />
-          </Button>
+          </button>
         </div>
       </Swiper>
     </div>
