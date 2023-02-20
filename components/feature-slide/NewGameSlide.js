@@ -1,14 +1,20 @@
-import React from "react";
-import {Swiper, SwiperSlide} from "swiper/react";
-
-import {Pagination, Navigation, Autoplay} from "swiper";
+import React, {useCallback, useState} from "react";
 import Image from "next/image";
-import {getImageUrl, lastPrice, shimmerBlur} from "@/libs/ultis";
-import ChevronRight from "../../assets/icons/chevron_right_black.svg";
-import ChevronLeft from "../../assets/icons/chevron_left_black.svg";
 import Link from "next/link";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Pagination, Navigation, Autoplay} from "swiper";
+import {getImageUrl, lastPrice} from "@/libs/ultis";
+import {Button, IconButton, Skeleton} from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 function NewGameSlide({newGameSlides}) {
+  const [loadingImage, setLoadingImage] = useState(false);
+
+  const onLoad = useCallback(() => {
+    setLoadingImage(true);
+  }, []);
+
   return (
     <div className="feature-slide">
       <Swiper
@@ -35,32 +41,40 @@ function NewGameSlide({newGameSlides}) {
             item.attributes;
 
           return (
-            <SwiperSlide key={key} className="py-3.5 -my-3.5">
-              <div className="h-full grid grid-cols-1 lg:grid-cols-11 rounded-xl lg:rounded-none overflow-hidden">
-                <div className="relative lg:col-span-8 py-20 lg:py-0 active:opacity-80">
+            <SwiperSlide key={key} className="py-3.5 -my-8">
+              <div className="h-full grid grid-row-4 md:grid-rows-none md:grid-cols-6 lg:grid-cols-12 ">
+                <div className="relative row-span-3 md:row-auto md:col-span-4 lg:col-span-9 lg:py-0 active:opacity-80">
                   <Link href={slug}>
+                    {loadingImage && (
+                      <Skeleton
+                        sx={{bgcolor: "grey.900"}}
+                        variant="rectangular"
+                        width={"100%"}
+                        height={"100%"}
+                        animation="wave"
+                      />
+                    )}
                     <Image
                       src={getImageUrl(cover)}
                       alt={name}
                       fill
-                      className="object-cover"
+                      className="object-cover rounded-t-xl md:rounded-t-none overflow-hidden"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                       draggable="false"
-                      placeholder="blur"
-                      blurDataURL={shimmerBlur()}
+                      onLoad={onLoad}
                     />
                   </Link>
                 </div>
-                <div className="lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-[#F5F5F5]">
+                <div className="row-span-1 md:row-auto md:col-span-2 lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-background-secondary py-0">
                   <Link href={slug}>
                     <h1 className="text-headline5 lg:text-headline4 font-bold">
                       {name}
                     </h1>
                   </Link>
-                  <p className="line-clamp-3 lg:line-clamp-5">{brief}</p>
+                  <p className="line-clamp-3 lg:line-clamp-4">{brief}</p>
                   <div className="flex items-center justify-between space-x-4">
                     {discount ? (
-                      <div className="bg-green-600 p-1 px-2.5 text-button2 font-bold border-none text-white">{`- ${discount}%`}</div>
+                      <div className="bg-green-600 p-1 px-2.5 text-button2 font-bold border-none rounded-md text-white">{`- ${discount}%`}</div>
                     ) : (
                       <p></p>
                     )}
@@ -71,34 +85,37 @@ function NewGameSlide({newGameSlides}) {
                             {prices.toLocaleString()}₫
                           </p>
                         ) : null}
-                        <p className="text-lg">{lastPrice(prices, discount)}</p>
+                        <p className="text-headline6 font-medium">
+                          {lastPrice(prices, discount)}
+                        </p>
                       </div>
                     ) : (
-                      <p className="italic">Free to play</p>
+                      <p className="italic text-headline6 font-medium">
+                        Free to play
+                      </p>
                     )}
                   </div>
-                  {/* <Link href={slug}> */}
-                  <button
-                    type="primary"
-                    size="large"
-                    block
-                    // className="font-medium"
-                  >
-                    {button}
-                  </button>
-                  {/* </Link> */}
+                  <Link href={slug} className="w-full">
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{width: "100%"}}
+                    >
+                      {button}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>
           );
         })}
-        <div className="hidden lg:block absolute top-4 right-6 space-x-2 z-10">
-          <button className="prev p-1">
-            <ChevronLeft className="fill-text-primary" />
-          </button>
-          <button className="next p-1">
-            <ChevronRight className="fill-text-primary" />
-          </button>
+        <div className="hidden md:block absolute top-4 right-4 z-10">
+          <IconButton className="prev">
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton className="next">
+            <ChevronRightIcon />
+          </IconButton>
         </div>
       </Swiper>
     </div>

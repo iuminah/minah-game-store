@@ -8,9 +8,7 @@ import {Button} from "@mui/material";
 export default function Home({newGameSlides}) {
   return (
     <div>
-      <Button variant="contained" className="w-full">
-        Contained
-      </Button>
+      <NewGameSlide newGameSlides={newGameSlides} />
     </div>
   );
 }

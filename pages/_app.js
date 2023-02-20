@@ -1,4 +1,5 @@
 import "@/styles/globals.scss";
+import "@/styles/motion.scss";
 
 import "swiper/css";
 import "swiper/css/pagination";

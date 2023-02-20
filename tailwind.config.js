@@ -125,7 +125,10 @@ module.exports = {
         primary: "#42A5F5",
         secondary: "#d9a300",
         error: "#F44336",
-        black: "#121212",
+        background: {
+          primary: "#121212",
+          secondary: "#272727",
+        },
       },
     },
   },

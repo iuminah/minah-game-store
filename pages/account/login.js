@@ -68,7 +68,7 @@ function LogInPage() {
     setShowPassword(!showPassword);
   }, [showPassword]);
 
-  // if (token) return <p className="text-center">You are logged in</p>;
+  if (token) return <p className="text-center">You are logged in</p>;
 
   return (
     <div className="flex flex-col justify-center items-center py-4 md:px-0">

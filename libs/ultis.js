@@ -25,7 +25,7 @@ const shimmer = (w, h) => `
       <stop stop-color="#dfdfdf" offset="70%" />
     </linearGradient>
   </defs>
-  <rect width="${w}" height="${h}" fill="none" />
+  <rect width="${w}" height="${h}" fill="#272727" />
   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
 </svg>`;
@@ -35,8 +35,8 @@ const toBase64 = (str) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
-export const shimmerBlur = () =>
-  `data:image/svg+xml;base64,${toBase64(shimmer(80, 80))}`;
+export const shimmerBlur = (w, h) =>
+  `data:image/svg+xml;base64,${toBase64(shimmer(w, h))}`;
 
 export const fixContent = (content) => {
   return content.replaceAll("/uploads/", `${DOMAIN}/uploads/`);
