@@ -35,7 +35,9 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+  -webkit-box-shadow: 0 0 0 30px #272727 inset !important;
+  background-color: #272727 !important;
+  background-clip: content-box !important;
 }
 
 input:-webkit-autofill {
@@ -106,4 +108,9 @@ input:-webkit-autofill {
       @apply bg-primary;
     }
   }
+}
+
+.form-layout {
+  @apply md:w-3/5 lg:w-2/5 rounded-xl;
+  @apply bg-background-secondary p-10;
 }

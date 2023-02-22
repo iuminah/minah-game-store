@@ -58,7 +58,6 @@ function LogInPage() {
       (async function userData() {
         const data = await getUserData(userId);
         dispatch(setUserData(data));
-        console.log("useEffect running");
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

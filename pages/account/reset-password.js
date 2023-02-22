@@ -1,15 +1,28 @@
-import React, {useEffect, useState} from "react";
-import PropTypes from "prop-types";
-import {selectToken} from "@/redux/accountSlice";
-import {useSelector} from "react-redux";
+import React, {useCallback, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useRouter} from "next/router";
 import {resetPassword} from "@/libs/api";
+import PopupDialog from "@/components/Dialog/PopupDialog";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Typography,
+  Input,
+} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 function ResetPasswordPage(props) {
   const router = useRouter();
 
   const [privateCode, setPrivateCode] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     const code = router.query.code;
@@ -19,48 +32,133 @@ function ResetPasswordPage(props) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: {errors},
   } = useForm();
 
   const onSubmit = async (data) => {
+    setDisableBtn(true);
     const res = await resetPassword(privateCode, data.password);
     if (res.status === 200) {
-      router.push("/account/login");
+      setOpenDialog(true);
+      setDisableBtn(false);
     } else {
-      console.log(res);
+      setErrorMessage(res.response.data.error.message);
+      setDisableBtn(false);
     }
   };
 
+  const handleShowPassword = useCallback(() => {
+    setShowPassword(!showPassword);
+  }, [showPassword]);
+
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+    router.push("/account/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="flex flex-col justify-center items-center py-4 md:px-0">
-      {/* <div className="form-layout">
-        <p className="text-center text-xl lg:text-2xl font-bold pb-8">
-          Đặt lại mật khẩu
-        </p>
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            className="input-text"
-            label="Password"
-            {...register("password", {required: true})}
-          />
-          {errors.password ? (
-            <p className="form-error">Chưa nhập Password</p>
-          ) : (
-            <p className="form-error">&nbsp;</p>
-          )}
-          <Button size="sm" className="p-0 w-full" disabled={false}>
-            <input
-              type="submit"
-              value="Gửi"
-              className="text-sm w-full h-full p-2"
-            />
-          </Button>
-        </form>
-      </div> */}
+    <div>
+      <PopupDialog
+        open={openDialog}
+        close={handleCloseDialog}
+        title="Reset password successful !"
+        content={
+          <div className="space-y-2">
+            <Typography>
+              Congratulations, you have successfully reset your password
+            </Typography>
+          </div>
+        }
+      />
+      <div className="flex flex-col justify-center items-center py-4 md:px-0">
+        <div className="form-layout">
+          <p className="text-center text-headline5 font-bold pb-8">
+            RESET PASSWORD
+          </p>
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <FormControl sx={{my: 1, width: "100%"}} variant="standard">
+              <InputLabel htmlFor="password" sx={{px: 0.5}}>
+                Password
+              </InputLabel>
+              <Input
+                id="password"
+                sx={{px: 0.5}}
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleShowPassword}
+                      onMouseDown={handleShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                {...register("password", {required: true})}
+              />
+              <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
+                {errors.password ? "Password is required" : <span>&nbsp;</span>}
+              </FormHelperText>
+            </FormControl>
+            <FormControl sx={{my: 1, width: "100%"}} variant="standard">
+              <InputLabel htmlFor="confirm-password" sx={{px: 0.5}}>
+                Confirm password
+              </InputLabel>
+              <Input
+                id="confirm-password"
+                sx={{px: 0.5}}
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleShowPassword}
+                      onMouseDown={handleShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                {...register("confirmPassword", {
+                  required: true,
+                  validate: (val) => {
+                    if (watch("password") != val) {
+                      return "Your passwords do no match";
+                    } else {
+                      setErrorMessage("");
+                    }
+                  },
+                })}
+              />
+              <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
+                {errors.confirmPassword?.message ? (
+                  errors.confirmPassword.message
+                ) : errors.confirmPassword ? (
+                  "Confirm password is required"
+                ) : errorMessage ? (
+                  errorMessage
+                ) : (
+                  <span>&nbsp;</span>
+                )}
+              </FormHelperText>
+            </FormControl>
+            <Button
+              variant="contained"
+              sx={{mb: 1, mt: 3, width: "100%"}}
+              disabled={disableBtn}
+            >
+              <input
+                type="submit"
+                value="RESET PASSWORD"
+                className="w-full h-full cursor-pointer"
+              />
+            </Button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
-
-ResetPasswordPage.propTypes = {};
 
 export default ResetPasswordPage;

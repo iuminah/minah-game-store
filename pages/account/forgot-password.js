@@ -1,9 +1,19 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useForm} from "react-hook-form";
 import {forgotPassword} from "@/libs/api";
 import PopupDialog from "@/components/Dialog/PopupDialog";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  Typography,
+} from "@mui/material";
+import {useRouter} from "next/router";
 
 function ForgotPasswordPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -14,48 +24,75 @@ function ForgotPasswordPage() {
   const [openDialog, setOpenDialog] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log("data :", data);
     setDisableBtn(true);
     const res = await forgotPassword(data.email);
+    console.log("res :", res);
     if (res.status === 200) {
       setOpenDialog(true);
     } else {
       setDisableBtn(false);
     }
+    setDisableBtn(false);
   };
 
-  const title = "Email xác thực tài khoản đã đc gửi !";
-  const content = "Chúng tôi đã gửi lại cho bạn email reset mật khẩu.";
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+    router.push("/account/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
-      {/* <PopupDialog openDialog={openDialog} title={title} content={content} />
+      <PopupDialog
+        open={openDialog}
+        close={handleCloseDialog}
+        title="Reset password Successful !"
+        content={
+          <Typography>
+            We have sent you an email to reset your password.
+          </Typography>
+        }
+      />
       <div className="flex flex-col justify-center items-center py-4 md:px-0">
         <div className="form-layout">
-          <p className="text-center text-xl lg:text-2xl font-bold pb-8">
-            Quên Mật Khẩu
+          <p className="text-center text-headline5 font-bold pb-2">
+            FORGOT PASSWORD
           </p>
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              className="input-text"
-              label="Email"
-              {...register("email", {required: true})}
-            />
-            {errors.email ? (
-              <p className="form-error">Chưa nhập Email</p>
-            ) : (
-              <p className="form-error">&nbsp;</p>
-            )}
-            <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
+            <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
+              <InputLabel htmlFor="Email" sx={{px: 0.5}}>
+                Email
+              </InputLabel>
+              <Input
+                id="Email"
+                sx={{px: 0.5}}
+                {...register("email", {required: true})}
+              />
+              <FormHelperText sx={{px: 0.5}}>
+                {errors.email ? (
+                  <span className="text-error">Email is required</span>
+                ) : (
+                  <span>
+                    Enter the email you need to reset your account password
+                  </span>
+                )}
+              </FormHelperText>
+            </FormControl>
+
+            <Button
+              variant="contained"
+              sx={{mb: 1, mt: 3, width: "100%"}}
+              disabled={disableBtn}
+            >
               <input
                 type="submit"
-                value="Gửi"
-                className="text-sm w-full h-full p-2"
+                value="SEND"
+                className="w-full h-full cursor-pointer"
               />
             </Button>
           </form>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

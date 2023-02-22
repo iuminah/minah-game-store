@@ -1,8 +1,19 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useForm} from "react-hook-form";
 import {resendEmail} from "@/libs/api";
+import PopupDialog from "@/components/Dialog/PopupDialog";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  Typography,
+} from "@mui/material";
+import {useRouter} from "next/router";
 
 function ResendEmailPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -14,52 +25,78 @@ function ResendEmailPage() {
   const [error, setError] = useState("");
 
   const onSubmit = async (data) => {
-    console.log("data :", data);
     setDisableBtn(true);
     const res = await resendEmail(data.email);
     if (res.status === 200) {
-      // console.log(res);
       setOpenDialog(true);
     } else {
-      // console.log(res);
       setError(res.response.data.error.message);
       setDisableBtn(false);
     }
   };
 
-  const title = "Email xác thực tài khoản đã đc gửi !";
-  const content = "Chúng tôi đã gửi lại cho bạn email xác thực tài khoản.";
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+    router.push("/account/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
-      {/* <PopupDialog openDialog={openDialog} title={title} content={content} />
-      <div className="flex flex-col justify-center items-center py-4 md:px-0">
-        <div className="form-layout">
-          <p className="text-center text-xl lg:text-2xl font-bold pb-8">
-            Confirm Email
-          </p>
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              className="input-text"
-              label="Email"
-              {...register("email", {required: true})}
-            />
-            {errors.email ? (
-              <p className="form-error">Email is required</p>
-            ) : error ? (
-              <p className="form-error">{error}</p>
-            ) : (
-              <p className="form-error">&nbsp;</p>
-            )}
-            <Button size="sm" className="p-0 w-full" disabled={disableBtn}>
-              <input
-                type="submit"
-                value="Submit"
-                className="text-sm w-full h-full p-2"
-              />
-            </Button>
-          </form>
+      <div>
+        <PopupDialog
+          open={openDialog}
+          close={handleCloseDialog}
+          title="Successful !"
+          content={
+            <Typography>
+              We have sent you an account verification email
+            </Typography>
+          }
+        />
+        <div className="flex flex-col justify-center items-center py-4 md:px-0">
+          <div className="form-layout">
+            <p className="text-center text-headline5 font-bold pb-2">
+              VERIFICATION EMAIL
+            </p>
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
+                <InputLabel htmlFor="Email" sx={{px: 0.5}}>
+                  Email
+                </InputLabel>
+                <Input
+                  id="Email"
+                  sx={{px: 0.5}}
+                  {...register("email", {required: true})}
+                />
+                <FormHelperText sx={{px: 0.5}}>
+                  {errors.email ? (
+                    <span className="text-error">Email is required</span>
+                  ) : error ? (
+                    error
+                  ) : (
+                    <span>
+                      Enter the email you need to verification your account
+                    </span>
+                  )}
+                </FormHelperText>
+              </FormControl>
+
+              <Button
+                variant="contained"
+                sx={{mb: 1, mt: 3, width: "100%"}}
+                disabled={disableBtn}
+              >
+                <input
+                  type="submit"
+                  value="SEND"
+                  className="w-full h-full cursor-pointer"
+                />
+              </Button>
+            </form>
+          </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
