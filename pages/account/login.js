@@ -21,8 +21,11 @@ import {
   InputLabel,
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useTranslation} from "react-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 function LogInPage() {
+  const {t} = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
   const {
@@ -67,12 +70,16 @@ function LogInPage() {
     setShowPassword(!showPassword);
   }, [showPassword]);
 
-  if (token) return <p className="text-center">You are logged in</p>;
+  if (token) {
+    router.push("/");
+  }
 
   return (
     <div className="flex flex-col justify-center items-center py-4 md:px-0">
       <div className="form-layout">
-        <p className="text-center text-headline5 font-bold pb-8">LOGIN</p>
+        <p className="text-center text-headline5 font-bold pb-8 uppercase">
+          {t("login")}
+        </p>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
@@ -90,7 +97,7 @@ function LogInPage() {
           </FormControl>
           <FormControl sx={{my: 1, width: "100%"}} variant="standard">
             <InputLabel htmlFor="password" sx={{px: 0.5}}>
-              Password
+              {t("password")}
             </InputLabel>
             <Input
               id="password"
@@ -112,8 +119,10 @@ function LogInPage() {
             <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
               {errors.email ? (
                 "Password is required"
-              ) : errorMessage ? (
-                errorMessage
+              ) : errorMessage === "Invalid identifier or password" ? (
+                <span>{t("Invalid identifier or password")}</span>
+              ) : errorMessage === "Your account email is not confirmed" ? (
+                <span>{t("Your account email is not confirmed")}</span>
               ) : (
                 <span>&nbsp;</span>
               )}
@@ -123,22 +132,19 @@ function LogInPage() {
             variant="contained"
             sx={{my: 1, width: "100%"}}
             disabled={disableBtn}
+            type="submit"
           >
-            <input
-              type="submit"
-              value="Login"
-              className="w-full h-full cursor-pointer"
-            />
+            {t("login")}
           </Button>
           <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
             <Link href="/account/register">
-              <p className=" text-primary">Create account</p>
+              <p className=" text-primary">{t("create account")}</p>
             </Link>
             <Link href="/account/forgot-password">
-              <p className="text-primary">Forgot password</p>
+              <p className="text-primary">{t("forgot password")}</p>
             </Link>
             <Link href="/account/resend-email">
-              <p className="text-primary">Resend the confirm email</p>
+              <p className="text-primary">{t("resend the confirm email")}</p>
             </Link>
           </div>
         </form>
@@ -150,3 +156,15 @@ function LogInPage() {
 LogInPage.propTypes = {};
 
 export default LogInPage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
+    },
+    revalidate: true,
+  };
+};

@@ -10,6 +10,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import Layout from "@/components/layout";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import {appWithTranslation} from "next-i18next";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +18,7 @@ const darkTheme = createTheme({
   },
 });
 
-export default function MyApp({Component, pageProps}) {
+function MyApp({Component, pageProps}) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -38,3 +39,5 @@ export default function MyApp({Component, pageProps}) {
     </Provider>
   );
 }
+
+export default appWithTranslation(MyApp);

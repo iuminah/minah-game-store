@@ -21,24 +21,27 @@ import {
   setUserID,
 } from "@/redux/accountSlice";
 import {getImageUrl} from "@/libs/ultis";
+import {useTranslation} from "react-i18next";
+import LanguageButton from "../language/LanguageButton";
 
-const ItemMenu = () => {
+const ItemMenu = ({store, discover, news}) => {
   return (
     <>
       <Link href="/" className="hover-effect">
-        STORE
+        {store}
       </Link>
       <Link href="/" className="hover-effect">
-        DISCOVER
+        {discover}
       </Link>
       <Link href="/" className="hover-effect">
-        NEWS
+        {news}
       </Link>
     </>
   );
 };
 
 function Navbar() {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
   const {username, avatar} = userData?.attributes ?? {};
@@ -77,67 +80,77 @@ function Navbar() {
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters className="navbar">
-          <Link href="/">
-            <div className="relative w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]">
-              <Image
-                alt="logo"
-                src={MinahLogoPNG}
-                fill
-                className="object-cover"
-                draggable="false"
-                priority="false"
-                sizes="100vw"
-              />
-            </div>
-          </Link>
-          <div className="menu">
-            <ItemMenu />
-          </div>
-          {userData ? (
-            <div className="hidden lg:block">
-              <Avatar
-                variant="rounded"
-                alt="Avatar"
-                onClick={openUserMenu}
-                src={getImageUrl(avatar)}
-              />
-              <Menu
-                anchorEl={anchorEl}
-                open={openAnchor}
-                onClose={CloseUserMenu}
-                className="mt-1"
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                PaperProps={{sx: {width: "120px"}}}
-              >
-                <Typography
-                  onClick={CloseUserMenu}
-                  className="text-center pb-1.5"
-                >
-                  {username}
-                </Typography>
-                <Divider />
-                <div className="mt-1.5">
-                  <Link href="/account/profile">
-                    <MenuItem onClick={CloseUserMenu}>Profile</MenuItem>
-                  </Link>
-                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                </div>
-              </Menu>
-            </div>
-          ) : (
-            <Link href="/account/login" className="hidden lg:block">
-              <Button variant="contained">LOGIN</Button>
+          <div className="w-full">
+            <Link href="/">
+              <div className="relative w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]">
+                <Image
+                  alt="logo"
+                  src={MinahLogoPNG}
+                  fill
+                  className="object-cover"
+                  draggable="false"
+                  priority="false"
+                  sizes="100vw"
+                />
+              </div>
             </Link>
-          )}
+          </div>
+          <div className="menu">
+            <ItemMenu
+              store={t("store")}
+              discover={t("discover")}
+              news={t("news")}
+            />
+          </div>
+          <div className="hidden lg:flex items-center justify-end space-x-4 w-full ">
+            <LanguageButton />
+            {userData ? (
+              <div className="">
+                <Avatar
+                  variant="rounded"
+                  alt="Avatar"
+                  onClick={openUserMenu}
+                  src={getImageUrl(avatar)}
+                />
+                <Menu
+                  anchorEl={anchorEl}
+                  open={openAnchor}
+                  onClose={CloseUserMenu}
+                  className="mt-1"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  PaperProps={{sx: {width: "120px"}}}
+                >
+                  <Typography
+                    onClick={CloseUserMenu}
+                    className="text-center pb-1.5"
+                  >
+                    {username}
+                  </Typography>
+                  <Divider />
+                  <div className="mt-1.5">
+                    <Link href="/account/profile">
+                      <MenuItem onClick={CloseUserMenu}>Profile</MenuItem>
+                    </Link>
+                    <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                  </div>
+                </Menu>
+              </div>
+            ) : (
+              <Link href="/account/login" className="hidden lg:block">
+                <Button variant="contained">{t("login")}</Button>
+              </Link>
+            )}
+          </div>
 
-          <div className="block lg:hidden">
+          <div className="flex lg:hidden space-x-3">
+            <LanguageButton />
             <IconButton aria-label="Menu" onClick={toggleDrawer}>
               <MenuIcon />
             </IconButton>
@@ -157,12 +170,17 @@ function Navbar() {
                 onClick={toggleDrawer}
                 className="menu-mobile"
               >
-                <div className="flex flex-col items-center space-y-6">
-                  <ItemMenu />
+                <div className="flex flex-col items-center space-y-6 uppercase">
+                  <ItemMenu
+                    store={t("store")}
+                    discover={t("discover")}
+                    news={t("news")}
+                  />
                 </div>
+
                 <div className="w-full">
                   {userData ? (
-                    <div className="flex justify-between items-center">
+                    <div className="space-y-6">
                       <div className="flex items-center space-x-3">
                         <Link href="/account/profile">
                           <Avatar
@@ -176,17 +194,17 @@ function Navbar() {
                         </Link>
                       </div>
                       <Button
-                        variant="text"
-                        sx={{px: 0}}
+                        variant="contained"
+                        sx={{px: 0, width: "100%"}}
                         onClick={handleLogOut}
                       >
-                        Logout
+                        {t("logout")}
                       </Button>
                     </div>
                   ) : (
                     <Link href="/account/login">
                       <Button variant="contained" sx={{width: "100%"}}>
-                        LOGIN
+                        {t("login")}
                       </Button>
                     </Link>
                   )}

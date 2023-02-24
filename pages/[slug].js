@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {getProductBySlug, getProducts} from "@/libs/api";
 import {fixContent} from "@/libs/ultis";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 function Page({product}) {
   const {name, description} = product;
@@ -22,20 +23,36 @@ function Page({product}) {
 
 Page.propTypes = {};
 
-export async function getStaticProps({params}) {
-  const product = await getProductBySlug(params.slug);
+export async function getStaticProps({params, locale}) {
+  const product = await getProductBySlug(params.slug, locale);
   return {
     props: {
+      // ...(await serverSideTranslations(locale, ["common"], null, ["en", "vi"])),
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
       product,
     },
   };
 }
 
-export async function getStaticPaths() {
-  const productSlug = await getProducts();
+export async function getStaticPaths({locales}) {
+  let paths = [];
+
+  for (const locale of locales) {
+    const productSlug = (await getProducts(locale)) || [];
+    paths = paths.concat(
+      productSlug?.map((page) => ({
+        params: {slug: page.attributes.slug},
+        locale: page.attributes.locale,
+      })),
+    );
+    console.log("paths :", paths);
+  }
 
   return {
-    paths: productSlug.map((product) => `/${product.attributes.slug}`),
+    paths,
     fallback: "blocking",
   };
 }

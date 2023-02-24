@@ -11,8 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import {useRouter} from "next/router";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "react-i18next";
 
 function ForgotPasswordPage() {
+  const {t} = useTranslation();
   const router = useRouter();
   const {
     register,
@@ -55,8 +58,8 @@ function ForgotPasswordPage() {
       />
       <div className="flex flex-col justify-center items-center py-4 md:px-0">
         <div className="form-layout">
-          <p className="text-center text-headline5 font-bold pb-2">
-            FORGOT PASSWORD
+          <p className="text-center text-headline5 font-bold pb-2 uppercase">
+            {t("forgot password")}
           </p>
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
@@ -73,7 +76,9 @@ function ForgotPasswordPage() {
                   <span className="text-error">Email is required</span>
                 ) : (
                   <span>
-                    Enter the email you need to reset your account password
+                    {t(
+                      "enter the email you need to reset your account password",
+                    )}
                   </span>
                 )}
               </FormHelperText>
@@ -83,12 +88,9 @@ function ForgotPasswordPage() {
               variant="contained"
               sx={{mb: 1, mt: 3, width: "100%"}}
               disabled={disableBtn}
+              type="submit"
             >
-              <input
-                type="submit"
-                value="SEND"
-                className="w-full h-full cursor-pointer"
-              />
+              {t("send")}
             </Button>
           </form>
         </div>
@@ -98,3 +100,15 @@ function ForgotPasswordPage() {
 }
 
 export default ForgotPasswordPage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
+    },
+    revalidate: true,
+  };
+};

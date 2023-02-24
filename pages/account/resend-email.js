@@ -11,8 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import {useRouter} from "next/router";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "react-i18next";
 
 function ResendEmailPage() {
+  const {t} = useTranslation();
   const router = useRouter();
   const {
     register,
@@ -23,6 +26,7 @@ function ResendEmailPage() {
   const [disableBtn, setDisableBtn] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [error, setError] = useState("");
+  console.log("error :", error);
 
   const onSubmit = async (data) => {
     setDisableBtn(true);
@@ -47,17 +51,17 @@ function ResendEmailPage() {
         <PopupDialog
           open={openDialog}
           close={handleCloseDialog}
-          title="Successful !"
+          title={`${t("successful")} !`}
           content={
             <Typography>
-              We have sent you an account verification email
+              {t("we have sent you an account verification email")}
             </Typography>
           }
         />
         <div className="flex flex-col justify-center items-center py-4 md:px-0">
           <div className="form-layout">
-            <p className="text-center text-headline5 font-bold pb-2">
-              VERIFICATION EMAIL
+            <p className="text-center text-headline5 font-bold pb-2 uppercase">
+              {t("verification email")}
             </p>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
@@ -71,12 +75,14 @@ function ResendEmailPage() {
                 />
                 <FormHelperText sx={{px: 0.5}}>
                   {errors.email ? (
-                    <span className="text-error">Email is required</span>
-                  ) : error ? (
-                    error
+                    <span className="text-error">{t("email is required")}</span>
+                  ) : error === "Already confirmed" ? (
+                    <span>{t("already confirmed")}</span>
                   ) : (
                     <span>
-                      Enter the email you need to verification your account
+                      {t(
+                        "enter the email you need to verification your account",
+                      )}
                     </span>
                   )}
                 </FormHelperText>
@@ -86,12 +92,9 @@ function ResendEmailPage() {
                 variant="contained"
                 sx={{mb: 1, mt: 3, width: "100%"}}
                 disabled={disableBtn}
+                type="submit"
               >
-                <input
-                  type="submit"
-                  value="SEND"
-                  className="w-full h-full cursor-pointer"
-                />
+                {t("send")}
               </Button>
             </form>
           </div>
@@ -102,3 +105,15 @@ function ResendEmailPage() {
 }
 
 export default ResendEmailPage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
+    },
+    revalidate: true,
+  };
+};

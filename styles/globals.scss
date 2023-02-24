@@ -18,13 +18,13 @@ body {
   @apply flex justify-between;
 
   .menu {
-    @apply hidden lg:block;
+    @apply hidden lg:flex justify-center w-full;
     @apply space-x-6 font-medium uppercase;
   }
 }
 
 .menu-mobile {
-  @apply flex flex-col items-center justify-between h-full pb-6 px-4;
+  @apply flex flex-col items-center justify-between h-full pb-10 px-4;
 }
 
 .hover-effect {
@@ -44,51 +44,52 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #fff !important;
 }
 
-// .post-content {
-//   // @apply text-base leading-relaxed;
+.post-content {
+  @apply text-body2 md:text-body1 leading-relaxed;
 
-//   p,
-//   span {
-//   }
+  p,
+  span {
+    @apply text-slate-200 #{!important};
+  }
 
-//   & > * {
-//     @apply mb-4;
-//   }
+  & > * {
+    @apply mb-4;
+  }
 
-//   img {
-//     @apply w-full mx-auto;
-//   }
+  img {
+    @apply w-full mx-auto;
+  }
 
-//   blockquote {
-//     @apply border-l-2 px-4 italic;
-//   }
+  blockquote {
+    @apply border-l-2 px-4 italic;
+  }
 
-//   pre {
-//     @apply p-4 text-body2;
-//   }
+  pre {
+    @apply p-4 text-body2;
+  }
 
-//   ul {
-//     @apply list-disc ml-8 space-y-2;
-//   }
+  ul {
+    @apply list-disc ml-8 space-y-2;
+  }
 
-//   .table {
-//     @apply w-full #{!important};
-//   }
-//   table {
-//     @apply w-full;
-//   }
+  .table {
+    @apply w-full #{!important};
+  }
+  table {
+    @apply w-full;
+  }
 
-//   table,
-//   th,
-//   td {
-//     @apply border border-collapse;
-//   }
+  table,
+  th,
+  td {
+    @apply border border-collapse;
+  }
 
-//   th,
-//   td {
-//     @apply px-2;
-//   }
-// }
+  th,
+  td {
+    @apply px-2;
+  }
+}
 
 .feature-slide {
   @apply h-[550px] md:h-[450px] xl:h-[600px] md:w-auto mx-auto;

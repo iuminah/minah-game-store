@@ -15,8 +15,11 @@ import {
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import PopupDialog from "@/components/Dialog/PopupDialog";
 import {useRouter} from "next/router";
+import {useTranslation} from "react-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 function RegisterPage() {
+  const {t} = useTranslation();
   const router = useRouter();
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,25 +63,29 @@ function RegisterPage() {
       <PopupDialog
         open={openDialog}
         close={handleCloseDialog}
-        title="Register Successful !"
+        title={t("register successful !")}
         content={
           <div className="space-y-2">
             <Typography>
-              Congratulations, you have successfully registered an account
+              {t(
+                "congratulations, you have successfully registered an account",
+              )}
             </Typography>
             <Typography>
-              Please check your email to activate your account
+              {t("please check your email to activate your account")}
             </Typography>
           </div>
         }
       />
       <div className="flex flex-col justify-center items-center py-4 md:px-0">
         <div className="form-layout">
-          <p className="text-center text-headline5 font-bold pb-8">REGISTER</p>
+          <p className="text-center text-headline5 font-bold pb-8 uppercase">
+            {t("register")}
+          </p>
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
               <InputLabel htmlFor="username" sx={{px: 0.5}}>
-                User Name
+                {t("username")}
               </InputLabel>
               <Input
                 id="username"
@@ -86,7 +93,11 @@ function RegisterPage() {
                 {...register("username", {required: true})}
               />
               <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
-                {errors.email ? "User Name is required" : <span>&nbsp;</span>}
+                {errors.email ? (
+                  <span>{t("user name is required")}</span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </FormHelperText>
             </FormControl>
             <FormControl variant="standard" sx={{my: 1, width: "100%"}}>
@@ -99,12 +110,16 @@ function RegisterPage() {
                 {...register("email", {required: true})}
               />
               <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
-                {errors.email ? "Email is required" : <span>&nbsp;</span>}
+                {errors.email ? (
+                  <span>{t("email is required")}</span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </FormHelperText>
             </FormControl>
             <FormControl sx={{my: 1, width: "100%"}} variant="standard">
               <InputLabel htmlFor="password" sx={{px: 0.5}}>
-                Password
+                {t("password")}
               </InputLabel>
               <Input
                 id="password"
@@ -123,12 +138,16 @@ function RegisterPage() {
                 {...register("password", {required: true})}
               />
               <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
-                {errors.password ? "Password is required" : <span>&nbsp;</span>}
+                {errors.password ? (
+                  <span>{t("password is required")}</span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </FormHelperText>
             </FormControl>
             <FormControl sx={{my: 1, width: "100%"}} variant="standard">
               <InputLabel htmlFor="confirm-password" sx={{px: 0.5}}>
-                Confirm password
+                {t("confirm password")}
               </InputLabel>
               <Input
                 id="confirm-password"
@@ -157,11 +176,16 @@ function RegisterPage() {
               />
               <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
                 {errors.confirmPassword?.message ? (
-                  errors.confirmPassword.message
+                  <span>{t("Your passwords do no match")}</span>
                 ) : errors.confirmPassword ? (
-                  "Confirm password is required"
-                ) : errorMessage ? (
-                  errorMessage
+                  <span>{t("confirm password is required")}</span>
+                ) : errorMessage === "Email or Username are already taken" ? (
+                  <span>{t("Email or Username are already taken")}</span>
+                ) : errorMessage === "email must be a valid email" ? (
+                  <span>{t("email must be a valid email")}</span>
+                ) : errorMessage ===
+                  "password must be at least 6 characters" ? (
+                  <span>{t("password must be at least 6 characters")}</span>
                 ) : (
                   <span>&nbsp;</span>
                 )}
@@ -171,22 +195,19 @@ function RegisterPage() {
               variant="contained"
               sx={{mb: 1, mt: 3, width: "100%"}}
               disabled={disableBtn}
+              type="submit"
             >
-              <input
-                type="submit"
-                value="Register"
-                className="w-full h-full cursor-pointer"
-              />
+              {t("register")}
             </Button>
             <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
               <Link href="/account/register">
-                <p className=" text-primary">Create account</p>
+                <p className=" text-primary">{t("create account")}</p>
               </Link>
               <Link href="/account/forgot-password">
-                <p className="text-primary">Forgot password</p>
+                <p className="text-primary">{t("forgot password")}</p>
               </Link>
               <Link href="/account/resend-email">
-                <p className="text-primary">Resend the confirm email</p>
+                <p className="text-primary">{t("resend the confirm email")}</p>
               </Link>
             </div>
           </form>
@@ -197,3 +218,15 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
+    },
+    revalidate: true,
+  };
+};

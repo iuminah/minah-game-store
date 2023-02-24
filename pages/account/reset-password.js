@@ -14,8 +14,11 @@ import {
   Input,
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "react-i18next";
 
-function ResetPasswordPage(props) {
+function ResetPasswordPage() {
+  const {t} = useTranslation();
   const router = useRouter();
 
   const [privateCode, setPrivateCode] = useState();
@@ -67,20 +70,20 @@ function ResetPasswordPage(props) {
         content={
           <div className="space-y-2">
             <Typography>
-              Congratulations, you have successfully reset your password
+              {t("congratulations, you have successfully reset your password")}
             </Typography>
           </div>
         }
       />
       <div className="flex flex-col justify-center items-center py-4 md:px-0">
         <div className="form-layout">
-          <p className="text-center text-headline5 font-bold pb-8">
-            RESET PASSWORD
+          <p className="text-center text-headline5 font-bold pb-8 uppercase">
+            {t("reset password")}
           </p>
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <FormControl sx={{my: 1, width: "100%"}} variant="standard">
               <InputLabel htmlFor="password" sx={{px: 0.5}}>
-                Password
+                {t("password")}
               </InputLabel>
               <Input
                 id="password"
@@ -99,12 +102,16 @@ function ResetPasswordPage(props) {
                 {...register("password", {required: true})}
               />
               <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
-                {errors.password ? "Password is required" : <span>&nbsp;</span>}
+                {errors.password ? (
+                  <span>{t("password is required")}</span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </FormHelperText>
             </FormControl>
             <FormControl sx={{my: 1, width: "100%"}} variant="standard">
               <InputLabel htmlFor="confirm-password" sx={{px: 0.5}}>
-                Confirm password
+                {t("confirm password")}
               </InputLabel>
               <Input
                 id="confirm-password"
@@ -124,7 +131,7 @@ function ResetPasswordPage(props) {
                   required: true,
                   validate: (val) => {
                     if (watch("password") != val) {
-                      return "Your passwords do no match";
+                      return <span>{t("Your passwords do no match")}</span>;
                     } else {
                       setErrorMessage("");
                     }
@@ -135,9 +142,10 @@ function ResetPasswordPage(props) {
                 {errors.confirmPassword?.message ? (
                   errors.confirmPassword.message
                 ) : errors.confirmPassword ? (
-                  "Confirm password is required"
-                ) : errorMessage ? (
-                  errorMessage
+                  <span>{t("confirm password is required")}</span>
+                ) : errorMessage ===
+                  "password must be at least 6 characters" ? (
+                  <span>{t("password must be at least 6 characters")}</span>
                 ) : (
                   <span>&nbsp;</span>
                 )}
@@ -147,12 +155,9 @@ function ResetPasswordPage(props) {
               variant="contained"
               sx={{mb: 1, mt: 3, width: "100%"}}
               disabled={disableBtn}
+              type="submit"
             >
-              <input
-                type="submit"
-                value="RESET PASSWORD"
-                className="w-full h-full cursor-pointer"
-              />
+              {t("reset password")}
             </Button>
           </form>
         </div>
@@ -162,3 +167,15 @@ function ResetPasswordPage(props) {
 }
 
 export default ResetPasswordPage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
+        "en",
+        "vi-VN",
+      ])),
+    },
+    revalidate: true,
+  };
+};
