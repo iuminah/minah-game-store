@@ -48,7 +48,6 @@ export async function getStaticPaths({locales}) {
         locale: page.attributes.locale,
       })),
     );
-    console.log("paths :", paths);
   }
 
   return {

@@ -209,21 +209,22 @@ export const getNewGameSlide = async (locale) => {
   return data?.newGame?.data?.attributes.products?.data;
 };
 
-export const getProducts = async () => {
+export const getProducts = async (locale) => {
   const data = await fetchAPI(
     `
-    query {
-      products {
+    query getProduct($locale: I18NLocaleCode) {
+      products(locale: $locale) {
         data {
           attributes {
             name
             slug
+            locale
           }
         }
       }
     }
     `,
-    {},
+    {variables: {locale}},
   );
   return data?.products?.data;
 };
