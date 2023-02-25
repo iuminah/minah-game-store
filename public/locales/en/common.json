@@ -34,5 +34,6 @@
   "Your passwords do no match" : "Your passwords do no match",
   "store" : "Store",
   "successful" : "Successful",
-  "we have sent you an account verification email" : "We have sent you an account verification email"
+  "we have sent you an account verification email" : "We have sent you an account verification email",
+  "we have sent you an email to reset your password" : "We have sent you an email to reset your password"
 }

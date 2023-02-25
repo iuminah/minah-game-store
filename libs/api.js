@@ -4,8 +4,8 @@ import FormData from "form-data";
 const token =
   "67c62940c97240816e00c6efb3315d04a228ab7a99b8067b7747fec2388df1a1aa6443ff4fee50694dd28be44f3474a7ea692938c19c8269147e3ccac9e613cdc4acb84f653870dd7bb01fd1d7e6435784a6cffdf5a9501f719dbcfbf8a71faab04a2ed8a6f3be05dbb8d13973e62686cc83d11e94c9064b194dfe9c9d95052f";
 
-// export const DOMAIN = "http://localhost:1337";
-export const DOMAIN = "https://minah-game-cms-uppyx.appengine.bfcplatform.vn";
+export const DOMAIN = "http://localhost:1337";
+// export const DOMAIN = "https://minah-game-cms-uppyx.appengine.bfcplatform.vn";
 
 const apiInstance = axios.create({
   baseURL: `${DOMAIN}/api`,
@@ -182,10 +182,9 @@ export const getNewGameSlide = async (locale) => {
             products {
               data {
                 attributes {
-                  name
-                  slug
+                  title
+                  link
                   brief
-                  button
                   prices
                   discount
                   cover {
@@ -216,8 +215,8 @@ export const getProducts = async (locale) => {
       products(locale: $locale) {
         data {
           attributes {
-            name
-            slug
+            title
+            link
             locale
           }
         }
@@ -229,21 +228,21 @@ export const getProducts = async (locale) => {
   return data?.products?.data;
 };
 
-export const getProductBySlug = async (slug, locale) => {
+export const getProductByLink = async (link, locale) => {
   const data = await fetchAPI(
     `
-    query getGameBySlug($slug: String, $locale: I18NLocaleCode) {
-      products(locale: $locale,filters: {slug: {eq: $slug}}) {
+    query getGameByLink($link: String, $locale: I18NLocaleCode) {
+      products(locale: $locale,filters: {link: {eq: $link}}) {
         data {
           attributes {
-            name
+            title
             description
           }
         }
       }
     }
     `,
-    {variables: {slug, locale}},
+    {variables: {link, locale}},
   );
   return data?.products?.data?.[0].attributes;
 };

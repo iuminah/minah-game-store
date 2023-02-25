@@ -29,7 +29,6 @@ function ForgotPasswordPage() {
   const onSubmit = async (data) => {
     setDisableBtn(true);
     const res = await forgotPassword(data.email);
-    console.log("res :", res);
     if (res.status === 200) {
       setOpenDialog(true);
     } else {
@@ -52,7 +51,7 @@ function ForgotPasswordPage() {
         title="Reset password Successful !"
         content={
           <Typography>
-            We have sent you an email to reset your password.
+            {t("we have sent you an email to reset your password")}
           </Typography>
         }
       />
@@ -73,7 +72,7 @@ function ForgotPasswordPage() {
               />
               <FormHelperText sx={{px: 0.5}}>
                 {errors.email ? (
-                  <span className="text-error">Email is required</span>
+                  <span className="text-error">{t("email is required")}</span>
                 ) : (
                   <span>
                     {t(

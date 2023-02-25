@@ -21,7 +21,12 @@ function LanguageButton() {
           sx={{
             boxShadow: "none",
             ".MuiOutlinedInput-notchedOutline": {border: 0},
-            padding: "0 !important",
+            ".MuiSelect-select": {
+              paddingLeft: "14px !important",
+              paddingTop: "8px !important",
+              paddingBottom: "6px !important",
+              paddingRight: "14px !important",
+            },
           }}
           inputProps={{IconComponent: () => null}}
         >

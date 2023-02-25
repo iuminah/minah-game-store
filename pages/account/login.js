@@ -92,7 +92,11 @@ function LogInPage() {
               {...register("email", {required: true})}
             />
             <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
-              {errors.email ? "Email is required" : <span>&nbsp;</span>}
+              {errors.email ? (
+                <span>{t("email is required")}</span>
+              ) : (
+                <span>&nbsp;</span>
+              )}
             </FormHelperText>
           </FormControl>
           <FormControl sx={{my: 1, width: "100%"}} variant="standard">
@@ -118,7 +122,7 @@ function LogInPage() {
             />
             <FormHelperText sx={{px: 0.5, color: "#F07C79"}}>
               {errors.email ? (
-                "Password is required"
+                <span>{t("password is required")}</span>
               ) : errorMessage === "Invalid identifier or password" ? (
                 <span>{t("Invalid identifier or password")}</span>
               ) : errorMessage === "Your account email is not confirmed" ? (

@@ -80,9 +80,9 @@ function Navbar() {
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters className="navbar">
-          <div className="w-full">
-            <Link href="/">
-              <div className="relative w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]">
+          <div className="lg:w-full">
+            <div className="relative w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]">
+              <Link href="/">
                 <Image
                   alt="logo"
                   src={MinahLogoPNG}
@@ -92,8 +92,8 @@ function Navbar() {
                   priority="false"
                   sizes="100vw"
                 />
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
           <div className="menu">
             <ItemMenu
@@ -149,8 +149,7 @@ function Navbar() {
             )}
           </div>
 
-          <div className="flex lg:hidden space-x-3">
-            <LanguageButton />
+          <div className="flex items-center lg:hidden space-x-3">
             <IconButton aria-label="Menu" onClick={toggleDrawer}>
               <MenuIcon />
             </IconButton>
@@ -160,7 +159,9 @@ function Navbar() {
               PaperProps={{sx: {width: "70%"}}}
               onClose={toggleDrawer}
             >
-              <div className="h-16 flex justify-end items-center px-1">
+              <div className="h-16 flex justify-between items-center px-1">
+                <LanguageButton />
+
                 <IconButton onClick={toggleDrawer}>
                   <ClearIcon />
                 </IconButton>

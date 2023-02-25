@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {getProductBySlug, getProducts} from "@/libs/api";
+import {getProductByLink, getProducts} from "@/libs/api";
 import {fixContent} from "@/libs/ultis";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
@@ -21,13 +20,19 @@ function Page({product}) {
   );
 }
 
-Page.propTypes = {};
+export default Page;
 
 export async function getStaticProps({params, locale}) {
-  const product = await getProductBySlug(params.slug, locale);
+  console.log("params :", params);
+  console.log("locale :", locale);
+  const product = await getProductByLink(params.link, locale);
+
+  if (!product) {
+    return {notFound: true};
+  }
+
   return {
     props: {
-      // ...(await serverSideTranslations(locale, ["common"], null, ["en", "vi"])),
       ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
         "en",
         "vi-VN",
@@ -44,15 +49,15 @@ export async function getStaticPaths({locales}) {
     const productSlug = (await getProducts(locale)) || [];
     paths = paths.concat(
       productSlug?.map((page) => ({
-        params: {slug: page.attributes.slug},
+        params: {link: page.attributes.link},
         locale: page.attributes.locale,
       })),
     );
   }
+  // console.log("paths :", paths);
 
   return {
     paths,
     fallback: "blocking",
   };
 }
-export default Page;

@@ -34,5 +34,6 @@
   "Your passwords do no match" : "Mật khẩu chưa khớp",
   "store" : "Cửa hàng",
   "successful" : "Thành công",
-  "we have sent you an account verification email" : "Chúng tôi đã gửi cho bạn một email xác minh tài khoản"
+  "we have sent you an account verification email" : "Chúng tôi đã gửi cho bạn email để xác minh tài khoản",
+  "we have sent you an email to reset your password" : "Chúng tôi đã gửi cho bạn email để đặt lại mật khẩu"
 }

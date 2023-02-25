@@ -24,6 +24,6 @@ export const getStaticProps = async ({locale}) => {
       ])),
       newGameSlides,
     },
-    revalidate: true,
+    revalidate: false,
   };
 };

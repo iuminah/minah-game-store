@@ -3,12 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Pagination, Navigation, Autoplay} from "swiper";
-import {getImageUrl, lastPrice, shimmerBlur} from "@/libs/ultis";
+import {
+  getFormattedImage,
+  getImageUrl,
+  lastPrice,
+  rgbDataURL,
+  shimmerBlur,
+} from "@/libs/ultis";
 import {Button, IconButton, Skeleton} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import {useTranslation} from "react-i18next";
 
 function NewGameSlide({newGameSlides}) {
+  const {t} = useTranslation();
   return (
     <div className="feature-slide">
       <Swiper
@@ -31,30 +39,30 @@ function NewGameSlide({newGameSlides}) {
         modules={[Autoplay, Pagination, Navigation]}
       >
         {newGameSlides?.map((item, key) => {
-          const {cover, name, brief, prices, discount, slug, button} =
-            item.attributes;
+          const {cover, title, brief, prices, discount, link} = item.attributes;
+          console.log("cover :", cover);
 
           return (
             <SwiperSlide key={key} className="py-3.5 -my-8">
-              <div className="h-full grid grid-row-4 md:grid-rows-none md:grid-cols-6 lg:grid-cols-12 ">
+              <div className="h-full grid grid-row-4 md:grid-rows-none md:grid-cols-6 lg:grid-cols-12">
                 <div className="relative row-span-3 md:row-auto md:col-span-4 lg:col-span-9 lg:py-0 active:opacity-80">
-                  <Link href={slug}>
+                  <Link href={link}>
                     <Image
                       src={getImageUrl(cover)}
-                      alt={name}
+                      alt={title}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                       draggable="false"
                       placeholder="blur"
-                      blurDataURL={shimmerBlur(80, 80)}
+                      blurDataURL={shimmerBlur(1000, 1000)}
                     />
                   </Link>
                 </div>
                 <div className="row-span-1 md:row-auto md:col-span-2 lg:col-span-3 flex flex-col px-6 justify-center space-y-2 lg:space-y-4 bg-background-secondary py-0">
-                  <Link href={slug}>
+                  <Link href={link}>
                     <h1 className="text-headline5 lg:text-headline4 font-bold">
-                      {name}
+                      {title}
                     </h1>
                   </Link>
                   <p className="line-clamp-3 lg:line-clamp-4">{brief}</p>
@@ -81,13 +89,13 @@ function NewGameSlide({newGameSlides}) {
                       </p>
                     )}
                   </div>
-                  <Link href={slug} className="w-full">
+                  <Link href={link} className="w-full">
                     <Button
                       variant="contained"
                       size="large"
                       sx={{width: "100%"}}
                     >
-                      {button}
+                      {t("learn more")}
                     </Button>
                   </Link>
                 </div>
