@@ -200,8 +200,8 @@ function RegisterPage() {
               {t("register")}
             </Button>
             <div className="flex flex-col items-center lg:items-start justify-between p-2 my-2.5 space-y-2.5">
-              <Link href="/account/register">
-                <p className=" text-primary">{t("create account")}</p>
+              <Link href="/account/login">
+                <p className=" text-primary">{t("login")}</p>
               </Link>
               <Link href="/account/forgot-password">
                 <p className="text-primary">{t("forgot password")}</p>
@@ -227,6 +227,5 @@ export const getStaticProps = async ({locale}) => {
         "vi-VN",
       ])),
     },
-    revalidate: true,
   };
 };
