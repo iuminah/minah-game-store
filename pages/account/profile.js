@@ -7,6 +7,7 @@ import {getBase64, getImageUrl} from "@/libs/ultis";
 import {useForm} from "react-hook-form";
 import {uploadAvatar} from "@/libs/api";
 import defaultAvatar from "../../assets/icons/userIcon.png";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 // import ImgCrop from "antd-img-crop";
 
 function ProfilePage() {
@@ -51,3 +52,14 @@ function ProfilePage() {
 ProfilePage.propTypes = {};
 
 export default ProfilePage;
+
+export const getStaticProps = async ({locale}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en-US", ["common"], null, [
+        "en-US",
+        "vi-VN",
+      ])),
+    },
+  };
+};

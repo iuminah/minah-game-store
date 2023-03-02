@@ -1,27 +1,28 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Pagination, Navigation, Autoplay} from "swiper";
 import {
-  getFormattedImage,
   getImageUrl,
   lastPrice,
-  rgbDataURL,
+  priceWithLocale,
   shimmerBlur,
 } from "@/libs/ultis";
-import {Button, IconButton, Skeleton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {useTranslation} from "react-i18next";
+import {useRouter} from "next/router";
 
 function NewGameSlide({newGameSlides}) {
   const {t} = useTranslation();
+  const router = useRouter();
+  const {locale} = router;
   return (
     <div className="feature-slide">
       <Swiper
         slidesPerView={1}
-        spaceBetween={30}
         loop
         pagination={{
           clickable: true,
@@ -40,7 +41,6 @@ function NewGameSlide({newGameSlides}) {
       >
         {newGameSlides?.map((item, key) => {
           const {cover, title, brief, prices, discount, link} = item.attributes;
-          console.log("cover :", cover);
 
           return (
             <SwiperSlide key={key} className="py-3.5 -my-8">
@@ -54,8 +54,6 @@ function NewGameSlide({newGameSlides}) {
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                       draggable="false"
-                      placeholder="blur"
-                      blurDataURL={shimmerBlur(1000, 1000)}
                     />
                   </Link>
                 </div>
@@ -76,11 +74,11 @@ function NewGameSlide({newGameSlides}) {
                       <div className="text-right">
                         {discount ? (
                           <p className="text-md line-through text-gray-300 italic font-thin">
-                            {prices.toLocaleString()}₫
+                            {priceWithLocale(prices, locale)}
                           </p>
                         ) : null}
                         <p className="text-headline6 font-medium">
-                          {lastPrice(prices, discount)}
+                          {lastPrice(prices, discount, locale)}
                         </p>
                       </div>
                     ) : (

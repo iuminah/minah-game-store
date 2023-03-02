@@ -48,27 +48,34 @@ const toBase64 = (str) =>
 export const shimmerBlur = (w, h) =>
   `data:image/svg+xml;base64,${toBase64(shimmer(w, h))}`;
 
-const keyStr =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-const triplet = (e1, e2, e3) =>
-  keyStr.charAt(e1 >> 2) +
-  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
-  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
-  keyStr.charAt(e3 & 63);
-
-export const rgbDataURL = (r, g, b) =>
-  `data:image/gif;base64,R0lGODlhAQABAPAA${
-    triplet(0, r, g) + triplet(b, 255, 255)
-  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
-
 export const fixContent = (content) => {
   return content.replaceAll("/uploads/", `${DOMAIN}/uploads/`);
 };
 
-export const lastPrice = (price, discount) => {
+export const priceWithLocale = (prices, locale) => {
+  let currency = "USD";
+  if (locale === "vi-VN") {
+    currency = "VND";
+  }
+  const price = prices.toLocaleString(locale, {
+    style: "currency",
+    currency: currency,
+    maximumSignificantDigits: 3,
+  });
+  return price;
+};
+
+export const lastPrice = (price, discount, locale) => {
+  let currency = "USD";
+  if (locale === "vi-VN") {
+    currency = "VND";
+  }
   const result = price - price * (discount / 100);
-  return `${result.toLocaleString()}₫`;
+  return `${result.toLocaleString(locale, {
+    style: "currency",
+    currency: currency,
+    maximumSignificantDigits: 3,
+  })}`;
 };
 
 export function getBase64(file) {

@@ -4,8 +4,8 @@ import FormData from "form-data";
 const token =
   "67c62940c97240816e00c6efb3315d04a228ab7a99b8067b7747fec2388df1a1aa6443ff4fee50694dd28be44f3474a7ea692938c19c8269147e3ccac9e613cdc4acb84f653870dd7bb01fd1d7e6435784a6cffdf5a9501f719dbcfbf8a71faab04a2ed8a6f3be05dbb8d13973e62686cc83d11e94c9064b194dfe9c9d95052f";
 
-// export const DOMAIN = "http://localhost:1337";
-export const DOMAIN = "https://minah-game-cms-uppyx.appengine.bfcplatform.vn";
+export const DOMAIN = "http://localhost:1337";
+// export const DOMAIN = "https://minah-game-cms-uppyx.appengine.bfcplatform.vn";
 
 const apiInstance = axios.create({
   baseURL: `${DOMAIN}/api`,
@@ -231,11 +231,70 @@ export const getProducts = async (locale) => {
 export const getProductByLink = async (link, locale) => {
   const data = await fetchAPI(
     `
-    query getGameByLink($link: String, $locale: I18NLocaleCode) {
-      products(locale: $locale,filters: {link: {eq: $link}}) {
+    query getProduct($locale: I18NLocaleCode) {
+      products(locale: $locale) {
         data {
           attributes {
             title
+            link
+            developer
+            publisher
+            releaseDate
+            gallery {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            logo {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            platforms {
+              data {
+                attributes {
+                  os
+                }
+              }
+            }
+            windows {
+              __typename
+              ... on ComponentSpecificationsMinimum {
+                OS
+                Processor
+                Memory
+                Storage
+                Graphics
+              }
+              ...on ComponentSpecificationsRecommended {
+                OS
+                Processor
+                Memory
+                Storage
+                Graphics
+              }
+            }
+            macos {
+              __typename
+              ... on ComponentSpecificationsMinimum {
+                OS
+                Processor
+                Memory
+                Storage
+                Graphics
+              }
+              ...on ComponentSpecificationsRecommended {
+                OS
+                Processor
+                Memory
+                Storage
+                Graphics
+              }
+            }
             description
           }
         }
@@ -245,4 +304,36 @@ export const getProductByLink = async (link, locale) => {
     {variables: {link, locale}},
   );
   return data?.products?.data?.[0].attributes;
+};
+
+export const getCategoties = async (locale) => {
+  const data = await fetchAPI(
+    `
+    query getCategories($locale : I18NLocaleCode) {
+      categories(locale : $locale){
+        data {
+          attributes {
+            title
+            products(sort: "publishedAt:desc") {
+              data {
+                attributes {
+                  title
+                  verticalCover{
+                    data{
+                      attributes {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }    
+      }
+    }
+    `,
+    {variables: {locale}},
+  );
+  return data?.categories?.data;
 };

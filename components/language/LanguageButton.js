@@ -31,7 +31,7 @@ function LanguageButton() {
           inputProps={{IconComponent: () => null}}
         >
           <MenuItem
-            value={"en"}
+            value={"en-US"}
             sx={{
               display: "flex",
               justifyItems: "center",

@@ -171,8 +171,8 @@ export default ResetPasswordPage;
 export const getStaticProps = async ({locale}) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? "en", ["common"], null, [
-        "en",
+      ...(await serverSideTranslations(locale ?? "en-US", ["common"], null, [
+        "en-US",
         "vi-VN",
       ])),
     },

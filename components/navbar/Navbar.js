@@ -23,14 +23,18 @@ import {
 import {getImageUrl} from "@/libs/ultis";
 import {useTranslation} from "react-i18next";
 import LanguageButton from "../language/LanguageButton";
+import {useRouter} from "next/router";
 
-const ItemMenu = ({store, discover, news}) => {
+const ItemMenu = ({store, discover, news, pathname}) => {
   return (
     <>
-      <Link href="/" className="hover-effect">
+      <Link
+        href="/"
+        className={`hover-effect ${pathname === "/" ? "text-primary" : ""}`}
+      >
         {store}
       </Link>
-      <Link href="/" className="hover-effect">
+      <Link href="/discover" className="hover-effect">
         {discover}
       </Link>
       <Link href="/" className="hover-effect">
@@ -42,6 +46,8 @@ const ItemMenu = ({store, discover, news}) => {
 
 function Navbar() {
   const {t} = useTranslation();
+  const router = useRouter();
+  const {pathname} = router;
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
   const {username, avatar} = userData?.attributes ?? {};
@@ -100,6 +106,7 @@ function Navbar() {
               store={t("store")}
               discover={t("discover")}
               news={t("news")}
+              locale={pathname}
             />
           </div>
           <div className="hidden lg:flex items-center justify-end space-x-4 w-full ">
@@ -136,9 +143,11 @@ function Navbar() {
                   <Divider />
                   <div className="mt-1.5">
                     <Link href="/account/profile">
-                      <MenuItem onClick={CloseUserMenu}>Profile</MenuItem>
+                      <MenuItem onClick={CloseUserMenu}>
+                        {t("profile")}
+                      </MenuItem>
                     </Link>
-                    <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                    <MenuItem onClick={handleLogOut}>{t("logout")}</MenuItem>
                   </div>
                 </Menu>
               </div>

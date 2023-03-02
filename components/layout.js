@@ -9,7 +9,7 @@ export default function Layout({children}) {
       <Container maxWidth="xl" className="pt-20">
         {children}
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

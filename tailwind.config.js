@@ -123,11 +123,12 @@ module.exports = {
     extend: {
       colors: {
         primary: "#42A5F5",
-        secondary: "#d9a300",
+        secondary: "#90CAF9",
         error: "#F44336",
         background: {
           primary: "#121212",
           secondary: "#272727",
+          tertiary: "#383838",
         },
       },
     },
