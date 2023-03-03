@@ -27,13 +27,13 @@ function Page({product}) {
 
   return (
     <div className="block">
-      <h1 className="text-headline3 pb-4">{title}</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-6 space-x-0 lg:space-x-14 space-y-4 lg:space-y-0">
+      <h1 className="text-headline3 my-10">{title}</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-10 space-x-0 lg:space-x-14 space-y-4 lg:space-y-0">
         <div
-          className="col-span-1 lg:col-span-4 post-content"
+          className="col-span-1 lg:col-span-7 post-content"
           dangerouslySetInnerHTML={{__html: fixedContent}}
         />
-        <div className="col-span-1 lg:col-span-2">
+        <div className="col-span-1 lg:col-span-3">
           <div className="flex flex-col justify-center items-center sticky top-24 mx-4 space-y-4">
             <div className="relative w-3/5 h-28">
               <Image
@@ -69,8 +69,8 @@ function Page({product}) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-6">
-        <div className="col-span-1 lg:col-span-4">
+      <div className="grid grid-cols-1 lg:grid-cols-10">
+        <div className="col-span-1 lg:col-span-7">
           <p className="pb-6 capitalize text-headline5">
             {t("specifications")}
           </p>

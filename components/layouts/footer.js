@@ -10,7 +10,7 @@ import {Container} from "@mui/material";
 
 function Footer() {
   return (
-    <div className="bg-background-secondary">
+    <div className="bg-background-secondary mt-6">
       <Container className=" py-10" maxWidth="xl">
         <div className="container mx-auto grid grid-col-1 lg:grid-cols-3 space-y-10 lg:space-y-0">
           <div className="flex flex-col items-center lg:items-start space-y-6 lg:space-y-2 col-span-1">

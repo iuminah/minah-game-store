@@ -7,7 +7,7 @@ import Head from "next/head";
 import {persistor, store} from "../redux/store";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
-import Layout from "@/components/layout";
+import Layout from "@/components/layouts/layout";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {appWithTranslation} from "next-i18next";

@@ -1,6 +1,6 @@
 import {Container} from "@mui/material";
-import Footer from "./footer/footer";
-import Navbar from "./navbar/Navbar";
+import Footer from "./footer";
+import Navbar from "./Navbar";
 
 export default function Layout({children}) {
   return (

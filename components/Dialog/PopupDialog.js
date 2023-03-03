@@ -5,8 +5,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import {useRouter} from "next/router";
-import React, {useCallback, useState} from "react";
+import React from "react";
 
 function PopupDialog({open, close, title, content}) {
   return (

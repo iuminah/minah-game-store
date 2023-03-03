@@ -5,48 +5,99 @@ import {selectUserData} from "@/redux/accountSlice";
 import Image from "next/image";
 import {getBase64, getImageUrl} from "@/libs/ultis";
 import {useForm} from "react-hook-form";
-import {uploadAvatar} from "@/libs/api";
-import defaultAvatar from "../../assets/icons/userIcon.png";
+import {changeUserInfo, uploadAvatar} from "@/libs/api";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-// import ImgCrop from "antd-img-crop";
+import {useRouter} from "next/router";
+import CropImage from "@/components/crop-image/CropImage";
+import {Button, TextField} from "@mui/material";
 
 function ProfilePage() {
-  const {register, handleSubmit} = useForm();
+  const router = useRouter();
+  const {register, handleSubmit, reset} = useForm();
   const userData = useSelector(selectUserData);
-  console.log("userData :", userData);
-  // if (!userData) return null;
-
   const {username, email, avatar} = userData?.attributes ?? {};
 
-  const onSubmit = async (data) => {
-    const {avatar} = data;
+  const [imageID, setImageID] = useState();
+  const [editInfo, setEditInfo] = useState(false);
 
-    const res = await uploadAvatar(avatar[0]);
+  const getImageID = useCallback((id) => {
+    setImageID(id);
+  });
+
+  const handleEdit = useCallback(() => {
+    setEditInfo((pre) => !pre);
+    reset();
+  }, []);
+
+  const onSubmit = async (input) => {
+    let inputData = {
+      username: input.username,
+      email: input.email,
+      avatar: imageID,
+    };
+    const res = await changeUserInfo(userData.id, inputData);
     console.log("res :", res);
   };
 
-  if (userData) {
+  if (!userData) {
+    router.push("/");
+  } else {
     return (
-      <div>
-        <div className="relative w-[100px] h-[100px]">
-          <Image
-            alt="avatar"
-            src={getImageUrl(avatar) || defaultAvatar.src}
-            fill
-            className="object-cover"
-            draggable="false"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-          />
+      <div className="flex justify-center items-center min-h-[calc(100dvh-441px)]">
+        <div className="w-full md:w-3/4 bg-background-secondary p-10 rounded-xl">
+          <form className="block" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-8 space-y-8 lg:space-y-0">
+              <div>
+                <CropImage
+                  currentAvatar={avatar}
+                  editInfo={editInfo}
+                  getImageID={getImageID}
+                />
+              </div>
+              <div className="flex flex-col justify-between space-y-8 lg:space-y-0 w-full lg:w-1/4">
+                <div className="flex flex-col space-y-8">
+                  <TextField
+                    variant={editInfo ? "outlined" : "filled"}
+                    disabled={!editInfo}
+                    id="outlined-disabled"
+                    label="User Name"
+                    defaultValue={username}
+                    {...register("username")}
+                  />
+                  <TextField
+                    variant={editInfo ? "outlined" : "filled"}
+                    disabled={!editInfo}
+                    id="outlined-disabled"
+                    label="Email"
+                    defaultValue={email}
+                    {...register("email")}
+                  />
+                </div>
+                <div className="space-x-4 flex justify-center items-center">
+                  <Button
+                    sx={{width: "100%"}}
+                    variant="contained"
+                    onClick={handleEdit}
+                  >
+                    {editInfo ? "Cancel" : "Edit"}
+                  </Button>
+                  {editInfo ? (
+                    <Button
+                      sx={{width: "100%"}}
+                      variant="contained"
+                      type="submit"
+                    >
+                      Save
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div>User Name : {username}</div>
-        <div>Email : {email}</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input type="file" {...register("avatar")} />
-          <input type="submit" />
-        </form>
       </div>
     );
-  } else return null;
+  }
 }
 
 ProfilePage.propTypes = {};

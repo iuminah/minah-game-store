@@ -57,7 +57,7 @@ input:-webkit-autofill {
 
   p,
   span {
-    @apply text-slate-200 #{!important};
+    @apply text-gray-300 #{!important};
   }
 
   & > * {
@@ -129,4 +129,13 @@ input:-webkit-autofill {
   @apply border h-9 w-9 p-2.5 rounded-lg;
   @apply hover:border-primary;
   @apply transition-all duration-200 ease-in-out cursor-pointer;
+}
+
+.box {
+  display: inline-block;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.img-preview {
+  overflow: hidden;
 }
