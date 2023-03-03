@@ -1,11 +1,8 @@
 import React, {useCallback, useState} from "react";
-import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import {selectUserData} from "@/redux/accountSlice";
-import Image from "next/image";
-import {getBase64, getImageUrl} from "@/libs/ultis";
 import {useForm} from "react-hook-form";
-import {changeUserInfo, uploadAvatar} from "@/libs/api";
+import {changeUserInfo} from "@/libs/api";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
 import CropImage from "@/components/crop-image/CropImage";
