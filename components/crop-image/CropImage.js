@@ -14,6 +14,8 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
   const [cropData, setCropData] = useState(null);
   const [cropper, setCropper] = useState();
   const [openDialog, setOpenDialog] = useState(false);
+  const [res, setRes] = useState();
+  console.log("res :", res);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -40,10 +42,18 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, contentType);
       setOpenDialog(false);
-      const res = await uploadAvatar(blob);
-      if (res) {
-        console.log("resssss :", res[0].id);
-        getImageID(res[0].id);
+      const response = await uploadAvatar(blob);
+      if (response) {
+        response
+          .json()
+          .then((res) => {
+            getImageID(res[0].id);
+            setRes("ok");
+          })
+          .catch((err) => {
+            console.log("errrrr : ", err);
+            setRes("too large");
+          });
       }
     }
   };
@@ -64,6 +74,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
               src={cropData || getImageUrl(currentAvatar)}
             />
           </div>
+          <div>{res}</div>
           {editInfo ? (
             <div className="mt-4 flex items-center justify-center w-full">
               <>
