@@ -44,16 +44,13 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
       setOpenDialog(false);
       const response = await uploadAvatar(blob);
       if (response) {
-        response
-          .json()
-          .then((res) => {
-            getImageID(res[0].id);
-            setRes("ok");
-          })
-          .catch((err) => {
-            console.log("errrrr : ", err);
-            setRes("too large");
-          });
+        response.json().then((res) => {
+          getImageID(res[0].id);
+          setRes("ok");
+        });
+      }
+      if (response.status !== 200) {
+        setRes("Too Large");
       }
     }
   };
