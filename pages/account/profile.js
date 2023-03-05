@@ -7,8 +7,10 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
 import CropImage from "@/components/crop-image/CropImage";
 import {Button, TextField} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 function ProfilePage() {
+  const {t} = useTranslation();
   const router = useRouter();
   const {register, handleSubmit, reset} = useForm();
   const userData = useSelector(selectUserData);
@@ -41,9 +43,10 @@ function ProfilePage() {
   } else {
     return (
       <div className="flex justify-center items-center min-h-[calc(100dvh-441px)]">
-        <div className="w-full md:w-3/4 bg-background-secondary p-10 rounded-xl">
+        <div className="w-full bg-background-secondary p-10 rounded-xl">
+          <p className="text-center text-headline4 pb-10">{t("profile")}</p>
           <form className="block" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-8 space-y-8 lg:space-y-0">
+            <div className="flex flex-col lg:flex-row justify-center space-x-0 lg:space-x-8 space-y-6 lg:space-y-0">
               <div>
                 <CropImage
                   currentAvatar={avatar}
@@ -51,8 +54,8 @@ function ProfilePage() {
                   getImageID={getImageID}
                 />
               </div>
-              <div className="flex flex-col justify-between space-y-8 lg:space-y-0 w-full lg:w-1/4">
-                <div className="flex flex-col space-y-8">
+              <div className="flex flex-col justify-between space-y-8 lg:space-y-0 w-full lg:w-2/4">
+                <div className="w-full flex flex-col space-y-6">
                   <TextField
                     variant={editInfo ? "outlined" : "filled"}
                     disabled={!editInfo}
@@ -69,6 +72,7 @@ function ProfilePage() {
                     defaultValue={email}
                     {...register("email")}
                   />
+                  <Button variant="outlined">{t("change password")}</Button>
                 </div>
                 <div className="space-x-4 flex justify-center items-center">
                   <Button

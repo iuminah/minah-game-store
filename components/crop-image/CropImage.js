@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
 import {Cropper} from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import {Button, Dialog, DialogActions, Divider} from "@mui/material";
+import {Avatar, Button, Dialog, DialogActions, Divider} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {b64toBlob, getImageUrl} from "@/libs/ultis";
 import Image from "next/image";
@@ -56,14 +56,12 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
     <div>
       <div className="flex flex-col justify-center items-center">
         <div>
-          <div className="relative w-[185px] h-[185px] lg:w-[250px] lg:h-[250px]">
-            <Image
-              alt="avatar"
+          <div className="w-[185px] h-[185px] lg:w-[250px] lg:h-[250px]">
+            <Avatar
+              variant="rounded"
+              alt="Avatar"
+              sx={{width: "100%", height: "100%"}}
               src={cropData || getImageUrl(currentAvatar)}
-              fill
-              className="object-cover"
-              draggable="false"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             />
           </div>
           {editInfo ? (

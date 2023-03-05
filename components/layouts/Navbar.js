@@ -132,7 +132,7 @@ function Navbar() {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  PaperProps={{sx: {width: "120px"}}}
+                  PaperProps={{sx: {width: "fit"}}}
                 >
                   <Typography
                     onClick={CloseUserMenu}
