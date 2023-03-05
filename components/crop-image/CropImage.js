@@ -1,7 +1,15 @@
 import React, {useCallback, useState} from "react";
 import {Cropper} from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import {Avatar, Button, Dialog, DialogActions, Divider} from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Dialog,
+  DialogActions,
+  Divider,
+  Snackbar,
+} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {b64toBlob, getImageUrl} from "@/libs/ultis";
 import Image from "next/image";
@@ -14,8 +22,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
   const [cropData, setCropData] = useState(null);
   const [cropper, setCropper] = useState();
   const [openDialog, setOpenDialog] = useState(false);
-  const [res, setRes] = useState();
-  console.log("res :", res);
+  const [mess, setMess] = useState();
 
   const onChange = (e) => {
     e.preventDefault();
@@ -31,6 +38,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
     };
     reader.readAsDataURL(files[0]);
     setOpenDialog(true);
+    setMess("");
   };
 
   const getCropData = async () => {
@@ -43,14 +51,17 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
       const blob = b64toBlob(realData, contentType);
       setOpenDialog(false);
       const response = await uploadAvatar(blob);
-      if (response) {
-        response.json().then((res) => {
-          getImageID(res[0].id);
-          setRes("ok");
-        });
-      }
-      if (response.status !== 200) {
-        setRes("Too Large");
+      if (response.status === 200) {
+        response
+          .json()
+          .then((res) => {
+            getImageID(res[0].id);
+          })
+          .catch((err) => {
+            console.log("err : ", err);
+          });
+      } else {
+        setMess(t("image size is too large"));
       }
     }
   };
@@ -71,7 +82,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
               src={cropData || getImageUrl(currentAvatar)}
             />
           </div>
-          <div>{res}</div>
+          <div className="text-center text-error pt-2">{mess}</div>
           {editInfo ? (
             <div className="mt-4 flex items-center justify-center w-full">
               <>
@@ -80,7 +91,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
                     htmlFor="file-upload"
                     className="w-full h-full p-1.5 cursor-pointer"
                   >
-                    Choose Image
+                    {t("choose image")}
                   </label>
                 </Button>
                 <input
@@ -96,7 +107,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
       </div>
       <Dialog open={openDialog} className="select-none">
         <div className="p-4 lg:p-6 pb-0 flex flex-col justify-center items-center space-y-4">
-          <p>{t("edit image")}</p>
+          <p className="uppercase font-medium">{t("edit image")}</p>
           <Cropper
             style={{height: "300px", width: "100%", overflow: "hidden"}}
             zoomTo={0}
@@ -134,7 +145,7 @@ function CropImage({currentAvatar, editInfo, getImageID}) {
               style={{float: "right"}}
               onClick={getCropData}
             >
-              Crop Image
+              {t("crop image")}
             </Button>
           </div>
         </DialogActions>

@@ -136,7 +136,7 @@ export const uploadAvatar = async (image) => {
   };
 
   const data = fetch(`${DOMAIN}/api/upload`, requestOptions)
-    .then((response) => response)
+    .then((result) => result)
     .catch((error) => error);
   return data;
 };

@@ -7,36 +7,38 @@ import PinterestIcon from "../../assets/icons/pinterest.svg";
 import MinahLogo from "../../assets/icons/MinahLogo.png";
 import Heart from "../../assets/icons/heart.svg";
 import {Container} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 function Footer() {
+  const {t} = useTranslation();
   return (
     <div className="bg-background-secondary mt-6">
       <Container className=" py-10" maxWidth="xl">
         <div className="container mx-auto grid grid-col-1 lg:grid-cols-3 space-y-10 lg:space-y-0">
           <div className="flex flex-col items-center lg:items-start space-y-6 lg:space-y-2 col-span-1">
             <Link href="" className="hover-effect">
-              Store
+              {t("store")}
             </Link>
             <Link href="" className="hover-effect">
-              Discover
+              {t("discover")}
             </Link>
             <Link href="" className="hover-effect">
-              News
+              {t("news")}
             </Link>
           </div>
           <div className="lg:hidden border-b border-text-primary mx-6" />
           <div className="flex flex-col col-span-1 items-center space-y-6 lg:space-y-2">
             <Link href="" className="hover-effect">
-              Terms and Service
+              {t("terms and service")}
             </Link>
             <Link href="" className="hover-effect">
-              Privacy Policy
+              {t("privacy policy")}
             </Link>
             <Link href="" className="hover-effect">
-              Contact us
+              {t("contact us")}
             </Link>
             <Link href="" className="hover-effect">
-              FAQ
+              {t("FAQ")}
             </Link>
           </div>
           <div className="flex space-x-2 col-span-1 justify-center lg:justify-end">

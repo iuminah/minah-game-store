@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import CropImage from "@/components/crop-image/CropImage";
 import {Button, TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
+import Link from "next/link";
 
 function ProfilePage() {
   const {t} = useTranslation();
@@ -60,7 +61,7 @@ function ProfilePage() {
                     variant={editInfo ? "outlined" : "filled"}
                     disabled={!editInfo}
                     id="outlined-disabled"
-                    label="User Name"
+                    label={t("username")}
                     defaultValue={username}
                     {...register("username")}
                   />
@@ -72,7 +73,11 @@ function ProfilePage() {
                     defaultValue={email}
                     {...register("email")}
                   />
-                  <Button variant="outlined">{t("change password")}</Button>
+                  <Link href="/account/change-password" className="w-full">
+                    <Button variant="outlined" sx={{width: "100%"}}>
+                      {t("change password")}
+                    </Button>
+                  </Link>
                 </div>
                 <div className="space-x-4 flex justify-center items-center">
                   <Button
@@ -80,7 +85,7 @@ function ProfilePage() {
                     variant="contained"
                     onClick={handleEdit}
                   >
-                    {editInfo ? "Cancel" : "Edit"}
+                    {editInfo ? <p>{t("cancel")}</p> : <p>{t("edit")}</p>}
                   </Button>
                   {editInfo ? (
                     <Button
@@ -88,7 +93,7 @@ function ProfilePage() {
                       variant="contained"
                       type="submit"
                     >
-                      Save
+                      {t("save")}
                     </Button>
                   ) : null}
                 </div>
@@ -113,5 +118,6 @@ export const getStaticProps = async ({locale}) => {
         "vi-VN",
       ])),
     },
+    revalidate: true,
   };
 };

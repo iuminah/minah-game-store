@@ -108,5 +108,6 @@ export const getStaticProps = async ({locale}) => {
         "vi-VN",
       ])),
     },
+    revalidate: true,
   };
 };

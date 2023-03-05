@@ -114,6 +114,7 @@ function Navbar() {
             {userData ? (
               <div className="">
                 <Avatar
+                  sx={{cursor: "pointer"}}
                   variant="rounded"
                   alt="Avatar"
                   onClick={openUserMenu}
