@@ -124,7 +124,6 @@ function Navbar() {
                   anchorEl={anchorEl}
                   open={openAnchor}
                   onClose={CloseUserMenu}
-                  className="mt-1"
                   anchorOrigin={{
                     vertical: "bottom",
                     horizontal: "right",
@@ -133,11 +132,13 @@ function Navbar() {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  PaperProps={{sx: {width: "fit"}}}
+                  PaperProps={{
+                    sx: {width: "fit", marginTop: "4px"},
+                  }}
                 >
                   <Typography
                     onClick={CloseUserMenu}
-                    className="text-center pb-1.5"
+                    className="text-center pb-1.5 px-4"
                   >
                     {username}
                   </Typography>

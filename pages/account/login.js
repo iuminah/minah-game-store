@@ -43,6 +43,7 @@ function LogInPage() {
     const {email, password} = data;
     await logIn(email, password).then((res) => {
       if (res.status === 200) {
+        console.log("res :", res);
         dispatch(setToken(res.data.jwt));
         dispatch(setUserID(res.data.user.id));
         router.push("/");

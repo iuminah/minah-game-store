@@ -105,6 +105,37 @@ export const resetPassword = async (privateCode, password) => {
   return data;
 };
 
+export const changePassword = async (
+  currentPassword,
+  password,
+  confirmPassword,
+  userJwt,
+) => {
+  const data = axios
+    .post(
+      `${DOMAIN}/api/auth/change-password`,
+      {
+        currentPassword: currentPassword,
+        password: password,
+        passwordConfirmation: confirmPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userJwt}`,
+        },
+      },
+    )
+    .then((res) => {
+      console.log("res : ", "res");
+      return res;
+    })
+    .catch((err) => {
+      console.log("An error occurred:", err.response);
+      return err;
+    });
+  return data;
+};
+
 export const resendEmail = async (email) => {
   const data = axios
     .post(`${DOMAIN}/api/auth/send-email-confirmation`, {

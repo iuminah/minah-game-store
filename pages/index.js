@@ -3,12 +3,13 @@ import NewGameSlide from "@/components/slides/NewGameSlide";
 import NewReleases from "@/components/sections/NewReleases";
 import {getNewGameSlide} from "@/libs/api";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {Skeleton} from "@mui/material";
 
 export default function Home({newGameSlides}) {
+  console.log("newGameSlides :", newGameSlides);
   return (
     <div>
       <NewGameSlide newGameSlides={newGameSlides} />
-      <div></div>
     </div>
   );
 }

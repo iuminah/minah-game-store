@@ -22,11 +22,13 @@ function ProfilePage() {
 
   const getImageID = useCallback((id) => {
     setImageID(id);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEdit = useCallback(() => {
     setEditInfo((pre) => !pre);
     reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async (input) => {
